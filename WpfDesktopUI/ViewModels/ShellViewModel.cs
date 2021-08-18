@@ -8,5 +8,9 @@ namespace WpfDesktopUI.ViewModels
 {
     public class ShellViewModel
     {
+        public ShellViewModel()
+        {
+
+        }
     }
 }

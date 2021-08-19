@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Workouts]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] VARCHAR(100) NULL DEFAULT 'My New Workout'
+)

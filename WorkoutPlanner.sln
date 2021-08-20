@@ -5,9 +5,15 @@ VisualStudioVersion = 15.0.28307.960
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDesktopUI", "WpfDesktopUI\WpfDesktopUI.csproj", "{73288326-0770-4B7F-ABC6-9E67FC02F7EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDesktopUI.Library", "WpfDesktopUI.Library\WpfDesktopUI.Library.csproj", "{00C19F45-9240-4BBB-BC6D-CF759BAC92EF}"
-EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WPlannerData", "WPlannerData\WPlannerData.sqlproj", "{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.Library", "DataAccess.Library\DataAccess.Library.csproj", "{6AA64459-29AE-4B71-BC72-C5B8CE07BC6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{0C8E8958-14CA-4E18-A75C-EA39EF785F37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{E6BC6F56-5471-44F4-AB62-E1006661F187}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{09AC4255-1D06-4969-9573-5F72D3CD13AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,19 +25,24 @@ Global
 		{73288326-0770-4B7F-ABC6-9E67FC02F7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73288326-0770-4B7F-ABC6-9E67FC02F7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73288326-0770-4B7F-ABC6-9E67FC02F7EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00C19F45-9240-4BBB-BC6D-CF759BAC92EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00C19F45-9240-4BBB-BC6D-CF759BAC92EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00C19F45-9240-4BBB-BC6D-CF759BAC92EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00C19F45-9240-4BBB-BC6D-CF759BAC92EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6AA64459-29AE-4B71-BC72-C5B8CE07BC6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA64459-29AE-4B71-BC72-C5B8CE07BC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA64459-29AE-4B71-BC72-C5B8CE07BC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA64459-29AE-4B71-BC72-C5B8CE07BC6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73288326-0770-4B7F-ABC6-9E67FC02F7EE} = {09AC4255-1D06-4969-9573-5F72D3CD13AB}
+		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0} = {0C8E8958-14CA-4E18-A75C-EA39EF785F37}
+		{6AA64459-29AE-4B71-BC72-C5B8CE07BC6E} = {E6BC6F56-5471-44F4-AB62-E1006661F187}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07CD2C74-D9AA-47B3-92BE-32D0F315294D}

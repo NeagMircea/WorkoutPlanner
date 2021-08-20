@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="WpfDesktopUI.Views.ProgramView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfDesktopUI.Views"
+             mc:Ignorable="d" Background="White" FontSize="20"
+             d:DesignHeight="425" d:DesignWidth="775">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                   HorizontalAlignment="Center" FontSize="35" 
+                   Margin="0 0 0 20" FontFamily="Segoe UI Light">
+            Workout Planner
+        </TextBlock>
+
+        <ListBox x:Name="ProgramListBox" Grid.Row="1" Grid.Column="1" 
+                 Grid.RowSpan="3" MinHeight="300" MinWidth="250">
+            ProgramListBoxItem1
+        </ListBox>
+
+        <Button x:Name="MoveUp" Grid.Row="1" Grid.Column="2" 
+                Margin="20 10 10 10" Padding="10">
+            Move Up
+        </Button>
+
+        <Button x:Name="MoveDown" Grid.Row="2" Grid.Column="2" 
+                Margin="20 20 10 10" Padding="10">
+            Move Down
+        </Button>
+
+        <Button x:Name="AddNew" Grid.Row="1" Grid.Column="3" 
+                Margin="20 10 10 10" Padding="10">
+            Add New
+        </Button>
+
+        <Button x:Name="ViewSelected" Grid.Row="2" Grid.Column="3" 
+                Margin="20 20 10 10" Padding="10">
+            View Selected
+        </Button>
+
+        <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="3" 
+                Margin="20 70 10 10" Padding="10" Background="Red">
+            Remove Selected
+        </Button>
+    </Grid>
+</UserControl>

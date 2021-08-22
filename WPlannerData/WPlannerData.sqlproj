@@ -76,6 +76,10 @@
     <Build Include="dbo\Tables\Workouts.sql" />
     <Build Include="dbo\Tables\Programs.sql" />
     <Build Include="dbo\Tables\WorkoutPrograms.sql" />
+    <Build Include="dbo\Stored Procedures\spCategoryLookup.sql" />
+    <Build Include="dbo\Stored Procedures\spCategoryGetAll.sql" />
+    <Build Include="dbo\Stored Procedures\spProgramLookup.sql" />
+    <Build Include="dbo\Stored Procedures\spProgramGetAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WPlannerData.refactorlog" />

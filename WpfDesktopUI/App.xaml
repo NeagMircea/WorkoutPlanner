@@ -4,11 +4,15 @@
              xmlns:local="clr-namespace:WpfDesktopUI">
     <Application.Resources>
     <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary>
-                <local:Bootstrapper x:Key="Bootstrapper"/>
-            </ResourceDictionary>
-        </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <local:Bootstrapper x:Key="Bootstrapper"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter">
+                
+            </BooleanToVisibilityConverter>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

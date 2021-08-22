@@ -20,6 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -29,33 +30,60 @@
             Workout Planner
         </TextBlock>
 
-        <ListBox x:Name="ProgramListBox" Grid.Row="1" Grid.Column="1" 
-                 Grid.RowSpan="3" MinHeight="300" MinWidth="250">
-            ProgramListBoxItem1
+        <TextBlock x:Name="ErrorMessage"
+                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                   Margin="10 0 10 10" Foreground="Red" MaxWidth="600"
+                   TextWrapping="Wrap" Visibility = 
+                   "{Binding IsErrorVisible, Converter=
+            {StaticResource BooleanToVisibilityConverter}, 
+            FallbackValue = Collapsed}" />
+
+        <ListBox x:Name="ProgramListBox" Grid.Row="2" Grid.Column="1" 
+                 Grid.RowSpan="3" MinHeight="300" MinWidth="250"
+                 MaxHeight="300" SelectedItem="{Binding SelectedProgram}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
         </ListBox>
 
-        <Button x:Name="MoveUp" Grid.Row="1" Grid.Column="2" 
-                Margin="20 10 10 10" Padding="10">
-            Move Up
-        </Button>
-
-        <Button x:Name="MoveDown" Grid.Row="2" Grid.Column="2" 
-                Margin="20 20 10 10" Padding="10">
-            Move Down
-        </Button>
-
-        <Button x:Name="AddNew" Grid.Row="1" Grid.Column="3" 
-                Margin="20 10 10 10" Padding="10">
-            Add New
-        </Button>
-
-        <Button x:Name="ViewSelected" Grid.Row="2" Grid.Column="3" 
+        <Button x:Name="ViewSelected" Grid.Row="2" Grid.Column="2" 
                 Margin="20 20 10 10" Padding="10">
             View Selected
         </Button>
 
-        <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="3" 
-                Margin="20 70 10 10" Padding="10" Background="Red">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="2">
+            <Button x:Name="MoveUp" 
+                Margin="20 10 10 10" Padding="10">
+                Move Up
+            </Button>
+            
+            <Button x:Name="MoveDown"  
+                Margin="20 10 10 10" Padding="10">
+                Move Down
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="3">
+
+            <TextBox x:Name="NewProgramName" Margin="20 20 10 10"
+                     MinHeight="40"/>
+
+            <Button x:Name="AddNew"  
+                Margin="20 10 10 10" Padding="10">
+                Add New
+            </Button>
+            
+        </StackPanel>
+        
+
+
+
+
+        <Button x:Name="RemoveSelected" Grid.Row="4" Grid.Column="3" 
+                Margin="20 60 10 10" Padding="10" Background="Red">
             Remove Selected
         </Button>
     </Grid>

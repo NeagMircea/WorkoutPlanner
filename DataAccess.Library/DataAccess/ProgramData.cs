@@ -33,5 +33,23 @@ namespace DataAccess.Library.DataAccess
 
             return output;
         }
+
+
+        public void SaveProgramRecord(ProgramModel program)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            sql.SaveData("dbo.spProgramInsert", program, "WPlannerData");
+        }
+
+
+        public void DeleteProgramRecord(int id)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new { Id = id };
+
+            sql.SaveData("dbo.spProgramRemoveAt", p, "WPlannerData");
+        }
     }
 }

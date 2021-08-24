@@ -1,10 +1,13 @@
-﻿using Caliburn.Micro;
+﻿using AutoMapper;
+using Caliburn.Micro;
+using DataAccess.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfDesktopUI.Models;
 using WpfDesktopUI.ViewModels;
 
 namespace WpfDesktopUI
@@ -25,6 +28,7 @@ namespace WpfDesktopUI
         //configures class asotiation
         protected override void Configure()
         {
+            container.Instance(ConfigureAutomapper());
             container.Instance(container);
 
             container
@@ -34,12 +38,28 @@ namespace WpfDesktopUI
                 //from CB Micro for event messaging 
                 .Singleton<IEventAggregator, EventAggregator>();
 
+
             //configure ViewModels using reflexion
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)
                 .Where(type => type.Name.EndsWith("ViewModel")).ToList()
                 .ForEach(viewModelType =>
                 container.RegisterPerRequest(viewModelType, viewModelType.ToString(), viewModelType));
+        }
+
+
+        private IMapper ConfigureAutomapper()
+        {
+            //maps data model to display model, uses reflection
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProgramModel, ProgramDisplayModel>();
+                cfg.CreateMap<CategoryModel, CategoryDisplayModel>();
+            });
+
+            var mapper = config.CreateMapper();
+
+            return mapper;
         }
 
 

@@ -1,14 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfDesktopUI.Models
 {
-    public class ProgramDisplayModel
+    public class ProgramDisplayModel /*: INotifyPropertyChanged*/
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+
+        private string name;
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                //CallPropertyChanged(nameof(Name));
+            }
+        }
+
+        //public event PropertyChangedEventHandler PropertyChanged;
+
+
+        //public void CallPropertyChanged(string propertyName)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
     }
 }

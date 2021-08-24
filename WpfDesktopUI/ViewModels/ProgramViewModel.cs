@@ -1,8 +1,11 @@
-﻿using Caliburn.Micro;
+﻿using AutoMapper;
+using Caliburn.Micro;
 using DataAccess.Library.DataAccess;
 using DataAccess.Library.Models;
+using HelperLibrary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -14,8 +17,8 @@ namespace WpfDesktopUI.ViewModels
 {
     public class ProgramViewModel : Screen
     {
-        private BindingList<ProgramModel> programListBox;
-        public BindingList<ProgramModel> ProgramListBox
+        private BindingList<ProgramDisplayModel> programListBox;
+        public BindingList<ProgramDisplayModel> ProgramListBox
         {
             get
             {
@@ -25,7 +28,23 @@ namespace WpfDesktopUI.ViewModels
             {
                 programListBox = value;
                 NotifyOfPropertyChange(() => ProgramListBox);
-                //TODO ListBox Logic
+            }
+        }
+
+        private ProgramDisplayModel selectedProgram;
+        public ProgramDisplayModel SelectedProgram
+        {
+            get
+            {
+                return selectedProgram;
+            }
+            set
+            {
+                selectedProgram = value;
+                NotifyOfPropertyChange(() => SelectedProgram);
+                NotifyOfPropertyChange(() => CanMoveUp);
+                NotifyOfPropertyChange(() => CanMoveDown);
+                NotifyOfPropertyChange(() => CanRemoveSelected);
             }
         }
 
@@ -39,7 +58,7 @@ namespace WpfDesktopUI.ViewModels
             set
             {
                 programName = value;
-                NotifyOfPropertyChange(() => ProgramName);   
+                NotifyOfPropertyChange(() => ProgramName);             
             }
         }
 
@@ -54,6 +73,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 newProgramName = value;
                 NotifyOfPropertyChange(() => NewProgramName);
+                NotifyOfPropertyChange(() => CanAddNew);
             }
         }
 
@@ -89,28 +109,23 @@ namespace WpfDesktopUI.ViewModels
         }
 
         private IEventAggregator events;
+        private IMapper mapper;
 
-
-        public ProgramViewModel(IEventAggregator events)
+        public ProgramViewModel(IEventAggregator events, IMapper mapper)
         {
             this.events = events;
+            this.mapper = mapper;
         }
 
 
         private void LoadPrograms()
         {
-            //TODO CHANGE PROGRAM MODEL TO PROGRAM DISPLAY MODEL
             ProgramData data = new ProgramData();
-            List<ProgramModel> programs = data.GetAllPrograms();
-            ProgramListBox = new BindingList<ProgramModel>(programs);
-        }
+            List<ProgramModel> programList = data.GetAllPrograms();
 
+            var programs = mapper.Map<List<ProgramDisplayModel>>(programList); 
 
-        private void LoadCategories()
-        {
-            //TODO CHANGE CATEGORY MODEL TO CATEGORY DISPLAY MODEL
-            CategoryData data = new CategoryData();
-            List<CategoryModel> categories = data.GetAllCategories();
+            ProgramListBox = new BindingList<ProgramDisplayModel>(programs);
         }
 
 
@@ -121,29 +136,33 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public bool CanMoveUp()
+        public bool CanMoveUp
         {
-            //TODO MOVE UP CONDITION
-            bool output = false;
-
-            if (true)
+            get
             {
-                output = true;
-            }
+                bool output = false;
 
-            return output;
+                if (SelectedProgram != null && ProgramListBox != null 
+                    && ProgramListBox.IndexOf(SelectedProgram) > 0)
+                {
+                    output = true;
+                }
+
+                return output;
+            }
         }
 
 
         public void MoveUp()
         {
-            //TODO MOVE UP LOGIC
             try
             {
                 ErrorMessage = "";
 
-                var x = 2;
-                x = x / 0;
+                int index1 = ProgramListBox.IndexOf(SelectedProgram);
+                int index2 = index1 - 1;
+
+                Helper.Swap(ProgramListBox, index1, index2);
             }
             catch (Exception ex)
             {
@@ -152,26 +171,34 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public bool CanMoveDown()
+        public bool CanMoveDown
         {
-            //TODO MOVE DOWN CONDITION
-            bool output = false;
-
-            if (true)
+            get
             {
-                output = true;
-            }
+                bool output = false;
 
-            return output;
+                if (SelectedProgram != null && ProgramListBox != null
+                    && ProgramListBox.IndexOf(SelectedProgram) < ProgramListBox.Count - 1)
+                {
+                    output = true;
+                }
+
+                return output;
+            }
         }
 
 
         public void MoveDown()
         {
-            //TODO MOVE DOWN LOGIC
             try
             {
                 ErrorMessage = "";
+
+                int index1 = ProgramListBox.IndexOf(SelectedProgram);
+                int index2 = index1 + 1;
+
+                Helper.Swap(ProgramListBox, index1, index2);
+
             }
             catch (Exception ex)
             {
@@ -180,27 +207,32 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public bool CanAddNew()
+        public bool CanAddNew
         {
-            //TODO ADD NEW CONDITION
-            bool output = false;
-
-            if (true)
+            get
             {
-                output = true;
-            }
+                bool output = false;
 
-            return output;
+                if (NewProgramName?.Length > 0)
+                {
+                    output = true;
+                }
+
+                return output;
+            }
         }
 
 
-        public async Task AddNew()
+        public void AddNew()
         {
-            //TODO ADD NEW LOGIC
             try
             {
                 ErrorMessage = "";
-                await events.PublishOnUIThreadAsync(new TestEvent());
+
+                ProgramData data = new ProgramData();
+                data.SaveProgramRecord(new ProgramModel { Name = NewProgramName });
+
+                LoadPrograms();
             }
             catch (Exception ex)
             {
@@ -209,54 +241,63 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public bool CanViewSelected()
+        public bool CanRemoveSelected
         {
-            //TODO VIEW SELECTED CONDITION
-            bool output = false;
-
-            if (true)
+            get
             {
-                output = true;
+                bool output = false;
+
+                if (SelectedProgram != null)
+                {
+                    output = true;
+                }
+
+                return output;
             }
-
-            return output;
-        }
-
-
-        public void ViewSelected()
-        {
-            //TODO VIEW SELECTED LOGIC
-            try
-            {
-                ErrorMessage = "";
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-            }
-        }
-
-
-        public bool CanRemoveSelected()
-        {
-            //TODO REMOVE SELECTED CONDITION
-            bool output = false;
-
-            if (true)
-            {
-                output = true;
-            }
-
-            return output;
         }
 
 
         public void RemoveSelected()
         {
-            //TODO REMOVE SELECTED LOGIC
             try
             {
                 ErrorMessage = "";
+
+                ProgramData data = new ProgramData();
+                data.DeleteProgramRecord(SelectedProgram.Id);
+
+                LoadPrograms();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
+
+
+        public bool CanViewSelected
+        {
+            get
+            {
+                bool output = false;
+
+                if (true)
+                {
+                    output = true;
+                }
+
+                return output;
+            }
+        }
+
+
+        public async Task ViewSelected()
+        {
+            //TODO VIEW SELECTED LOGIC
+            try
+            {
+                ErrorMessage = "";
+                await events.PublishOnUIThreadAsync(new TestEvent());
             }
             catch (Exception ex)
             {

@@ -1,0 +1,20 @@
+TITLE: WORKOUT PLANNER
+
+TASKS:
+- create workouts from existing exercises
+- can have multiple workouts
+- workouts structured on week
+- can group workouts in a program*
+- add, remove, update, copy* program
+- add, remove, update, copy* workout
+- add, remove, update, copy* exercise
+- get yt vi deo
+
+*means feature
+
+Technologies:
+- WPF MVVM .Net Framework
+- csv or db(sqlite or ssdt)
+- apply SOLID, DRY, DI
+- CB Micro(MVVM framework), Dapper(easier db calls),
+ DRY, Bootstrapper

@@ -9,6 +9,46 @@ namespace WpfDesktopUI.ViewModels
 {
     public class TestViewModel : Screen
     {
+        private int programId;                      
+        public int ProgramId
+        {
+            get
+            {
+                return programId;
+            }
+            set
+            {
+                programId = value;
+            }
+        }
+
+        private string programName;
+        public string ProgramName
+        {
+            get
+            {
+                return programName;
+            }
+            set
+            {
+                programName = value;
+            }
+        }
+
+        private string textTitle;
+        public string TextTitle
+        {
+            get
+            {
+                return textTitle;
+            }
+            set
+            {
+                textTitle = value;
+                NotifyOfPropertyChange(() => TextTitle);
+            }
+        }
+
 
         public bool CanTestButton()
         {
@@ -26,6 +66,13 @@ namespace WpfDesktopUI.ViewModels
         public void TestButton()
         {
 
+        }
+
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            TextTitle = ProgramName;
         }
     }
 }

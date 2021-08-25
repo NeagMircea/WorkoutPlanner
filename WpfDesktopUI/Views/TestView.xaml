@@ -19,7 +19,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="1" Grid.Column="1"
+        <TextBlock x:Name="TextTitle" Grid.Row="1" Grid.Column="1"
                    FontSize="50">
             TEST VIEW
         </TextBlock>

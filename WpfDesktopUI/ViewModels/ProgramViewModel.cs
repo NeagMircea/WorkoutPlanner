@@ -5,22 +5,20 @@ using DataAccess.Library.Models;
 using HelperLibrary;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WpfDesktopUI.EventModels;
 using WpfDesktopUI.Models;
+using WpfDesktopUI.Views.Interfaces.Composite;
 
 namespace WpfDesktopUI.ViewModels
 {
-    public class ProgramViewModel : Screen
+    public class ProgramViewModel : Screen, IStartView
     {
         private BindingList<ProgramDisplayModel> programListBox;
         public BindingList<ProgramDisplayModel> ProgramListBox
         {
-            get
+            get 
             {
                 return programListBox;
             }
@@ -45,20 +43,7 @@ namespace WpfDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CanMoveUp);
                 NotifyOfPropertyChange(() => CanMoveDown);
                 NotifyOfPropertyChange(() => CanRemoveSelected);
-            }
-        }
-
-        private string programName;
-        public string ProgramName
-        {
-            get
-            {
-                return programName;
-            }
-            set
-            {
-                programName = value;
-                NotifyOfPropertyChange(() => ProgramName);             
+                NotifyOfPropertyChange(() => CanViewSelected);
             }
         }
 
@@ -118,7 +103,7 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        private void LoadPrograms()
+        public void LoadItems()
         {
             ProgramData data = new ProgramData();
             List<ProgramModel> programList = data.GetAllPrograms();
@@ -132,7 +117,7 @@ namespace WpfDesktopUI.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            LoadPrograms();
+            LoadItems();
         }
 
 
@@ -232,7 +217,7 @@ namespace WpfDesktopUI.ViewModels
                 ProgramData data = new ProgramData();
                 data.SaveProgramRecord(new ProgramModel { Name = NewProgramName });
 
-                LoadPrograms();
+                LoadItems();
             }
             catch (Exception ex)
             {
@@ -266,7 +251,7 @@ namespace WpfDesktopUI.ViewModels
                 ProgramData data = new ProgramData();
                 data.DeleteProgramRecord(SelectedProgram.Id);
 
-                LoadPrograms();
+                LoadItems();
             }
             catch (Exception ex)
             {
@@ -281,7 +266,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (true)
+                if (SelectedProgram != null)
                 {
                     output = true;
                 }
@@ -293,11 +278,11 @@ namespace WpfDesktopUI.ViewModels
 
         public async Task ViewSelected()
         {
-            //TODO VIEW SELECTED LOGIC
             try
             {
                 ErrorMessage = "";
-                await events.PublishOnUIThreadAsync(new TestEvent());
+                await events.PublishOnUIThreadAsync(
+                    new SelectProgramEvent { Id = SelectedProgram.Id, ProgramName = SelectedProgram.Name});
             }
             catch (Exception ex)
             {

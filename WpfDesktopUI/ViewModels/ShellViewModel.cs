@@ -9,19 +9,17 @@ using WpfDesktopUI.EventModels;
 
 namespace WpfDesktopUI.ViewModels
 {
-    public class ShellViewModel : Conductor<object>, IHandle<TestEvent>
+    public class ShellViewModel : Conductor<object>, IHandle<SelectProgramEvent>, IHandle<ActivateProgramViewEvent>
     {
         private IEventAggregator events;
-
-        private TestViewModel testVM;
-
         private SimpleContainer container;
+        //private WorkoutViewModel workoutVM;
 
         //constructor injection
-        public ShellViewModel(IEventAggregator events, TestViewModel testVM, SimpleContainer container)
+        public ShellViewModel(IEventAggregator events, /*WorkoutViewModel workoutVM,*/ SimpleContainer container)
         {
             this.events = events;
-            this.testVM = testVM;
+            //this.workoutVM = workoutVM;
             this.container = container;
 
             ActivateItemAsync(container.GetInstance<ProgramViewModel>());
@@ -29,13 +27,22 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public async Task HandleAsync(TestEvent message, CancellationToken cancellationToken)
+        public async Task HandleAsync(SelectProgramEvent message, CancellationToken cancellationToken)
         {
-            await ActivateItemAsync(testVM);
-            //programVM = container.GetInstance<ProgramViewModel>();
+            WorkoutViewModel workoutVM = container.GetInstance<WorkoutViewModel>();
+
+            workoutVM.ProgramId = message.Id;
+            workoutVM.ViewTitle = message.ProgramName;
+
+            await ActivateItemAsync(workoutVM);
         }
 
 
- 
+        public async Task HandleAsync(ActivateProgramViewEvent message, CancellationToken cancellationToken)
+        {
+            ProgramViewModel programVM = container.GetInstance<ProgramViewModel>();
+
+            await ActivateItemAsync(programVM);
+        }
     }
 }

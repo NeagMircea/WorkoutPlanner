@@ -82,6 +82,11 @@
     <Build Include="dbo\Stored Procedures\spProgramGetAll.sql" />
     <Build Include="dbo\Stored Procedures\spProgramInsert.sql" />
     <Build Include="dbo\Stored Procedures\spProgramRemoveAt.sql" />
+    <Build Include="dbo\VIews\Program_Workouts.sql" />
+    <Build Include="dbo\Stored Procedures\spWorkoutLookupByProgramId.sql" />
+    <Build Include="dbo\Stored Procedures\spWorkoutInsert.sql" />
+    <Build Include="dbo\Stored Procedures\spWorkoutRemoveAt.sql" />
+    <Build Include="dbo\Stored Procedures\spWorkoutProgramsInsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WPlannerData.refactorlog" />

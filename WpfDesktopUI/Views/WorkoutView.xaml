@@ -52,7 +52,7 @@
 
         <Button x:Name="ViewSelected" Grid.Row="2" Grid.Column="2" 
                 Margin="20 20 10 10" Padding="10">
-            View Selected
+            View Workout
         </Button>
 
         <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="2">
@@ -74,14 +74,14 @@
 
             <Button x:Name="AddNew"  
                 Margin="20 10 10 10" Padding="10">
-                Add New
+                Add New Workout
             </Button>
 
         </StackPanel>
 
         <Button x:Name="RemoveSelected" Grid.Row="4" Grid.Column="3" 
                 Margin="20 60 10 10" Padding="10" Background="Red">
-            Remove Selected
+            Remove Workout
         </Button>
 
         <Button x:Name="GoBack" Grid.Row="4" Grid.Column="2" 

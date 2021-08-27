@@ -200,7 +200,11 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
                 await events.PublishOnUIThreadAsync(
-                    new GoWorkoutAddViewEvent { ProgramId = ProgramId, ProgramName = ViewTitle });
+                    new GoWorkoutAddViewEvent
+                    {
+                        ProgramId = ProgramId,
+                        ProgramName = ViewTitle
+                    });
             }
             catch (Exception ex)
             {
@@ -243,7 +247,17 @@ namespace WpfDesktopUI.ViewModels
                 int index1 = WorkoutListBox.IndexOf(SelectedWorkout);
                 int index2 = index1 - 1;
 
-                Helper.Swap(WorkoutListBox, index1, index2);
+                int dbIndex1 = WorkoutListBox[index1].WorkoutProgramId;
+                int dbIndex2 = WorkoutListBox[index2].WorkoutProgramId;
+
+                int dbOrder1 = WorkoutListBox[index1].WorkoutOrder;
+                int dbOrder2 = WorkoutListBox[index2].WorkoutOrder;
+
+                WorkoutData data = new WorkoutData();
+
+                data.SwapWorkoutProgramOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+                LoadItems();
             }
             catch (Exception ex)
             {

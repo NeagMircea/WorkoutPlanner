@@ -83,5 +83,21 @@ namespace DataAccess.Library.DataAccess
 
             sql.SaveData("dbo.spWorkoutProgramRemoveAt", p, "WPlannerData");
         }
+
+
+        public void SwapWorkoutProgramOrder(int workoutOneId, int workoutOneOrder, int workoutTwoId, int workoutTwoOrder)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                WorkoutOneId = workoutOneId,
+                WorkoutOneOrder = workoutOneOrder,
+                WorkoutTwoId = workoutTwoId,
+                WorkoutTwoOrder = workoutTwoOrder
+            };
+
+            sql.SaveData("dbo.spWorkoutProgramSwapOrder", p, "WPlannerData");
+        }
     }
 }

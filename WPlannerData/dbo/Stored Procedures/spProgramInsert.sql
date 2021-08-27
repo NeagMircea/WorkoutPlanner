@@ -10,5 +10,4 @@ BEGIN
 	UPDATE [dbo].[Programs]
 	SET [ProgramOrder] = SCOPE_IDENTITY()
 	WHERE [Id] = SCOPE_IDENTITY();
-
 END;

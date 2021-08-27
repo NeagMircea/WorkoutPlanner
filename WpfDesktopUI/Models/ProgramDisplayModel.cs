@@ -32,5 +32,7 @@ namespace WpfDesktopUI.Models
         //{
         //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         //}
+
+        public int ProgramOrder { get; set; }
     }
 }

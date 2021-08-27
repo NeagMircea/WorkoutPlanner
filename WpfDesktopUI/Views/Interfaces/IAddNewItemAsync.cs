@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WpfDesktopUI.Views.Interfaces
 {
-    public interface IAddItem
+    public interface IAddNewItemAsync
     {
         bool CanAddNew { get; }
-        void AddNew();
+        Task AddNew();
     }
 }

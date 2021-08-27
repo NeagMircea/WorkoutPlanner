@@ -6,5 +6,5 @@ BEGIN
 
 	DELETE 
 	FROM [dbo].[Workouts]
-	WHERE [Id] = @Id; 
+	WHERE [WorkoutId] = @Id; 
 END;

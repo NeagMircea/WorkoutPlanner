@@ -10,5 +10,6 @@ namespace DataAccess.Library.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int ProgramOrder { get; set; }
     }
 }

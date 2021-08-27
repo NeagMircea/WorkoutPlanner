@@ -35,11 +35,13 @@ namespace DataAccess.Library.DataAccess
         }
 
 
-        public void SaveProgramRecord(ProgramModel program)
+        public void SaveProgramRecord(string name)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
-            sql.SaveData("dbo.spProgramInsert", program, "WPlannerData");
+            var p = new { Name = name };
+
+            sql.SaveData("dbo.spProgramInsert", p, "WPlannerData");
         }
 
 
@@ -50,6 +52,22 @@ namespace DataAccess.Library.DataAccess
             var p = new { Id = id };
 
             sql.SaveData("dbo.spProgramRemoveAt", p, "WPlannerData");
+        }
+
+
+        public void SwapProgramOrder(int programOneId, int programOneOrder, int programTwoId, int programTwoOrder)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                ProgramOneId = programOneId,
+                ProgramOneOrder = programOneOrder,
+                ProgramTwoId = programTwoId,
+                ProgramTwoOrder = programTwoOrder
+            };
+
+            sql.SaveData("dbo.spProgramSwapOrder", p, "WPlannerData");
         }
     }
 }

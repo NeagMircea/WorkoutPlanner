@@ -3,6 +3,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT [Id], [Name] 
-	FROM [dbo].[Programs];
+	SELECT [Id], [Name], [ProgramOrder]
+	FROM [dbo].[Programs]
+	ORDER BY [ProgramOrder];
 END;

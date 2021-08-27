@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [dbo].[spProgramInsert]
-	@Id INT = 0,
 	@Name VARCHAR(100)
 AS
 BEGIN
@@ -7,5 +6,9 @@ BEGIN
 
 	INSERT INTO [dbo].[Programs]([Name])
 	VALUES(@Name);
+
+	UPDATE [dbo].[Programs]
+	SET [ProgramOrder] = SCOPE_IDENTITY()
+	WHERE [Id] = SCOPE_IDENTITY();
 
 END;

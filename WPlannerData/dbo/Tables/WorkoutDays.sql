@@ -4,7 +4,7 @@
     [fk_WorkoutId] INT NOT NULL, 
     [fk_DayId] INT NOT NULL, 
 
-    CONSTRAINT [FK_WorkoutDays_ToWorkouts] FOREIGN KEY ([fk_WorkoutId]) REFERENCES [Workouts]([Id])
+    CONSTRAINT [FK_WorkoutDays_ToWorkouts] FOREIGN KEY ([fk_WorkoutId]) REFERENCES [Workouts]([WorkoutId])
 	ON UPDATE NO ACTION ON DELETE CASCADE, 
 
     CONSTRAINT [FK_WorkoutDays_ToDays] FOREIGN KEY ([fk_DayId]) REFERENCES [Days]([Id])

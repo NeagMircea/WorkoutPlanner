@@ -6,7 +6,7 @@ AS
 BEGIN 
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Workouts]([Name])
+	INSERT INTO [dbo].[Workouts]([WorkoutName])
 	VALUES(@Name);
 
 	SELECT @Id = SCOPE_IDENTITY();

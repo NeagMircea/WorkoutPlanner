@@ -64,33 +64,12 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        private string newWorkoutName;
-        public string NewWorkoutName
-        {
-            get
-            {
-                return newWorkoutName;
-            }
-            set
-            {
-                newWorkoutName = value;
-                NotifyOfPropertyChange(() => NewWorkoutName);
-                NotifyOfPropertyChange(() => CanAddNew);
-            }
-        }
 
         public bool CanAddNew
         {
             get
             {
-                bool output = false;
-
-                if (NewWorkoutName?.Length > 0)
-                {
-                    output = true;
-                }
-
-                return output;
+                return true;
             }
         }
 
@@ -215,16 +194,13 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public void AddNew()
+        public async Task AddNew()
         {
             try
             {
                 ErrorMessage = "";
-
-                WorkoutData data = new WorkoutData();
-                data.SaveWorkoutRecord(ProgramId, NewWorkoutName);
-
-                LoadItems();
+                await events.PublishOnUIThreadAsync(
+                    new GoWorkoutAddViewEvent { ProgramId = ProgramId, ProgramName = ViewTitle });
             }
             catch (Exception ex)
             {
@@ -240,7 +216,7 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = "";
 
                 WorkoutData data = new WorkoutData();
-                data.DeleteWorkoutRecord(SelectedWorkout.WorkoutId);
+                data.RemoveWorkoutFromProgram(ProgramId, SelectedWorkout.WorkoutId);
 
                 LoadItems();            
             }
@@ -300,7 +276,7 @@ namespace WpfDesktopUI.ViewModels
             try
             {
                 ErrorMessage = "";
-                await events.PublishOnUIThreadAsync(new ActivateProgramViewEvent());
+                await events.PublishOnUIThreadAsync(new GoProgramViewEvent());
             }
             catch (Exception ex)
             {

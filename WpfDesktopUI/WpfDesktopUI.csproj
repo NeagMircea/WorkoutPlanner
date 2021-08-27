@@ -77,8 +77,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="EventModels\ActivateProgramViewEvent.cs" />
-    <Compile Include="EventModels\SelectProgramEvent.cs" />
+    <Compile Include="EventModels\GoProgramViewEvent.cs" />
+    <Compile Include="EventModels\GoWorkoutAddViewEvent.cs" />
+    <Compile Include="EventModels\GoWorkoutViewEvent.cs" />
     <Compile Include="EventModels\TestEvent.cs" />
     <Compile Include="Models\CategoryDisplayModel.cs" />
     <Compile Include="Models\ProgramDisplayModel.cs" />
@@ -86,10 +87,14 @@
     <Compile Include="ViewModels\ProgramViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutAddViewModel.cs" />
     <Compile Include="ViewModels\WorkoutViewModel.cs" />
+    <Compile Include="Views\Interfaces\Composite\IAddView.cs" />
     <Compile Include="Views\Interfaces\Composite\IDefaultView.cs" />
     <Compile Include="Views\Interfaces\Composite\IStartView.cs" />
-    <Compile Include="Views\Interfaces\IAddItem.cs" />
+    <Compile Include="Views\Interfaces\IAddNewItem.cs" />
+    <Compile Include="Views\Interfaces\IAddNewItemAsync.cs" />
+    <Compile Include="Views\Interfaces\IAddSelectedItem.cs" />
     <Compile Include="Views\Interfaces\IGoBack.cs" />
     <Compile Include="Views\Interfaces\IHasError.cs" />
     <Compile Include="Views\Interfaces\IHasItems.cs" />
@@ -110,6 +115,9 @@
     <Compile Include="Views\TestView.xaml.cs">
       <DependentUpon>TestView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WorkoutAddView.xaml.cs">
+      <DependentUpon>WorkoutAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorkoutView.xaml.cs">
       <DependentUpon>WorkoutView.xaml</DependentUpon>
     </Compile>
@@ -122,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorkoutAddView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

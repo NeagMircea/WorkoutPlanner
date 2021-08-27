@@ -2,7 +2,6 @@
 using Caliburn.Micro;
 using DataAccess.Library.DataAccess;
 using DataAccess.Library.Models;
-using HelperLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -147,7 +146,17 @@ namespace WpfDesktopUI.ViewModels
                 int index1 = ProgramListBox.IndexOf(SelectedProgram);
                 int index2 = index1 - 1;
 
-                Helper.Swap(ProgramListBox, index1, index2);
+                int dbIndex1 = ProgramListBox[index1].Id;
+                int dbIndex2 = ProgramListBox[index2].Id;
+
+                int dbOrder1 = ProgramListBox[index1].ProgramOrder;
+                int dbOrder2 = ProgramListBox[index2].ProgramOrder;
+
+                ProgramData data = new ProgramData();
+
+                data.SwapProgramOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+                LoadItems();
             }
             catch (Exception ex)
             {
@@ -182,7 +191,17 @@ namespace WpfDesktopUI.ViewModels
                 int index1 = ProgramListBox.IndexOf(SelectedProgram);
                 int index2 = index1 + 1;
 
-                Helper.Swap(ProgramListBox, index1, index2);
+                int dbIndex1 = ProgramListBox[index1].Id;
+                int dbIndex2 = ProgramListBox[index2].Id;
+
+                int dbOrder1 = ProgramListBox[index1].ProgramOrder;
+                int dbOrder2 = ProgramListBox[index2].ProgramOrder;
+
+                ProgramData data = new ProgramData();
+
+                data.SwapProgramOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+                LoadItems();
 
             }
             catch (Exception ex)
@@ -215,7 +234,7 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = "";
 
                 ProgramData data = new ProgramData();
-                data.SaveProgramRecord(new ProgramModel { Name = NewProgramName });
+                data.SaveProgramRecord(NewProgramName);
 
                 LoadItems();
             }
@@ -282,7 +301,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
                 await events.PublishOnUIThreadAsync(
-                    new SelectProgramEvent { Id = SelectedProgram.Id, ProgramName = SelectedProgram.Name});
+                    new GoWorkoutViewEvent { ProgramId = SelectedProgram.Id, ProgramName = SelectedProgram.Name});
             }
             catch (Exception ex)
             {

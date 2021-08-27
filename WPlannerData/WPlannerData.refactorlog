@@ -7,4 +7,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Duration(minutes)" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="90ec5baf-13be-4a43-8282-649e8fad5aa0" ChangeDateTime="08/26/2021 15:23:46">
+    <Property Name="ElementName" Value="[dbo].[Workouts].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Workouts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WorkoutName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="53822d7b-efac-4bba-8956-9df94d43d392" ChangeDateTime="08/26/2021 15:28:35">
+    <Property Name="ElementName" Value="[dbo].[Workouts].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Workouts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WorkoutId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8cafb85e-2da8-4e5c-a87e-ad2e9167e7c5" ChangeDateTime="08/26/2021 19:20:47">
+    <Property Name="ElementName" Value="[dbo].[Programs].[fk_ProgramOrder]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Programs]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ProgramOrder" />
+  </Operation>
 </Operations>

@@ -12,6 +12,45 @@ namespace DataAccess.Library.DataAccess
 {
     public class WorkoutData
     {
+        public List<WorkoutModel> GetAllWorkouts()
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var output =
+            sql.LoadData<WorkoutModel, dynamic>("dbo.spWorkoutGetAll", new { }, "WPlannerData");
+
+            return output;
+        }
+
+
+        public void DeleteWorkoutRecord(int id)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new { Id = id };
+
+            sql.SaveData("dbo.spWorkoutRemoveAt", p, "WPlannerData");
+        }
+
+
+        public void SaveWorkoutRecord(string workoutName)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new DynamicParameters();
+            p.Add("@Name", workoutName);
+            p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+            sql.SaveData("dbo.spWorkoutInsert", p, "WPlannerData");
+
+            //int workoutId = p.Get<int>("@Id");
+
+            //var r = new { ProgramId = programId, WorkoutId = workoutId };
+
+            //sql.SaveData("dbo.spWorkoutProgramsInsert", r, "WPlannerData");
+        }
+
+
         public List<WorkoutModel> GetWorkoutsByProgramId(int id)
         {
             SqlDataAccess sql = new SqlDataAccess();
@@ -25,31 +64,24 @@ namespace DataAccess.Library.DataAccess
         }
 
 
-        public void SaveWorkoutRecord(int programId, string workoutName)
+        public void AddWorkoutToProgram(int programId, int workoutId)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
-            var p = new DynamicParameters();
-            p.Add("@Name", workoutName);
-            p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+            var p = new { ProgramId = programId, WorkoutId = workoutId };
 
-            sql.SaveData("dbo.spWorkoutInsert", p, "WPlannerData");
+            sql.SaveData("dbo.spWorkoutProgramsInsert", p, "WPlannerData");
 
-            int workoutId = p.Get<int>("@Id");
-
-            var r = new { ProgramId = programId, WorkoutId = workoutId };
-
-            sql.SaveData("dbo.spWorkoutProgramsInsert", r, "WPlannerData");
         }
 
 
-        public void DeleteWorkoutRecord(int id)
+        public void RemoveWorkoutFromProgram(int programId, int workoutId)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
-            var p = new { Id = id };
+            var p = new { ProgramId = programId, WorkoutId = workoutId };
 
-            sql.SaveData("dbo.spWorkoutRemoveAt", p, "WPlannerData");
+            sql.SaveData("dbo.spWorkoutProgramRemoveAt", p, "WPlannerData");
         }
     }
 }

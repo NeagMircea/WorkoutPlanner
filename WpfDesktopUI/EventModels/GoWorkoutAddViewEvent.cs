@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WpfDesktopUI.EventModels
 {
-    public class SelectProgramEvent
+    public class GoWorkoutAddViewEvent
     {
-        public int Id { get; set; }
+        public int ProgramId { get; set; }
         public string ProgramName { get; set; }
     }
 }

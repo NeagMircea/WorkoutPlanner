@@ -9,17 +9,16 @@ using WpfDesktopUI.EventModels;
 
 namespace WpfDesktopUI.ViewModels
 {
-    public class ShellViewModel : Conductor<object>, IHandle<SelectProgramEvent>, IHandle<ActivateProgramViewEvent>
+    public class ShellViewModel : Conductor<object>, IHandle<GoWorkoutViewEvent>, IHandle<GoProgramViewEvent>,
+        IHandle<GoWorkoutAddViewEvent>
     {
         private IEventAggregator events;
         private SimpleContainer container;
-        //private WorkoutViewModel workoutVM;
 
         //constructor injection
-        public ShellViewModel(IEventAggregator events, /*WorkoutViewModel workoutVM,*/ SimpleContainer container)
+        public ShellViewModel(IEventAggregator events, SimpleContainer container)
         {
             this.events = events;
-            //this.workoutVM = workoutVM;
             this.container = container;
 
             ActivateItemAsync(container.GetInstance<ProgramViewModel>());
@@ -27,22 +26,33 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public async Task HandleAsync(SelectProgramEvent message, CancellationToken cancellationToken)
+        public async Task HandleAsync(GoWorkoutViewEvent message, CancellationToken cancellationToken)
         {
             WorkoutViewModel workoutVM = container.GetInstance<WorkoutViewModel>();
 
-            workoutVM.ProgramId = message.Id;
+            workoutVM.ProgramId = message.ProgramId;
             workoutVM.ViewTitle = message.ProgramName;
 
             await ActivateItemAsync(workoutVM);
         }
 
 
-        public async Task HandleAsync(ActivateProgramViewEvent message, CancellationToken cancellationToken)
+        public async Task HandleAsync(GoProgramViewEvent message, CancellationToken cancellationToken)
         {
             ProgramViewModel programVM = container.GetInstance<ProgramViewModel>();
 
             await ActivateItemAsync(programVM);
+        }
+
+
+        public async Task HandleAsync(GoWorkoutAddViewEvent message, CancellationToken cancellationToken)
+        {
+            WorkoutAddViewModel workoutAddVM = container.GetInstance<WorkoutAddViewModel>();
+
+            workoutAddVM.ProgramId = message.ProgramId;
+            workoutAddVM.ViewTitle = message.ProgramName;
+
+            await ActivateItemAsync(workoutAddVM);
         }
     }
 }

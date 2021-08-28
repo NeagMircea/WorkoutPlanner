@@ -84,6 +84,7 @@
     <Compile Include="Models\CategoryDisplayModel.cs" />
     <Compile Include="Models\ProgramDisplayModel.cs" />
     <Compile Include="Models\WorkoutDisplayModel.cs" />
+    <Compile Include="Models\WorkoutProgramDisplayModel.cs" />
     <Compile Include="ViewModels\ProgramViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />

@@ -250,7 +250,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                WorkoutData data = new WorkoutData();
+                WorkoutProgramData data = new WorkoutProgramData();
                 data.AddWorkoutToProgram(ProgramId, SelectedWorkout.WorkoutId);
 
                 LoadItems();
@@ -291,7 +291,17 @@ namespace WpfDesktopUI.ViewModels
                 int index1 = ExistingWorkouts.IndexOf(SelectedWorkout);
                 int index2 = index1 - 1;
 
-                Helper.Swap(ExistingWorkouts, index1, index2);
+                int dbIndex1 = ExistingWorkouts[index1].WorkoutId;
+                int dbIndex2 = ExistingWorkouts[index2].WorkoutId;
+
+                int dbOrder1 = ExistingWorkouts[index1].WorkoutOrder;
+                int dbOrder2 = ExistingWorkouts[index2].WorkoutOrder;
+
+                WorkoutData data = new WorkoutData();
+
+                data.SwapWorkoutOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+                LoadItems();
             }
             catch (Exception ex)
             {
@@ -309,7 +319,17 @@ namespace WpfDesktopUI.ViewModels
                 int index1 = ExistingWorkouts.IndexOf(SelectedWorkout);
                 int index2 = index1 + 1;
 
-                Helper.Swap(ExistingWorkouts, index1, index2);
+                int dbIndex1 = ExistingWorkouts[index1].WorkoutId;
+                int dbIndex2 = ExistingWorkouts[index2].WorkoutId;
+
+                int dbOrder1 = ExistingWorkouts[index1].WorkoutOrder;
+                int dbOrder2 = ExistingWorkouts[index2].WorkoutOrder;
+
+                WorkoutData data = new WorkoutData();
+
+                data.SwapWorkoutOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+                LoadItems();
 
             }
             catch (Exception ex)

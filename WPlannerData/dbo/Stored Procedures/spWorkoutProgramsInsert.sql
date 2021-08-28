@@ -7,6 +7,6 @@ BEGIN
 	VALUES(@ProgramId, @WorkoutId);
 
 	UPDATE [dbo].[WorkoutPrograms]
-	SET [WorkoutOrder] = SCOPE_IDENTITY()
+	SET [WorkoutProgramOrder] = SCOPE_IDENTITY()
 	WHERE [Id] = SCOPE_IDENTITY();
 END;

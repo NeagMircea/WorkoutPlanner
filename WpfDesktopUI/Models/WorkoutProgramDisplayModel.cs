@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace WpfDesktopUI.Models
 {
-    public class WorkoutDisplayModel
+    public class WorkoutProgramDisplayModel
     {
         public int WorkoutId { get; set; }
         public string WorkoutName { get; set; }
-        public int WorkoutOrder { get; set; }
+        public int WorkoutProgramId { get; set; }
+        public int WorkoutProgramOrder { get; set; }
     }
 }

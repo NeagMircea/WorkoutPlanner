@@ -11,6 +11,5 @@ namespace DataAccess.Library.Models
         public int WorkoutId { get; set; }
         public string WorkoutName { get; set; }
         public int WorkoutOrder { get; set; }
-        public int WorkoutProgramId { get; set; }
     }
 }

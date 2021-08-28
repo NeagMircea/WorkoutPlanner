@@ -8,10 +8,10 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[WorkoutPrograms]
-	SET [WorkoutOrder] = @WorkoutTwoOrder
+	SET [WorkoutProgramOrder] = @WorkoutTwoOrder
 	WHERE [Id] = @WorkoutOneId;
 
 	UPDATE [dbo].[WorkoutPrograms]
-	SET [WorkoutOrder] = @WorkoutOneOrder
+	SET [WorkoutProgramOrder] = @WorkoutOneOrder
 	WHERE [Id] = @WorkoutTwoId;
 END;

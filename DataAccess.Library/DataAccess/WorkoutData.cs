@@ -51,41 +51,7 @@ namespace DataAccess.Library.DataAccess
         }
 
 
-        public List<WorkoutModel> GetWorkoutsByProgramId(int id)
-        {
-            SqlDataAccess sql = new SqlDataAccess();
-
-            var p = new { ProgramId = id };
-
-            var output = 
-                sql.LoadData<WorkoutModel, dynamic>("dbo.spWorkoutLookupByProgramId", p, "WPlannerData");
-
-            return output;
-        }
-
-
-        public void AddWorkoutToProgram(int programId, int workoutId)
-        {
-            SqlDataAccess sql = new SqlDataAccess();
-
-            var p = new { ProgramId = programId, WorkoutId = workoutId };
-
-            sql.SaveData("dbo.spWorkoutProgramsInsert", p, "WPlannerData");
-
-        }
-
-
-        public void RemoveWorkoutFromProgram(int programId, int workoutId)
-        {
-            SqlDataAccess sql = new SqlDataAccess();
-
-            var p = new { ProgramId = programId, WorkoutId = workoutId };
-
-            sql.SaveData("dbo.spWorkoutProgramRemoveAt", p, "WPlannerData");
-        }
-
-
-        public void SwapWorkoutProgramOrder(int workoutOneId, int workoutOneOrder, int workoutTwoId, int workoutTwoOrder)
+        public void SwapWorkoutOrder(int workoutOneId, int workoutOneOrder, int workoutTwoId, int workoutTwoOrder)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
@@ -97,7 +63,7 @@ namespace DataAccess.Library.DataAccess
                 WorkoutTwoOrder = workoutTwoOrder
             };
 
-            sql.SaveData("dbo.spWorkoutProgramSwapOrder", p, "WPlannerData");
+            sql.SaveData("dbo.spWorkoutSwapOrder", p, "WPlannerData");
         }
     }
 }

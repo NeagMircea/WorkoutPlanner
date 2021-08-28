@@ -3,7 +3,7 @@
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [fk_ProgramId] INT NOT NULL, 
     [fk_WorkoutId] INT NOT NULL, 
-    [WorkoutOrder] INT NULL, 
+    [WorkoutProgramOrder] INT NULL, 
 
     CONSTRAINT [FK_WorkoutPrograms_ToWorkouts] FOREIGN KEY ([fk_WorkoutId]) REFERENCES [Workouts]([WorkoutId])
 	ON UPDATE NO ACTION ON DELETE CASCADE, 

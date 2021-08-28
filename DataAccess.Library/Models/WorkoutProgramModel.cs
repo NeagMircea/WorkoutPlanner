@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfDesktopUI.Models
-{
-    public class WorkoutDisplayModel
+namespace DataAccess.Library.Models
+{   
+    public class WorkoutProgramModel
     {
         public int WorkoutId { get; set; }
         public string WorkoutName { get; set; }
-        public int WorkoutOrder { get; set; }
+        public int WorkoutProgramId { get; set; }
+        public int WorkoutProgramOrder { get; set; }
     }
 }

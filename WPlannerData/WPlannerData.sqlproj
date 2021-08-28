@@ -91,6 +91,7 @@
     <Build Include="dbo\Stored Procedures\spWorkoutProgramRemoveAt.sql" />
     <Build Include="dbo\Stored Procedures\spProgramSwapOrder.sql" />
     <Build Include="dbo\Stored Procedures\spWorkoutProgramSwapOrder.sql" />
+    <Build Include="dbo\Stored Procedures\spWorkoutSwapOrder.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WPlannerData.refactorlog" />

@@ -4,5 +4,6 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT *
-	FROM [dbo].[Workouts];
+	FROM [dbo].[Workouts]
+	ORDER BY [WorkoutOrder];
 END;

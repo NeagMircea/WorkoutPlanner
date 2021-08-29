@@ -233,8 +233,23 @@ namespace WpfDesktopUI.ViewModels
 
         public async Task ViewSelected()
         {
-            //TODO implement this 
-            await TryCloseAsync();
+            try
+            {
+                ErrorMessage = "";
+                await events.PublishOnUIThreadAsync(
+                    new GoExerciseViewEvent
+                    {
+                        ProgramId = this.ProgramId,
+                        ProgramName = ViewTitle,
+                        WorkoutId = SelectedWorkout.WorkoutId,
+                        WorkoutName = SelectedWorkout.WorkoutName
+                    });
+            }
+            catch (Exception ex)
+            {
+
+                ErrorMessage = ex.Message;
+            }
         }
 
 

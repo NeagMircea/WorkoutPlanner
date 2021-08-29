@@ -1,7 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spWorkoutInsert]
-	@Name VARCHAR(100),
-	@Id INT OUTPUT
-	
+	@Name VARCHAR(100)
+	--@Id INT OUTPUT	
 AS
 BEGIN 
 	SET NOCOUNT ON;
@@ -9,10 +8,14 @@ BEGIN
 	INSERT INTO [dbo].[Workouts]([WorkoutName])
 	VALUES(@Name);
 
+	DECLARE @scopeId INT;
+	SET @scopeId = SCOPE_IDENTITY();
+
 	UPDATE [dbo].[Workouts]
-	SET [WorkoutOrder] = SCOPE_IDENTITY()
-	WHERE [WorkoutId] = SCOPE_IDENTITY();
+	SET [WorkoutOrder] = @scopeId
+	WHERE [WorkoutId] = @scopeId
 
-	SELECT @Id = SCOPE_IDENTITY();
+	EXECUTE spWorkoutDaysInsert @WorkoutId = @scopeId;
 
+	--SELECT @Id = SCOPE_IDENTITY();
 END

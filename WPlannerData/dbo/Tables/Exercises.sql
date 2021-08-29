@@ -5,6 +5,6 @@
     [VideoPath] NVARCHAR(200) NULL, 
     [Sets] INT NULL DEFAULT 0, 
     [Reps] INT NULL DEFAULT 0, 
-    [Duration(minutes)] FLOAT NULL DEFAULT 0,
+    [Duration] FLOAT NULL DEFAULT 0,
 
 )

@@ -39,7 +39,7 @@ namespace DataAccess.Library.DataAccess
 
             var p = new DynamicParameters();
             p.Add("@Name", workoutName);
-            p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+            //p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             sql.SaveData("dbo.spWorkoutInsert", p, "WPlannerData");
 

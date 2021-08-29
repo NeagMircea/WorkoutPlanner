@@ -35,4 +35,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="WorkoutProgramOrder" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="eb3c2d4c-ae17-459c-a803-c18a21832d5e" ChangeDateTime="08/29/2021 15:43:17">
+    <Property Name="ElementName" Value="[dbo].[Exercises].[Duration(minutes)]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Exercises]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Duration\" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2a1eaefa-ffd1-482c-97f3-ccd67b3f8a92" ChangeDateTime="08/29/2021 15:43:19">
+    <Property Name="ElementName" Value="[dbo].[Exercises].[Duration\]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Exercises]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Duration" />
+  </Operation>
 </Operations>

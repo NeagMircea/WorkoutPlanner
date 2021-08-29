@@ -1,0 +1,8 @@
+﻿CREATE PROCEDURE [dbo].[spDaysGetAll]
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT [Id], [Name]
+	FROM [Days];
+END

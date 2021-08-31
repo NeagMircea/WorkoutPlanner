@@ -15,7 +15,7 @@ BEGIN
 	SET [WorkoutOrder] = @scopeId
 	WHERE [WorkoutId] = @scopeId
 
-	EXECUTE spWorkoutDaysInsert @WorkoutId = @scopeId;
+	--EXECUTE spWorkoutDaysInsert @WorkoutId = @scopeId;
 
 	--SELECT @Id = SCOPE_IDENTITY();
 END

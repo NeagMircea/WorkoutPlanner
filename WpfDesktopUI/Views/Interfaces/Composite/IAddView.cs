@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WpfDesktopUI.Views.Interfaces.Composite
 {
     public interface IAddView : IHasItems, IAddNewItem, IAddSelectedItem, IRemoveItem,
-        IHasError, IMoveItem, IGoBack
+        IHasError, IGoBack
     {
     }
 }

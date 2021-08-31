@@ -10,7 +10,7 @@ using WpfDesktopUI.EventModels;
 namespace WpfDesktopUI.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<GoWorkoutViewEvent>, IHandle<GoProgramViewEvent>,
-        IHandle<GoWorkoutAddViewEvent>, IHandle<GoExerciseViewEvent>
+        IHandle<GoWorkoutAddViewEvent>, IHandle<GoExerciseViewEvent>, IHandle<GoExerciseAddViewEvent>
     {
         private IEventAggregator events;
         private SimpleContainer container;
@@ -66,6 +66,21 @@ namespace WpfDesktopUI.ViewModels
             exerciseVM.WorkoutEventData.WorkoutName = message.WorkoutName;
 
             await ActivateItemAsync(exerciseVM);
+        }
+
+        public async Task HandleAsync(GoExerciseAddViewEvent message, CancellationToken cancellationToken)
+        {
+            ExerciseAddViewModel exerciseAddVM = container.GetInstance<ExerciseAddViewModel>();
+
+            exerciseAddVM.ProgramEventData.Id = message.ProgramId;
+
+            exerciseAddVM.WorkoutEventData.WorkoutId = message.WorkoutId;
+            exerciseAddVM.WorkoutEventData.WorkoutName = message.WorkoutName;
+
+            exerciseAddVM.DayEventData.DayId = message.DayId;
+            exerciseAddVM.DayEventData.DayName = message.DayName;
+            
+            await ActivateItemAsync(exerciseAddVM);
         }
     }
 }

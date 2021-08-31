@@ -9,18 +9,18 @@ namespace WpfDesktopUI.Models
 {
     public class CategoryDisplayModel /*: INotifyPropertyChanged*/
     {
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
 
-        private string name;
-        public string Name
+        private string categoryName;
+        public string CategoryName
         {
             get
             {
-                return name;
+                return categoryName;
             }
             set
             {
-                name = value;
+                categoryName = value;
                 //CallPropertyChanged(nameof(Name));
             }
         }

@@ -71,7 +71,6 @@
     <Build Include="dbo\Tables\Categories.sql" />
     <Build Include="dbo\Tables\ExercisesCategories.sql" />
     <Build Include="dbo\Tables\Days.sql" />
-    <Build Include="dbo\Tables\WorkoutDays.sql" />
     <Build Include="dbo\Tables\Workouts.sql" />
     <Build Include="dbo\Tables\Programs.sql" />
     <Build Include="dbo\Tables\WorkoutPrograms.sql" />
@@ -91,10 +90,15 @@
     <Build Include="dbo\Stored Procedures\spProgramSwapOrder.sql" />
     <Build Include="dbo\Stored Procedures\spWorkoutProgramSwapOrder.sql" />
     <Build Include="dbo\Stored Procedures\spWorkoutSwapOrder.sql" />
-    <Build Include="dbo\Tables\WorkoutExercises.sql" />
-    <Build Include="dbo\Stored Procedures\spWorkoutDaysInsert.sql" />
-    <Build Include="dbo\Stored Procedures\spWorkoutExercisesInsert.sql" />
     <Build Include="dbo\Stored Procedures\spDaysGetAll.sql" />
+    <Build Include="dbo\Stored Procedures\spExercisesGetAll.sql" />
+    <Build Include="dbo\Stored Procedures\spExercisesGetByCategoryId.sql" />
+    <Build Include="dbo\VIews\Exercise_Categories.sql" />
+    <Build Include="dbo\Tables\WorkoutDayExercises.sql" />
+    <Build Include="dbo\VIews\Workout_Day_Exercises.sql" />
+    <Build Include="dbo\Stored Procedures\spExerciseInsert.sql" />
+    <Build Include="dbo\Stored Procedures\spExerciseRemoveAt.sql" />
+    <Build Include="dbo\Stored Procedures\spWorkoutDayExercisesInsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WPlannerData.refactorlog" />

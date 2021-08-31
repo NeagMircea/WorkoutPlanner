@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\CategoryData.cs" />
     <Compile Include="DataAccess\DayData.cs" />
+    <Compile Include="DataAccess\ExerciseData.cs" />
     <Compile Include="DataAccess\Internal\SqlDataAccess.cs" />
     <Compile Include="DataAccess\ProgramData.cs" />
     <Compile Include="DataAccess\WorkoutData.cs" />

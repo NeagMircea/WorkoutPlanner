@@ -77,6 +77,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="EventModels\GoExerciseAddViewEvent.cs" />
     <Compile Include="EventModels\GoExerciseViewEvent.cs" />
     <Compile Include="EventModels\GoProgramViewEvent.cs" />
     <Compile Include="EventModels\GoWorkoutAddViewEvent.cs" />
@@ -88,12 +89,16 @@
     <Compile Include="Models\ProgramDisplayModel.cs" />
     <Compile Include="Models\WorkoutDisplayModel.cs" />
     <Compile Include="Models\WorkoutProgramDisplayModel.cs" />
+    <Compile Include="ViewModels\ExerciseAddViewModel.cs" />
     <Compile Include="ViewModels\ExerciseViewModel.cs" />
     <Compile Include="ViewModels\ProgramViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
     <Compile Include="ViewModels\WorkoutAddViewModel.cs" />
     <Compile Include="ViewModels\WorkoutViewModel.cs" />
+    <Compile Include="Views\ExerciseAddView.xaml.cs">
+      <DependentUpon>ExerciseAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExerciseView.xaml.cs">
       <DependentUpon>ExerciseView.xaml</DependentUpon>
     </Compile>
@@ -129,6 +134,10 @@
     <Compile Include="Views\WorkoutView.xaml.cs">
       <DependentUpon>WorkoutView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\ExerciseAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ExerciseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

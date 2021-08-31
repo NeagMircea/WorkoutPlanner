@@ -16,7 +16,7 @@ using WpfDesktopUI.Views.Interfaces.Composite;
 
 namespace WpfDesktopUI.ViewModels
 {
-    public class WorkoutAddViewModel : Screen, IAddView
+    public class WorkoutAddViewModel : Screen, IAddView, IMoveItem
     {
         public string ViewTitle { get; set; }
 

@@ -8,7 +8,7 @@ namespace DataAccess.Library.Models
 {
     public class DayModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int DayId { get; set; }
+        public string DayName { get; set; }
     }
 }

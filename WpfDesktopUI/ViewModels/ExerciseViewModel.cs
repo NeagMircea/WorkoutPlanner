@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfDesktopUI.EventModels;
 using WpfDesktopUI.Models;
 using WpfDesktopUI.Views.Interfaces.Composite;
 
@@ -57,6 +58,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 selectedExercise = value;
                 NotifyOfPropertyChange(() => SelectedExercise);
+                NotifyOfPropertyChange(() => CanRemoveSelected);
+                
             }
         }
 
@@ -86,14 +89,23 @@ namespace WpfDesktopUI.ViewModels
             {
                 selectedDay = value;
                 NotifyOfPropertyChange(() => SelectedDay);
+                NotifyOfPropertyChange(() => CanAddNew);
+                
             }
         }
 
         public bool CanAddNew
         {
             get
-            { 
-                return true;
+            {
+                bool output = false;
+
+                if (SelectedDay != null)
+                {
+                    output = true;
+                }
+
+                return output;
             }
         }
 
@@ -103,7 +115,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (true)
+                if (SelectedExercise != null)
                 {
                     output = true;
                 }
@@ -224,9 +236,27 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public Task AddNew()
+        public async Task AddNew()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ErrorMessage = "";
+                await events.PublishOnUIThreadAsync(
+                    new GoExerciseAddViewEvent
+                    {
+                        ProgramId = ProgramEventData.Id,
+
+                        WorkoutId = WorkoutEventData.WorkoutId,
+                        WorkoutName = WorkoutEventData.WorkoutName,
+
+                        DayId = SelectedDay.DayId,
+                        DayName = SelectedDay.DayName
+                    });
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public Task GoBack()

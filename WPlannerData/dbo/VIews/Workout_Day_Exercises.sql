@@ -1,6 +1,6 @@
 ﻿CREATE VIEW [dbo].[Workout_Day_Exercises]
 	AS 
-	SELECT [Workouts].[WorkoutId], [Days].[DayId], [Exercises].*, [ExerciseOrder]
+	SELECT [WorkoutDayExercises].[Id], [Workouts].[WorkoutId], [Days].[DayId], [Exercises].*, [ExerciseOrder]
 	FROM [WorkoutDayExercises]
 
 	JOIN [Workouts] ON [WorkoutDayExercises].[fk_WorkoutId] = [Workouts].[WorkoutId]

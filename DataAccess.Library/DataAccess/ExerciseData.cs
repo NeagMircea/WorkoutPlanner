@@ -34,6 +34,23 @@ namespace DataAccess.Library.DataAccess
         }
 
 
+        public List<ExerciseModel> GetExercisesByWorkoutDayId(int workoutId, int dayId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                WorkoutId = workoutId,
+                DayId = dayId
+            };
+
+            var output =
+                sql.LoadData<ExerciseModel, dynamic>("dbo.spExercisesGetByWorkoutDayId", p, "WPlannerData");
+
+            return output;
+        }
+
+
         public void SaveExerciseRecord(ExerciseModel model, int categoryId)
         {
             SqlDataAccess sql = new SqlDataAccess();
@@ -76,5 +93,35 @@ namespace DataAccess.Library.DataAccess
             sql.SaveData("dbo.spExerciseRemoveAt", p, "WPlannerData");
         }
 
+
+        public void RemoveWorkoutDayExerciseRecord(int workoutId, int dayId, int exerciseId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                WorkoutId = workoutId,
+                DayId = dayId,
+                ExerciseId = exerciseId
+            };
+
+            sql.SaveData("dbo.spWorkoutDayExerciseRemoveAt", p, "WPlannerData");
+        }
+
+
+        public void SwapExerciseOrder(int idOne, int exerciseOneOrder, int idTwo, int exerciseTwoOrder)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                IdOne = idOne,
+                ExerciseOneOrder = exerciseOneOrder,
+                IdTwo = idTwo,
+                ExerciseTwoOrder = exerciseTwoOrder
+            };
+
+            sql.SaveData("dbo.spExercisesSwapOrder", p, "WPlannerData");
+        }
     }
 }

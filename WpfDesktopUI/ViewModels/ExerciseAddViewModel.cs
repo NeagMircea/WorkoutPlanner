@@ -36,7 +36,6 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-
         private BindingList<ExerciseDisplayModel> existingExercises;
         public BindingList<ExerciseDisplayModel> ExistingExercises
         {
@@ -93,6 +92,21 @@ namespace WpfDesktopUI.ViewModels
                 selectedCategory = value;
                 NotifyOfPropertyChange(() => SelectedCategory);
                 FilterExercisesByCategories();
+            }
+        }
+
+        private string newCategoryName;
+        public string NewCategoryName
+        {
+            get
+            {
+                return newCategoryName;
+            }
+            set
+            {
+                newCategoryName = value;
+                NotifyOfPropertyChange(() => NewCategoryName);
+                NotifyOfPropertyChange(() => CanAddNewCategory);
             }
         }
 
@@ -185,7 +199,6 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        //ExerciseDuration
         private string exerciseDuration = "Duration";
         public string ExerciseDuration
         {
@@ -220,7 +233,14 @@ namespace WpfDesktopUI.ViewModels
         {
             get
             {
-                return true;
+                bool output = false;
+
+                if (NewCategoryName?.Length > 0)
+                {
+                    output = true;
+                }
+
+                return output;
             }
         }
 
@@ -379,7 +399,10 @@ namespace WpfDesktopUI.ViewModels
 
         public void AddNewCategory()
         {
-            throw new NotImplementedException();
+            CategoryData data = new CategoryData();
+            data.SaveCategoryRecord(NewCategoryName);
+
+            LoadCategories();
         }
 
 

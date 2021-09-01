@@ -99,6 +99,10 @@
     <Build Include="dbo\Stored Procedures\spExerciseInsert.sql" />
     <Build Include="dbo\Stored Procedures\spExerciseRemoveAt.sql" />
     <Build Include="dbo\Stored Procedures\spWorkoutDayExercisesInsert.sql" />
+    <Build Include="dbo\Stored Procedures\spExercisesGetByWorkoutDayId.sql" />
+    <Build Include="dbo\Stored Procedures\spWorkoutDayExerciseRemoveAt.sql" />
+    <Build Include="dbo\Stored Procedures\spCategoryInsert.sql" />
+    <Build Include="dbo\Stored Procedures\spExercisesSwapOrder.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WPlannerData.refactorlog" />

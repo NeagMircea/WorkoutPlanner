@@ -59,7 +59,8 @@ namespace WpfDesktopUI.ViewModels
                 selectedExercise = value;
                 NotifyOfPropertyChange(() => SelectedExercise);
                 NotifyOfPropertyChange(() => CanRemoveSelected);
-                
+                NotifyOfPropertyChange(() => CanMoveUp);
+                NotifyOfPropertyChange(() => CanMoveDown);
             }
         }
 
@@ -90,7 +91,7 @@ namespace WpfDesktopUI.ViewModels
                 selectedDay = value;
                 NotifyOfPropertyChange(() => SelectedDay);
                 NotifyOfPropertyChange(() => CanAddNew);
-                
+                LoadExercises();           
             }
         }
 
@@ -145,7 +146,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (true)
+                if (SelectedExercise != null && ExerciseListBox != null
+                    && ExerciseListBox.IndexOf(SelectedExercise) > 0)
                 {
                     output = true;
                 }
@@ -160,7 +162,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (true)
+                if (SelectedExercise != null && ExerciseListBox != null
+                    && ExerciseListBox.IndexOf(SelectedExercise) < ExerciseListBox.Count - 1)
                 {
                     output = true;
                 }
@@ -212,26 +215,43 @@ namespace WpfDesktopUI.ViewModels
 
         public void LoadItems()
         {
+            try
+            {
+                LoadDays();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
+
+
+        private void LoadDays()
+        {
             DayData data = new DayData();
             List<DayModel> dayList = data.GetAllDays();
 
             var days = mapper.Map<List<DayDisplayModel>>(dayList);
 
             DaysComboBox = new BindingList<DayDisplayModel>(days);
+        }
 
-            //WorkoutProgramData data = new WorkoutProgramData();
-            //List<WorkoutProgramModel> workoutList = data.GetWorkoutsByProgramId(ProgramId);
 
-            //var workouts = mapper.Map<List<WorkoutProgramDisplayModel>>(workoutList);
+        private void LoadExercises()
+        {
+            ExerciseData data = new ExerciseData();
+            List<ExerciseModel> exerciseList = data.GetExercisesByWorkoutDayId(
+                WorkoutEventData.WorkoutId, SelectedDay.DayId);
 
-            //WorkoutListBox = new BindingList<WorkoutProgramDisplayModel>(workouts);
+            var exercises = mapper.Map<List<ExerciseDisplayModel>>(exerciseList);
+            ExerciseListBox = new BindingList<ExerciseDisplayModel>(exercises);
         }
 
 
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            LoadItems();
+            LoadDays();
             ViewTitle = WorkoutEventData.WorkoutName;
         }
 
@@ -259,24 +279,84 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
+
         public Task GoBack()
         {
             throw new NotImplementedException();
         }
 
+
         public void MoveDown()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ErrorMessage = "";
+
+                int index1 = ExerciseListBox.IndexOf(SelectedExercise);
+                int index2 = index1 + 1;
+
+                int dbIndex1 = ExerciseListBox[index1].Id;
+                int dbIndex2 = ExerciseListBox[index2].Id;
+
+                int dbOrder1 = ExerciseListBox[index1].ExerciseOrder;
+                int dbOrder2 = ExerciseListBox[index2].ExerciseOrder;
+
+                ExerciseData data = new ExerciseData();
+
+                data.SwapExerciseOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+                LoadExercises();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
+
 
         public void MoveUp()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ErrorMessage = "";
+
+                int index1 = ExerciseListBox.IndexOf(SelectedExercise);
+                int index2 = index1 - 1;
+
+                int dbIndex1 = ExerciseListBox[index1].Id;
+                int dbIndex2 = ExerciseListBox[index2].Id;
+
+                int dbOrder1 = ExerciseListBox[index1].ExerciseOrder;
+                int dbOrder2 = ExerciseListBox[index2].ExerciseOrder;
+
+                ExerciseData data = new ExerciseData();
+
+                data.SwapExerciseOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+                LoadExercises();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
+
 
         public void RemoveSelected()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ExerciseData data = new ExerciseData();
+
+                data.RemoveWorkoutDayExerciseRecord(
+                    WorkoutEventData.WorkoutId, SelectedDay.DayId, SelectedExercise.ExerciseId);
+
+                LoadExercises();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public Task ViewSelected()

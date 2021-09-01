@@ -33,5 +33,15 @@ namespace DataAccess.Library.DataAccess
 
             return output;
         }
+
+
+        public void SaveCategoryRecord(string categoryName)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new { CategoryName = categoryName };
+
+            sql.SaveData("dbo.spCategoryInsert", p, "WPlannerData");
+        }
     }
 }

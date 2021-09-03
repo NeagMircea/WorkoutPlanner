@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using DataAccess.Library.DataAccess;
 using DataAccess.Library.Models;
+using HelperLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,7 @@ namespace WpfDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => ViewTitle);
             }
         }
+
         //exercises <-> workout <-> days
         private BindingList<ExerciseDisplayModel> exerciseListBox;
         public BindingList<ExerciseDisplayModel> ExerciseListBox
@@ -61,6 +63,7 @@ namespace WpfDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CanRemoveSelected);
                 NotifyOfPropertyChange(() => CanMoveUp);
                 NotifyOfPropertyChange(() => CanMoveDown);
+                NotifyOfPropertyChange(() => CanViewSelected);
             }
         }
 
@@ -131,7 +134,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (true)
+                if (SelectedExercise != null)
                 {
                     output = true;
                 }
@@ -178,7 +181,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (true)
+                if (ErrorMessage?.Length > 0)
                 {
                     output = true;
                 }
@@ -280,32 +283,18 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public Task GoBack()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void MoveDown()
+        public async Task GoBack()
         {
             try
             {
                 ErrorMessage = "";
 
-                int index1 = ExerciseListBox.IndexOf(SelectedExercise);
-                int index2 = index1 + 1;
-
-                int dbIndex1 = ExerciseListBox[index1].Id;
-                int dbIndex2 = ExerciseListBox[index2].Id;
-
-                int dbOrder1 = ExerciseListBox[index1].ExerciseOrder;
-                int dbOrder2 = ExerciseListBox[index2].ExerciseOrder;
-
-                ExerciseData data = new ExerciseData();
-
-                data.SwapExerciseOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
-
-                LoadExercises();
+                await events.PublishOnUIThreadAsync(
+                    new GoWorkoutViewEvent
+                    {
+                        ProgramId = ProgramEventData.Id,
+                        ProgramName = ProgramEventData.Name
+                    });
             }
             catch (Exception ex)
             {
@@ -320,20 +309,24 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                int index1 = ExerciseListBox.IndexOf(SelectedExercise);
-                int index2 = index1 - 1;
+                ExerciseData data = new ExerciseData();
+                Helper.SwapItems(ExerciseListBox, SelectedExercise, -1, data.SwapExerciseOrder, LoadExercises);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
 
-                int dbIndex1 = ExerciseListBox[index1].Id;
-                int dbIndex2 = ExerciseListBox[index2].Id;
 
-                int dbOrder1 = ExerciseListBox[index1].ExerciseOrder;
-                int dbOrder2 = ExerciseListBox[index2].ExerciseOrder;
+        public void MoveDown()
+        {
+            try
+            {
+                ErrorMessage = "";
 
                 ExerciseData data = new ExerciseData();
-
-                data.SwapExerciseOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
-
-                LoadExercises();
+                Helper.SwapItems(ExerciseListBox, SelectedExercise, 1, data.SwapExerciseOrder, LoadExercises);
             }
             catch (Exception ex)
             {

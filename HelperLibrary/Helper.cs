@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelperLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -44,6 +45,45 @@ namespace HelperLibrary
             //    mapper.Map<List<ExerciseDisplayModel>>);
         }
 
+        /// <summary>
+        /// Swap the locations of two items from a Collection of IDisplayModel
+        /// </summary>
+        /// <typeparam name="T">DisplayModel type</typeparam>
+        /// <param name="itemList"></param>
+        /// <param name="selectedItem"></param>
+        /// <param name="dataFunc">database function used to swap Collection items</param>
+        /// <param name="loadFunc">the function used to reload the items in the Collection</param>
+        /// <param name="step">the swap step, negative for upwards, positive for downwards</param>
+        public static void SwapItems<T>(Collection<T> itemList, T selectedItem, int step,
+            Action<int, int, int, int> dataFunc, Action loadFunc) where T : IDisplayModel
+        {
+            int index1 = itemList.IndexOf(selectedItem);
+            int index2 = index1 + step;
 
+            int dbIndex1 = itemList[index1].GetId;
+            int dbIndex2 = itemList[index2].GetId;
+
+            int dbOrder1 = itemList[index1].GetOrder;
+            int dbOrder2 = itemList[index2].GetOrder;
+
+            dataFunc(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+            loadFunc();
+
+            //int index1 = CategoryListBox.IndexOf(SelectedCategory);
+            //int index2 = index1 - 1;
+
+            //int dbIndex1 = CategoryListBox[index1].CategoryId;
+            //int dbIndex2 = CategoryListBox[index2].CategoryId;
+
+            //int dbOrder1 = CategoryListBox[index1].CategoryOrder;
+            //int dbOrder2 = CategoryListBox[index2].CategoryOrder;
+
+            //CategoryData data = new CategoryData();
+
+            //data.SwapCategoryOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+            //LoadCategories();
+        }
     }
 }

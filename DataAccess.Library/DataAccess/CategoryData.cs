@@ -43,5 +43,32 @@ namespace DataAccess.Library.DataAccess
 
             sql.SaveData("dbo.spCategoryInsert", p, "WPlannerData");
         }
+
+
+        public void RemoveCategoryRecord(int categoryId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new { CategoryId = categoryId };
+
+            sql.SaveData("dbo.spCategoryRemoveAt", p, "WPlannerData");
+        }
+
+
+        public void SwapCategoryOrder(int categoryOneId, int categoryOneOrder,
+            int categoryTwoId, int categoryTwoOrder)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                CategoryOneId = categoryOneId,
+                CategoryOneOrder = categoryOneOrder,
+                CategoryTwoId = categoryTwoId,
+                CategoryTwoOrder = categoryTwoOrder
+            };
+
+            sql.SaveData("dbo.spCategorySwapOrder", p, "WPlannerData");
+        }
     }
 }

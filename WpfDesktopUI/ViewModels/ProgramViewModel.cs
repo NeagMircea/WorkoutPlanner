@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using DataAccess.Library.DataAccess;
 using DataAccess.Library.Models;
+using HelperLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -143,20 +144,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                int index1 = ProgramListBox.IndexOf(SelectedProgram);
-                int index2 = index1 - 1;
-
-                int dbIndex1 = ProgramListBox[index1].Id;
-                int dbIndex2 = ProgramListBox[index2].Id;
-
-                int dbOrder1 = ProgramListBox[index1].ProgramOrder;
-                int dbOrder2 = ProgramListBox[index2].ProgramOrder;
-
                 ProgramData data = new ProgramData();
-
-                data.SwapProgramOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
-
-                LoadItems();
+                Helper.SwapItems(ProgramListBox, SelectedProgram, -1, data.SwapProgramOrder, LoadItems);
             }
             catch (Exception ex)
             {
@@ -188,21 +177,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                int index1 = ProgramListBox.IndexOf(SelectedProgram);
-                int index2 = index1 + 1;
-
-                int dbIndex1 = ProgramListBox[index1].Id;
-                int dbIndex2 = ProgramListBox[index2].Id;
-
-                int dbOrder1 = ProgramListBox[index1].ProgramOrder;
-                int dbOrder2 = ProgramListBox[index2].ProgramOrder;
-
                 ProgramData data = new ProgramData();
-
-                data.SwapProgramOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
-
-                LoadItems();
-
+                Helper.SwapItems(ProgramListBox, SelectedProgram, 1, data.SwapProgramOrder, LoadItems);
             }
             catch (Exception ex)
             {

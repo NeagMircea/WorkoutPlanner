@@ -16,7 +16,7 @@ using WpfDesktopUI.Views.Interfaces.Composite;
 
 namespace WpfDesktopUI.ViewModels
 {
-    public class ExerciseAddViewModel : Screen, IAddView
+    public class ExerciseAddViewModel : Screen, IAddView, IAddSelectedItem
     {
         public ProgramModel ProgramEventData { get; set; } = new ProgramModel();
         public WorkoutModel WorkoutEventData { get; set; } = new WorkoutModel();
@@ -92,21 +92,6 @@ namespace WpfDesktopUI.ViewModels
                 selectedCategory = value;
                 NotifyOfPropertyChange(() => SelectedCategory);
                 FilterExercisesByCategories();
-            }
-        }
-
-        private string newCategoryName;
-        public string NewCategoryName
-        {
-            get
-            {
-                return newCategoryName;
-            }
-            set
-            {
-                newCategoryName = value;
-                NotifyOfPropertyChange(() => NewCategoryName);
-                NotifyOfPropertyChange(() => CanAddNewCategory);
             }
         }
 
@@ -233,14 +218,7 @@ namespace WpfDesktopUI.ViewModels
         {
             get
             {
-                bool output = false;
-
-                if (NewCategoryName?.Length > 0)
-                {
-                    output = true;
-                }
-
-                return output;
+                return true;
             }
         }
 
@@ -397,12 +375,27 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        public void AddNewCategory()
+        public async Task AddNewCategory()
         {
-            CategoryData data = new CategoryData();
-            data.SaveCategoryRecord(NewCategoryName);
+            try
+            {
+                ErrorMessage = "";
+                await events.PublishOnUIThreadAsync(
+                    new GoCategoryViewEvent
+                    {
+                        ProgramId = ProgramEventData.Id,
 
-            LoadCategories();
+                        WorkoutId = WorkoutEventData.WorkoutId,
+                        WorkoutName = WorkoutEventData.WorkoutName,
+
+                        DayId = DayEventData.DayId,
+                        DayName = DayEventData.DayName
+                    });
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }          
         }
 
 

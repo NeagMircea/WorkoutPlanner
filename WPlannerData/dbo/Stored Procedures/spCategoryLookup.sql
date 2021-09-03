@@ -4,7 +4,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT [CategoryId], [CategoryName] 
+	SELECT [CategoryId], [CategoryName], [CategoryOrder]
 	FROM [dbo].[Categories]
 	WHERE CategoryId = @Id;
 END;

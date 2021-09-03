@@ -53,12 +53,12 @@
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2">
 
             <Button x:Name="AddSelected" 
-                Margin="20 20 10 10" Padding="10" DockPanel.Dock="Top">
+                Margin="20 20 10 10" Padding="10">
                 Add Selected
             </Button>
 
             <ComboBox x:Name="CategoryComboBox" SelectedItem="{Binding SelectedCategory}" 
-                      Margin="20 10 10 10" Padding="10" DockPanel.Dock="Top">
+                      Margin="20 10 10 10" Padding="10">
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -68,11 +68,11 @@
 
             </ComboBox>
 
-            <TextBox x:Name="NewCategoryName" Margin="20 63 10 10" 
-                     Padding="10" MinHeight="40" Text="Category Name"/>
+            <!--<TextBox x:Name="NewCategoryName" Margin="20 63 10 10" 
+                     Padding="10" MinHeight="40" Text="Category Name"/>-->
 
             <Button x:Name="AddNewCategory" 
-                Margin="20 10 10 10" Padding="10" DockPanel.Dock="Bottom">
+                Margin="20 130 10 10" Padding="10">
                 Add New Category
             </Button>
         </StackPanel>

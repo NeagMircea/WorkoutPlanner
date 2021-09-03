@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelperLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WpfDesktopUI.Models
 {
-    public class ProgramDisplayModel /*: INotifyPropertyChanged*/
+    public class ProgramDisplayModel /*: INotifyPropertyChanged*/ : IDisplayModel
     {
         public int Id { get; set; }
 
@@ -34,5 +35,9 @@ namespace WpfDesktopUI.Models
         //}
 
         public int ProgramOrder { get; set; }
+
+        public int GetId => Id;
+
+        public int GetOrder => ProgramOrder;
     }
 }

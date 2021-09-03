@@ -10,7 +10,8 @@ using WpfDesktopUI.EventModels;
 namespace WpfDesktopUI.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<GoWorkoutViewEvent>, IHandle<GoProgramViewEvent>,
-        IHandle<GoWorkoutAddViewEvent>, IHandle<GoExerciseViewEvent>, IHandle<GoExerciseAddViewEvent>
+        IHandle<GoWorkoutAddViewEvent>, IHandle<GoExerciseViewEvent>, IHandle<GoExerciseAddViewEvent>,
+        IHandle<GoCategoryViewEvent>
     {
         private IEventAggregator events;
         private SimpleContainer container;
@@ -30,8 +31,8 @@ namespace WpfDesktopUI.ViewModels
         {
             WorkoutViewModel workoutVM = container.GetInstance<WorkoutViewModel>();
 
-            workoutVM.ProgramId = message.ProgramId;
-            workoutVM.ViewTitle = message.ProgramName;
+            workoutVM.ProgramEventData.Id = message.ProgramId;
+            workoutVM.ProgramEventData.Name = message.ProgramName;
 
             await ActivateItemAsync(workoutVM);
         }
@@ -49,8 +50,8 @@ namespace WpfDesktopUI.ViewModels
         {
             WorkoutAddViewModel workoutAddVM = container.GetInstance<WorkoutAddViewModel>();
 
-            workoutAddVM.ProgramId = message.ProgramId;
-            workoutAddVM.ViewTitle = message.ProgramName;
+            workoutAddVM.ProgramEventData.Id = message.ProgramId;
+            workoutAddVM.ProgramEventData.Name = message.ProgramName;
 
             await ActivateItemAsync(workoutAddVM);
         }
@@ -81,6 +82,21 @@ namespace WpfDesktopUI.ViewModels
             exerciseAddVM.DayEventData.DayName = message.DayName;
             
             await ActivateItemAsync(exerciseAddVM);
+        }
+
+        public async Task HandleAsync(GoCategoryViewEvent message, CancellationToken cancellationToken)
+        {
+            CategoryViewModel categoryVM = container.GetInstance<CategoryViewModel>();
+
+            categoryVM.ProgramEventData.Id = message.ProgramId;
+
+            categoryVM.WorkoutEventData.WorkoutId = message.WorkoutId;
+            categoryVM.WorkoutEventData.WorkoutName = message.WorkoutName;
+
+            categoryVM.DayEventData.DayId = message.DayId;
+            categoryVM.DayEventData.DayName = message.DayName;
+
+            await ActivateItemAsync(categoryVM);
         }
     }
 }

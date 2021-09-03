@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelperLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace WpfDesktopUI.Models
 {
-    public class CategoryDisplayModel /*: INotifyPropertyChanged*/
+    public class CategoryDisplayModel /*: INotifyPropertyChanged*/ : IDisplayModel
     {
         public int CategoryId { get; set; }
+
+        public int CategoryOrder { get; set; }
 
         private string categoryName;
         public string CategoryName
@@ -32,5 +35,9 @@ namespace WpfDesktopUI.Models
         //{
         //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         //}
+
+        public int GetId => CategoryId;
+
+        public int GetOrder => CategoryOrder;
     }
 }

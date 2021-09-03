@@ -3,6 +3,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT [CategoryId], [CategoryName] 
-	FROM [dbo].[Categories];
+	SELECT [CategoryId], [CategoryName], [CategoryOrder]
+	FROM [dbo].[Categories]
+	ORDER BY [CategoryOrder];
 END;

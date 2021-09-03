@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelperLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfDesktopUI.Models
 {
-    public class ExerciseDisplayModel
+    public class ExerciseDisplayModel : IDisplayModel
     {
         public int Id { get; set; }
         public int ExerciseId { get; set; }
@@ -16,5 +17,9 @@ namespace WpfDesktopUI.Models
         public int Reps { get; set; }
         public float Duration { get; set; }
         public int ExerciseOrder { get; set; }
+
+        public int GetId => Id;
+
+        public int GetOrder => ExerciseOrder;
     }
 }

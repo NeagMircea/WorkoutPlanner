@@ -16,8 +16,12 @@ using WpfDesktopUI.Views.Interfaces.Composite;
 
 namespace WpfDesktopUI.ViewModels
 {
-    public class WorkoutAddViewModel : Screen, IAddView, IMoveItem, IAddSelectedItem
+    public class CategoryViewModel : Screen, IAddView, IMoveItem
     {
+        public ProgramModel ProgramEventData { get; set; } = new ProgramModel();
+        public WorkoutModel WorkoutEventData { get; set; } = new WorkoutModel();
+        public DayModel DayEventData { get; set; } = new DayModel();
+
         string viewTitle;
         public string ViewTitle
         {
@@ -32,51 +36,48 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        public ProgramModel ProgramEventData { get; set; } = new ProgramModel();
-
-        private BindingList<WorkoutDisplayModel> existingWorkouts;
-        public BindingList<WorkoutDisplayModel> ExistingWorkouts
+        private BindingList<CategoryDisplayModel> categoryListBox;
+        public BindingList<CategoryDisplayModel> CategoryListBox
         {
             get
             {
-                return existingWorkouts;
+                return categoryListBox;
             }
             set
             {
-                existingWorkouts = value;
-                NotifyOfPropertyChange(() => ExistingWorkouts);
+                categoryListBox = value;
+                NotifyOfPropertyChange(() => CategoryListBox);
             }
         }
 
-        private WorkoutDisplayModel selectedWorkout;
-        public WorkoutDisplayModel SelectedWorkout
+        private CategoryDisplayModel selectedCategory;
+        public CategoryDisplayModel SelectedCategory
         {
             get
             {
-                return selectedWorkout;
+                return selectedCategory;
             }
             set
             {
-                selectedWorkout = value;
-                NotifyOfPropertyChange(() => SelectedWorkout);
+                selectedCategory = value;
+                NotifyOfPropertyChange(() => SelectedCategory);
+                NotifyOfPropertyChange(() => CanRemoveSelected);
                 NotifyOfPropertyChange(() => CanMoveUp);
                 NotifyOfPropertyChange(() => CanMoveDown);
-                NotifyOfPropertyChange(() => CanRemoveSelected);
-                NotifyOfPropertyChange(() => CanAddSelected);
             }
         }
 
-        private string newWorkoutName;
-        public string NewWorkoutName
+        private string newCategoryName;
+        public string NewCategoryName
         {
             get
             {
-                return newWorkoutName;
+                return newCategoryName;
             }
             set
             {
-                newWorkoutName = value;
-                NotifyOfPropertyChange(() => NewWorkoutName);
+                newCategoryName = value;
+                NotifyOfPropertyChange(() => NewCategoryName);
                 NotifyOfPropertyChange(() => CanAddNew);
             }
         }
@@ -87,22 +88,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (NewWorkoutName?.Length > 0)
-                {
-                    output = true;
-                }
-
-                return output;
-            }
-        }
-
-        public bool CanAddSelected
-        {
-            get
-            {
-                bool output = false;
-
-                if (SelectedWorkout != null)
+                if (NewCategoryName?.Length > 0)
                 {
                     output = true;
                 }
@@ -117,7 +103,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (SelectedWorkout != null)
+                if (SelectedCategory != null)
                 {
                     output = true;
                 }
@@ -141,7 +127,7 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        private string errorMessage;
+        public string errorMessage;
         public string ErrorMessage
         {
             get
@@ -162,8 +148,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (SelectedWorkout != null && ExistingWorkouts != null
-                    && ExistingWorkouts.IndexOf(SelectedWorkout) > 0)
+                if (SelectedCategory != null && CategoryListBox != null
+                    && CategoryListBox.IndexOf(SelectedCategory) > 0)
                 {
                     output = true;
                 }
@@ -178,8 +164,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (SelectedWorkout != null && ExistingWorkouts != null
-                    && ExistingWorkouts.IndexOf(SelectedWorkout) < ExistingWorkouts.Count - 1)
+                if (SelectedCategory != null && CategoryListBox != null
+                    && CategoryListBox.IndexOf(SelectedCategory) < CategoryListBox.Count - 1)
                 {
                     output = true;
                 }
@@ -192,7 +178,7 @@ namespace WpfDesktopUI.ViewModels
         private IMapper mapper;
 
 
-        public WorkoutAddViewModel(IEventAggregator events, IMapper mapper)
+        public CategoryViewModel(IEventAggregator events, IMapper mapper)
         {
             this.events = events;
             this.mapper = mapper;
@@ -203,26 +189,32 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
-                WorkoutData data = new WorkoutData();
-                List<WorkoutModel> workoutList = data.GetAllWorkouts();
-
-                var workouts = mapper.Map<List<WorkoutDisplayModel>>(workoutList);
-
-                ExistingWorkouts = new BindingList<WorkoutDisplayModel>(workouts);
+                LoadCategories();
             }
             catch (Exception ex)
             {
+
                 ErrorMessage = ex.Message;
             }
+        }
 
+
+        private void LoadCategories()
+        {
+            CategoryData data = new CategoryData();
+            List<CategoryModel> categoryList = data.GetAllCategories();
+
+            var categories = mapper.Map<List<CategoryDisplayModel>>(categoryList);
+
+            CategoryListBox= new BindingList<CategoryDisplayModel>(categories);
         }
 
 
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            ViewTitle = $"{ProgramEventData.Name} - add workout";
             LoadItems();
+            ViewTitle = "Category Panel";
         }
 
 
@@ -230,37 +222,16 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
-                ErrorMessage = "";
+                CategoryData data = new CategoryData();
+                data.SaveCategoryRecord(NewCategoryName);
 
-                WorkoutData data = new WorkoutData();
-                data.SaveWorkoutRecord(NewWorkoutName);
-
-                LoadItems();
+                LoadCategories();
             }
             catch (Exception ex)
             {
-
                 ErrorMessage = ex.Message;
             }
-        }
 
-
-        public void AddSelected()
-        {
-            try
-            {
-                ErrorMessage = "";
-
-                WorkoutProgramData data = new WorkoutProgramData();
-                data.AddWorkoutToProgram(ProgramEventData.Id, SelectedWorkout.WorkoutId);
-
-                LoadItems();
-            }
-            catch (Exception ex)
-            {
-
-                ErrorMessage = ex.Message;
-            }
         }
 
 
@@ -268,18 +239,16 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
-                ErrorMessage = "";
+                CategoryData data = new CategoryData();
+                data.RemoveCategoryRecord(SelectedCategory.CategoryId);
 
-                WorkoutData data = new WorkoutData();
-                data.DeleteWorkoutRecord(SelectedWorkout.WorkoutId);
-
-                LoadItems();
+                LoadCategories();
             }
             catch (Exception ex)
             {
-
                 ErrorMessage = ex.Message;
             }
+
         }
 
 
@@ -289,8 +258,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                WorkoutData data = new WorkoutData();
-                Helper.SwapItems(ExistingWorkouts, SelectedWorkout, -1, data.SwapWorkoutOrder, LoadItems);
+                CategoryData data = new CategoryData();
+                Helper.SwapItems(CategoryListBox, SelectedCategory, -1, data.SwapCategoryOrder, LoadCategories);
             }
             catch (Exception ex)
             {
@@ -305,8 +274,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                WorkoutData data = new WorkoutData();
-                Helper.SwapItems(ExistingWorkouts, SelectedWorkout, 1, data.SwapWorkoutOrder, LoadItems);
+                CategoryData data = new CategoryData();
+                Helper.SwapItems(CategoryListBox, SelectedCategory, 1, data.SwapCategoryOrder, LoadCategories);
 
             }
             catch (Exception ex)
@@ -323,10 +292,15 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = "";
 
                 await events.PublishOnUIThreadAsync(
-                    new GoWorkoutViewEvent
+                    new GoExerciseAddViewEvent
                     {
                         ProgramId = ProgramEventData.Id,
-                        ProgramName = ProgramEventData.Name
+
+                        WorkoutId = WorkoutEventData.WorkoutId,
+                        WorkoutName = WorkoutEventData.WorkoutName,
+
+                        DayId = DayEventData.DayId,
+                        DayName =DayEventData.DayName
                     });
             }
             catch (Exception ex)

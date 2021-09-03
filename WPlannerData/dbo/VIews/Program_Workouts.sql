@@ -1,7 +1,7 @@
 ﻿CREATE VIEW [dbo].[Program_Workouts]
 AS
 
-SELECT [Programs].[Id] AS [ProgramId], [Programs].[Name] AS [ProgramName], [Workouts].[WorkoutId], 
+SELECT [WorkoutPrograms].[Id] AS [Id], [Programs].[Id] AS [ProgramId], [Programs].[Name] AS [ProgramName], [Workouts].[WorkoutId], 
 [Workouts].[WorkoutName], [WorkoutPrograms].[Id] AS [WorkoutProgramId], [WorkoutPrograms].[WorkoutProgramOrder]
 
 FROM [Programs]

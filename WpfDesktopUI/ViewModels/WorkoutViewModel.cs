@@ -17,20 +17,21 @@ namespace WpfDesktopUI.ViewModels
 {
     public class WorkoutViewModel : Screen, IDefaultView
     {
-        public string ViewTitle { get; set; }
-
-        private int programId;
-        public int ProgramId
+        string viewTitle;
+        public string ViewTitle
         {
             get
             {
-                return programId;
+                return viewTitle;
             }
-            set
+            private set
             {
-                programId = value;
+                viewTitle = value;
+                NotifyOfPropertyChange(() => ViewTitle);
             }
         }
+
+        public ProgramModel ProgramEventData { get; set; } = new ProgramModel();
 
         private BindingList<WorkoutProgramDisplayModel> workoutListBox;
         public BindingList<WorkoutProgramDisplayModel> WorkoutListBox
@@ -179,7 +180,7 @@ namespace WpfDesktopUI.ViewModels
         public void LoadItems()
         {
             WorkoutProgramData data = new WorkoutProgramData();
-            List<WorkoutProgramModel> workoutList = data.GetWorkoutsByProgramId(ProgramId);
+            List<WorkoutProgramModel> workoutList = data.GetWorkoutsByProgramId(ProgramEventData.Id);
 
             var workouts = mapper.Map<List<WorkoutProgramDisplayModel>>(workoutList);
 
@@ -190,6 +191,7 @@ namespace WpfDesktopUI.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
+            ViewTitle = ProgramEventData.Name;
             LoadItems();
         }
 
@@ -202,7 +204,7 @@ namespace WpfDesktopUI.ViewModels
                 await events.PublishOnUIThreadAsync(
                     new GoWorkoutAddViewEvent
                     {
-                        ProgramId = ProgramId,
+                        ProgramId = ProgramEventData.Id,
                         ProgramName = ViewTitle
                     });
             }
@@ -220,7 +222,7 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = "";
 
                 WorkoutProgramData data = new WorkoutProgramData();
-                data.RemoveWorkoutFromProgram(ProgramId, SelectedWorkout.WorkoutId);
+                data.RemoveWorkoutFromProgram(ProgramEventData.Id, SelectedWorkout.WorkoutId);
 
                 LoadItems();            
             }
@@ -239,7 +241,7 @@ namespace WpfDesktopUI.ViewModels
                 await events.PublishOnUIThreadAsync(
                     new GoExerciseViewEvent
                     {
-                        ProgramId = this.ProgramId,
+                        ProgramId = ProgramEventData.Id,
                         ProgramName = ViewTitle,
                         WorkoutId = SelectedWorkout.WorkoutId,
                         WorkoutName = SelectedWorkout.WorkoutName
@@ -259,20 +261,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                int index1 = WorkoutListBox.IndexOf(SelectedWorkout);
-                int index2 = index1 - 1;
-
-                int dbIndex1 = WorkoutListBox[index1].WorkoutProgramId;
-                int dbIndex2 = WorkoutListBox[index2].WorkoutProgramId;
-
-                int dbOrder1 = WorkoutListBox[index1].WorkoutProgramOrder;
-                int dbOrder2 = WorkoutListBox[index2].WorkoutProgramOrder;
-
                 WorkoutProgramData data = new WorkoutProgramData();
-
-                data.SwapWorkoutProgramOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
-
-                LoadItems();
+                Helper.SwapItems(WorkoutListBox, SelectedWorkout, -1, data.SwapWorkoutProgramOrder, LoadItems);
             }
             catch (Exception ex)
             {
@@ -287,20 +277,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 ErrorMessage = "";
 
-                int index1 = WorkoutListBox.IndexOf(SelectedWorkout);
-                int index2 = index1 + 1;
-
-                int dbIndex1 = WorkoutListBox[index1].WorkoutProgramId;
-                int dbIndex2 = WorkoutListBox[index2].WorkoutProgramId;
-
-                int dbOrder1 = WorkoutListBox[index1].WorkoutProgramOrder;
-                int dbOrder2 = WorkoutListBox[index2].WorkoutProgramOrder;
-
                 WorkoutProgramData data = new WorkoutProgramData();
-
-                data.SwapWorkoutProgramOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
-
-                LoadItems();
+                Helper.SwapItems(WorkoutListBox, SelectedWorkout, 1, data.SwapWorkoutProgramOrder, LoadItems);
             }
             catch (Exception ex)
             {

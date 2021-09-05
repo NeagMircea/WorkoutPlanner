@@ -48,7 +48,7 @@
       <HintPath>..\packages\Caliburn.Micro.4.0.173\lib\net461\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -80,6 +80,7 @@
     <Compile Include="EventModels\GoCategoryViewEvent.cs" />
     <Compile Include="EventModels\GoExerciseAddViewEvent.cs" />
     <Compile Include="EventModels\GoExerciseViewEvent.cs" />
+    <Compile Include="EventModels\GoPlayerViewEvent.cs" />
     <Compile Include="EventModels\GoProgramViewEvent.cs" />
     <Compile Include="EventModels\GoWorkoutAddViewEvent.cs" />
     <Compile Include="EventModels\GoWorkoutViewEvent.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ExerciseAddViewModel.cs" />
     <Compile Include="ViewModels\ExerciseViewModel.cs" />
+    <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\ProgramViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
@@ -120,6 +122,9 @@
     <Compile Include="Views\Interfaces\IMoveItem.cs" />
     <Compile Include="Views\Interfaces\IRemoveItem.cs" />
     <Compile Include="Views\Interfaces\ISelectItem.cs" />
+    <Compile Include="Views\PlayerView.xaml.cs">
+      <DependentUpon>PlayerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProgramView.xaml.cs">
       <DependentUpon>ProgramView.xaml</DependentUpon>
     </Compile>
@@ -148,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ExerciseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

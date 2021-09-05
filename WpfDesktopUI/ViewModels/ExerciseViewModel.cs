@@ -352,9 +352,28 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        public Task ViewSelected()
+        public async Task ViewSelected()
         {
-            throw new NotImplementedException();
+            try
+            {
+                await events.PublishOnUIThreadAsync(
+                    new GoPlayerViewEvent
+                    {
+                        ProgramId = ProgramEventData.Id,
+                        ProgramName = ProgramEventData.Name,
+
+                        WorkoutId = WorkoutEventData.WorkoutId,
+                        WorkoutName = WorkoutEventData.WorkoutName,
+
+                        ExerciseId = SelectedExercise.Id,
+                        ExerciseName = SelectedExercise.ExerciseName,
+                        VideoPath = SelectedExercise.VideoPath
+                    });
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
     }
 }

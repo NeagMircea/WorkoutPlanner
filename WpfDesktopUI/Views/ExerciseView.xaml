@@ -40,30 +40,37 @@
             {StaticResource BooleanToVisibilityConverter}, 
             FallbackValue = Collapsed}" />
 
-        <ListBox x:Name="ExerciseListBox" Grid.Row="3" Grid.Column="1" 
-                 Grid.RowSpan="3" MinHeight="200" MinWidth="250"
-                 MaxHeight="300" SelectedItem="{Binding SelectedExercise}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding ExerciseName}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+        <StackPanel Grid.Row="2" Grid.Column="1" 
+                 Grid.RowSpan="4">
 
-        </ListBox>
+            <TextBlock Text="Exercises"
+                       Padding="0 0 0 5"/>
 
-        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="2">
+            <ListBox x:Name="ExerciseListBox"  MinHeight="300" MinWidth="250"
+                 SelectedItem="{Binding SelectedExercise}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ExerciseName}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2"
+                    Grid.RowSpan="4">
 
             <ComboBox x:Name="DaysComboBox" SelectedItem="{Binding SelectedDay}" 
-                      Margin="20 10 10 10" Padding="10">
+                      Margin="20 32 10 10" Padding="10">
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding DayName}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-                
+
             </ComboBox>
-            
+
             <Button x:Name="MoveUp" 
                 Margin="20 10 10 10" Padding="10">
                 Move Up
@@ -73,12 +80,19 @@
                 Margin="20 10 10 10" Padding="10">
                 Move Down
             </Button>
+
+            <Button x:Name="GoBack" Grid.Row="5" Grid.Column="2" 
+                Margin="20 55 10 10" Padding="10">
+                Back
+            </Button>
+
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="3">
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="3"
+                    Grid.RowSpan="4">
 
             <Button x:Name="AddNew" 
-                Margin="20 10 10 10" Padding="10">
+                Margin="20 32 10 10" Padding="10">
                 Add Exercise
             </Button>
 
@@ -87,16 +101,11 @@
                 Show Video
             </Button>
 
+            <Button x:Name="RemoveSelected" Grid.Row="5" Grid.Column="3" 
+                Margin="20 122 10 10" Padding="10" Background="Red">
+                Remove Exercise
+            </Button>
+            
         </StackPanel>
-
-        <Button x:Name="RemoveSelected" Grid.Row="5" Grid.Column="3" 
-                Margin="20 60 10 10" Padding="10" Background="Red">
-            Remove Exercise
-        </Button>
-
-        <Button x:Name="GoBack" Grid.Row="5" Grid.Column="2" 
-                Margin="20 60 10 10" Padding="10">
-            Back
-        </Button>
     </Grid>
 </UserControl>

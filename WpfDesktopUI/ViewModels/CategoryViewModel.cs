@@ -5,6 +5,8 @@ using DataAccess.Library.Models;
 using HelperLibrary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -16,7 +18,7 @@ using WpfDesktopUI.Views.Interfaces.Composite;
 
 namespace WpfDesktopUI.ViewModels
 {
-    public class CategoryViewModel : Screen, IAddView, IMoveItem
+    public class CategoryViewModel : Screen, IAddView
     {
         public ProgramModel ProgramEventData { get; set; } = new ProgramModel();
         public WorkoutModel WorkoutEventData { get; set; } = new WorkoutModel();
@@ -62,8 +64,76 @@ namespace WpfDesktopUI.ViewModels
                 selectedCategory = value;
                 NotifyOfPropertyChange(() => SelectedCategory);
                 NotifyOfPropertyChange(() => CanRemoveSelected);
-                NotifyOfPropertyChange(() => CanMoveUp);
-                NotifyOfPropertyChange(() => CanMoveDown);
+                NotifyOfPropertyChange(() => CanAddNewSubcategory);
+                LoadSubcategoriesBySelected();
+            }
+        }
+
+        private BindingList<SubcategoryDisplayModel> subcategoryListBox;
+        public BindingList<SubcategoryDisplayModel> SubcategoryListBox
+        {
+            get { return subcategoryListBox; }
+            set
+            {
+                subcategoryListBox = value;
+                NotifyOfPropertyChange(() => SubcategoryListBox);
+            }
+        }
+
+        private SubcategoryDisplayModel selectedSubcategory;
+        public SubcategoryDisplayModel SelectedSubcategory
+        {
+            get
+            {
+                return selectedSubcategory;
+            }
+            set
+            {
+                selectedSubcategory = value;
+                NotifyOfPropertyChange(() => SelectedSubcategory);
+                NotifyOfPropertyChange(() => CanRemoveSubcategory);
+            }
+        }
+
+        //private string newSubcategoryName;
+        //public string NewSubcategoryName
+        //{
+        //    get { return newSubcategoryName; }
+        //    set
+        //    {
+        //        newSubcategoryName = value;
+        //        NotifyOfPropertyChange(() => NewSubcategoryName);
+        //        NotifyOfPropertyChange(() => CanAddNewSubcategory);
+        //    }
+        //}
+
+        public bool CanAddNewSubcategory
+        {
+            get
+            {
+                bool output = false;
+
+                if (SelectedCategory != null)
+                {
+                    output = true;
+                }
+
+                return output;
+            }
+        }
+
+        public bool CanRemoveSubcategory
+        {
+            get
+            {
+                bool output = false;
+
+                if (SelectedSubcategory != null)
+                {
+                    output = true;
+                }
+
+                return output;
             }
         }
 
@@ -82,13 +152,47 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
+        private BindingList<SubcategoryDisplayModel> subcategoryComboBox;
+        public BindingList<SubcategoryDisplayModel> SubcategoryComboBox
+        {
+            get { return subcategoryComboBox; }
+            set
+            {
+                subcategoryComboBox = value;
+                NotifyOfPropertyChange(() => SubcategoryComboBox);
+            }
+        }
+
+        private ObservableCollection<SubcategoryDisplayModel> selectedSubcategoryCB = new ObservableCollection<SubcategoryDisplayModel>();
+        public ObservableCollection<SubcategoryDisplayModel> SelectedSubcategoryCB
+        {
+            get { return selectedSubcategoryCB; ; }
+            set
+            {
+                selectedSubcategoryCB = value;
+                NotifyOfPropertyChange(() => SelectedSubcategoryCB);
+                NotifyOfPropertyChange(() => CanAddNew);
+            }
+        }
+
+        private string subcategoryCBText;
+        public string SubcategoryCBText
+        {
+            get { return subcategoryCBText; }
+            set
+            {
+                subcategoryCBText = value;
+                NotifyOfPropertyChange(() => SubcategoryCBText);
+            }
+        }
+
         public bool CanAddNew
         {
             get
             {
                 bool output = false;
 
-                if (NewCategoryName?.Length > 0)
+                if (NewCategoryName?.Length > 0 && SelectedSubcategoryCB?.Count > 0) 
                 {
                     output = true;
                 }
@@ -142,42 +246,10 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        public bool CanMoveUp
-        {
-            get
-            {
-                bool output = false;
-
-                if (SelectedCategory != null && CategoryListBox != null
-                    && CategoryListBox.IndexOf(SelectedCategory) > 0)
-                {
-                    output = true;
-                }
-
-                return output;
-            }
-        }
-
-        public bool CanMoveDown
-        {
-            get
-            {
-                bool output = false;
-
-                if (SelectedCategory != null && CategoryListBox != null
-                    && CategoryListBox.IndexOf(SelectedCategory) < CategoryListBox.Count - 1)
-                {
-                    output = true;
-                }
-
-                return output;
-            }
-        }
-
         private IEventAggregator events;
         private IMapper mapper;
 
-
+      
         public CategoryViewModel(IEventAggregator events, IMapper mapper)
         {
             this.events = events;
@@ -190,6 +262,7 @@ namespace WpfDesktopUI.ViewModels
             try
             {
                 LoadCategories();
+                LoadSubcategories();
             }
             catch (Exception ex)
             {
@@ -210,6 +283,34 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
+        private void LoadSubcategories()
+        {
+            SubcategoryData data = new SubcategoryData();
+            List<SubcategoryModel> subcategoryList = data.GetAllSubcategories();
+
+            var subcategories = mapper.Map<List<SubcategoryDisplayModel>>(subcategoryList);
+
+            SubcategoryComboBox = new BindingList<SubcategoryDisplayModel>(subcategories);
+        }
+
+
+        private void LoadSubcategoriesBySelected()
+        {
+            if (SelectedCategory == null)
+            {
+                SubcategoryListBox = new BindingList<SubcategoryDisplayModel>();
+                return;
+            }
+
+            SubcategoryData data = new SubcategoryData();
+            List<SubcategoryModel> subcategoryList = data.GetSubcategoryByCategoryId(SelectedCategory.CategoryId);
+
+            var subcategories = mapper.Map<List<SubcategoryDisplayModel>>(subcategoryList);
+
+            SubcategoryListBox = new BindingList<SubcategoryDisplayModel>(subcategories);
+        }
+
+
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
@@ -218,12 +319,29 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
+        public async Task AddNewSubcategory()
+        {
+            //TODO implement this
+            await CanCloseAsync();
+        }
+
+
+        public void RemoveSubcategory()
+        {
+            SubcategoryData data = new SubcategoryData();
+            data.RemoveSubcategoryFromCategory(SelectedCategory.CategoryId, SelectedSubcategory.SubcategoryId);
+
+            LoadSubcategoriesBySelected();
+        }
+
+
         public void AddNew()
         {
             try
             {
                 CategoryData data = new CategoryData();
-                data.SaveCategoryRecord(NewCategoryName);
+                            
+                data.SaveCategoryRecord(NewCategoryName, Helper.GetIdsFromCollection(SelectedSubcategoryCB));
 
                 LoadCategories();
             }
@@ -234,7 +352,7 @@ namespace WpfDesktopUI.ViewModels
 
         }
 
-
+        
         public void RemoveSelected()
         {
             try
@@ -243,45 +361,13 @@ namespace WpfDesktopUI.ViewModels
                 data.RemoveCategoryRecord(SelectedCategory.CategoryId);
 
                 LoadCategories();
+                LoadSubcategoriesBySelected();
             }
             catch (Exception ex)
             {
                 ErrorMessage = ex.Message;
             }
 
-        }
-
-
-        public void MoveUp()
-        {
-            try
-            {
-                ErrorMessage = "";
-
-                CategoryData data = new CategoryData();
-                Helper.SwapItems(CategoryListBox, SelectedCategory, -1, data.SwapCategoryOrder, LoadCategories);
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-            }
-        }
-
-
-        public void MoveDown()
-        {
-            try
-            {
-                ErrorMessage = "";
-
-                CategoryData data = new CategoryData();
-                Helper.SwapItems(CategoryListBox, SelectedCategory, 1, data.SwapCategoryOrder, LoadCategories);
-
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-            }
         }
 
 
@@ -308,5 +394,20 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = ex.Message;
             }
         }
+
+
+        public void SetText()
+        {
+            NotifyOfPropertyChange(() => CanAddNew);
+
+            if (SelectedSubcategoryCB == null)
+            {
+                SubcategoryCBText = "0";
+                return;
+            }
+
+            SubcategoryCBText = SelectedSubcategoryCB.Count.ToString();
+        }
+
     }
 }

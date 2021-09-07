@@ -69,12 +69,14 @@
     <Compile Include="DataAccess\ExerciseData.cs" />
     <Compile Include="DataAccess\Internal\SqlDataAccess.cs" />
     <Compile Include="DataAccess\ProgramData.cs" />
+    <Compile Include="DataAccess\SubcategoryData.cs" />
     <Compile Include="DataAccess\WorkoutData.cs" />
     <Compile Include="DataAccess\WorkoutProgramData.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\DayModel.cs" />
     <Compile Include="Models\ExerciseModel.cs" />
     <Compile Include="Models\ProgramModel.cs" />
+    <Compile Include="Models\SubcategoryModel.cs" />
     <Compile Include="Models\WorkoutModel.cs" />
     <Compile Include="Models\WorkoutProgramModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -45,7 +45,7 @@
             <TextBlock Text="Existing Exercises"
                        Padding="10 0 0 5"/>
 
-            <ListBox x:Name="ExistingExercises"  MinHeight="306" MinWidth="250"
+            <ListBox x:Name="ExistingExercises"  MinHeight="328" MinWidth="250"
                  Margin="10 0 0 0"
                  SelectedItem="{Binding SelectedExercise}">
                 <ListBox.ItemTemplate>
@@ -66,8 +66,11 @@
                 Add Selected
             </Button>
 
+            <TextBlock Text="Filters:"
+                       Margin="20 0 10 0"/>
+            
             <ComboBox x:Name="CategoryComboBox" SelectedItem="{Binding SelectedCategory}" 
-                      Margin="20 6 10 10" Padding="10">
+                      Margin="20 0 10 10" Padding="10">
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -100,7 +103,7 @@
             </Button>
 
             <Button x:Name="GoBack" Grid.Row="3" Grid.Column="2" 
-                Margin="20 44 10 10" Padding="10">
+                Margin="20 30 10 10" Padding="10">
                 Back
             </Button>
         </StackPanel>
@@ -111,7 +114,10 @@
             <TextBox x:Name="NewExerciseName" Margin="20 32 10 10"
                      Padding="10" Text="Exercise Name"/>
 
-            <ComboBox x:Name="NewCategoryComboBox" Margin="20 5 10 10"
+            <TextBlock Text="Filters:"
+                       Margin="20 0 10 0"/>
+            
+            <ComboBox x:Name="NewCategoryComboBox" Margin="20 0 10 10"
                       Padding="10" SelectedItem="{Binding SelectedNewCategory}" >
                 
                 <ComboBox.ItemTemplate>
@@ -155,7 +161,7 @@
             </Button>
 
             <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="3" 
-                Margin="20 44 10 10" Padding="10" Background="Red">
+                Margin="20 29 10 10" Padding="10" Background="Red">
                 Remove Exercise
             </Button>
 

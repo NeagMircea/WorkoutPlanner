@@ -85,5 +85,18 @@ namespace HelperLibrary
 
             //LoadCategories();
         }
+
+
+        public static List<int> GetIdsFromCollection<T>(Collection<T> displayList) where T : IDisplayModel
+        {
+            List<int> output = new List<int>();
+
+            foreach (var item in displayList)
+            {
+                output.Add(item.GetId);
+            }
+
+            return output;
+        }
     }
 }

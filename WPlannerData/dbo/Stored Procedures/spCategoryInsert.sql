@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spCategoryInsert]
-	@CategoryName VARCHAR(100)
+	@CategoryName VARCHAR(100),
+	@Id INT OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -10,4 +11,6 @@ BEGIN
 	UPDATE [Categories]
 	SET [CategoryOrder] = SCOPE_IDENTITY()
 	WHERE [CategoryId] = SCOPE_IDENTITY();
+
+	SELECT @Id = SCOPE_IDENTITY();
 END;

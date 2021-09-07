@@ -1,7 +1,9 @@
-﻿using DataAccess.Library.DataAccess.Internal;
+﻿using Dapper;
+using DataAccess.Library.DataAccess.Internal;
 using DataAccess.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,13 +37,29 @@ namespace DataAccess.Library.DataAccess
         }
 
 
-        public void SaveCategoryRecord(string categoryName)
+        public void SaveCategoryRecord(string categoryName, List<int> subcatIdList)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
-            var p = new { CategoryName = categoryName };
+            //var p = new { CategoryName = categoryName };
+            var p = new DynamicParameters();
+            p.Add("@CategoryName", categoryName);
+            p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             sql.SaveData("dbo.spCategoryInsert", p, "WPlannerData");
+
+            int id = p.Get<int>("@Id");
+
+            foreach (int subcatId in subcatIdList)
+            {
+                var q = new
+                {
+                    CategoryId = id,
+                    SubcategoryId = subcatId
+                };
+
+                sql.SaveData("dbo.spCategorySubcategoryInsert", q, "WPlannerData");
+            }
         }
 
 

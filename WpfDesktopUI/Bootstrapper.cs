@@ -59,7 +59,8 @@ namespace WpfDesktopUI
                 cfg.CreateMap<WorkoutProgramModel, WorkoutProgramDisplayModel>();
                 cfg.CreateMap<DayModel, DayDisplayModel>();
                 cfg.CreateMap<ExerciseModel, ExerciseDisplayModel>();
-                });
+                cfg.CreateMap<SubcategoryModel, SubcategoryDisplayModel>();
+            });
 
             var mapper = config.CreateMapper();
 

@@ -24,5 +24,6 @@ namespace WpfDesktopUI.Views
         {
             InitializeComponent();
         }
+        
     }
 }

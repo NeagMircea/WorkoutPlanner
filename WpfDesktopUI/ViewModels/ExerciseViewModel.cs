@@ -365,7 +365,7 @@ namespace WpfDesktopUI.ViewModels
                         WorkoutId = WorkoutEventData.WorkoutId,
                         WorkoutName = WorkoutEventData.WorkoutName,
 
-                        ExerciseId = SelectedExercise.Id,
+                        ExerciseId = SelectedExercise.ExerciseId,
                         ExerciseName = SelectedExercise.ExerciseName,
                         VideoPath = SelectedExercise.VideoPath
                     });

@@ -24,18 +24,22 @@ namespace WpfDesktopUI.Views
     {
         private bool videoIsPlaying = true;
         private bool sliderIsMoving = false;
+        DispatcherTimer timer;
+        private bool isSetup = false;
+
 
         public PlayerView()
         {
             InitializeComponent();
-            SetupTimer();
             SetupPlayer();
+            SetupTimer();
+            isSetup = true;
         }
 
 
         private void SetupTimer()
         {
-            DispatcherTimer timer = new DispatcherTimer();
+            timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
@@ -46,7 +50,7 @@ namespace WpfDesktopUI.Views
         {
             Player.Volume = .5;
             Volume.Value = Player.Volume;
-            VolumeStatus.Text = $"{(int)(Volume.Value * 100)}%";
+            VolumeStatus.Text = $"{(int)(Volume.Value * 100)}%";       
             Player.Play();
         }
 
@@ -60,7 +64,6 @@ namespace WpfDesktopUI.Views
                 Progress.Value = Player.Position.TotalSeconds;
             }
         }
-
 
         private void Progress_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
@@ -81,17 +84,23 @@ namespace WpfDesktopUI.Views
         }
 
 
-        private void Player_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Player_MouseDown(object sender, MouseButtonEventArgs e) 
+            => PlayPause();
+
+
+        private void PlayPause()
         {
             if ((Player != null) && (Player.Source != null))
             {
                 if (!videoIsPlaying)
                 {
                     Player.Play();
+                    Play.Content = "Pause";
                 }
                 else
                 {
                     Player.Pause();
+                    Play.Content = "Play";
                 }
                 videoIsPlaying = !videoIsPlaying;
             }
@@ -103,6 +112,20 @@ namespace WpfDesktopUI.Views
             
             Player.Volume = Volume.Value;
             VolumeStatus.Text = $"{(int)(Volume.Value * 100)}%";
+        }
+
+
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isSetup)
+            {
+                SetupPlayer();
+                SetupTimer();
+
+                isSetup = true;
+            }
+
+            PlayPause();
         }
     }
 }

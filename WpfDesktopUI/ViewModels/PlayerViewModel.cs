@@ -17,7 +17,16 @@ namespace WpfDesktopUI.ViewModels
         public WorkoutModel WorkoutEventData { get; set; } = new WorkoutModel();
         public ExerciseModel ExerciseEventData { get; set; } = new ExerciseModel();
 
-        public Uri PlayerSource { get; set; }
+        private Uri playerSource;
+        public Uri PlayerSource
+        {
+            get { return playerSource; }
+            set
+            {
+                playerSource = value;
+                NotifyOfPropertyChange(() => PlayerSource);
+            }
+        }
 
         public bool CanGoBack
         {
@@ -66,6 +75,11 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+        }
+
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
@@ -79,13 +93,13 @@ namespace WpfDesktopUI.ViewModels
             {
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-                PlayerSource = new Uri($@"{baseDirectory}Videos\{ExerciseEventData.ExerciseName}");
+                PlayerSource = new Uri($@"{baseDirectory}Videos\{ExerciseEventData.ExerciseName}.mp4");
+                //PlayerSource = new Uri($@"{baseDirectory}Videos\Super Meat Boy E3 2010 Trailer.mp4");
             }
             else
             {
                 ErrorMessage = "Could not find your video";
-            }
-        
+            }     
         }
 
 

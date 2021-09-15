@@ -43,5 +43,18 @@ namespace DataAccess.Library.DataAccess.Internal
                     commandType: CommandType.StoredProcedure);
             }
         }
+        
+
+        public List<T> QueryString<T, U>(string sql, U parameters, string connectionStringName)
+        {
+            string connectionString = GetConnectionString(connectionStringName);
+
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                List<T> rows = connection.Query<T>(sql, parameters).ToList();
+
+                return rows;
+            }
+        }
     }
 }

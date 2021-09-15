@@ -34,6 +34,46 @@ namespace DataAccess.Library.DataAccess
         }
 
 
+        public void SaveSubcategoryRecord(string subcategoryName)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                SubcategoryName = subcategoryName
+            };
+
+            sql.SaveData("dbo.spSubcategoryInsert", p, "WPlannerData");
+        }
+
+
+        public void SaveSubcategoryToCategory(int categoryId, int subcategoryId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                CategoryId = categoryId,
+                SubcategoryId = subcategoryId
+            };
+
+            sql.SaveData("dbo.spCategorySubcategoryInsert", p, "WPlannerData");
+        }
+
+
+        public void RemoveSubcategoryRecord(int subcategoryId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new
+            {
+                SubcategoryId = subcategoryId
+            };
+
+            sql.SaveData("dbo.spSubcategoryRemoveAt", p, "WPlannerData");
+        }
+
+
         public void RemoveSubcategoryFromCategory(int categoryId, int subcategoryId)
         {
             SqlDataAccess sql = new SqlDataAccess();
@@ -45,6 +85,18 @@ namespace DataAccess.Library.DataAccess
             };
 
             sql.SaveData("dbo.spCategorySubcategoryRemoveAt", p, "WPlannerData");
+        }
+
+
+        public List<SubcategoryModel> GetUnusedSubcategories(int categoryId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new { CategoryId = categoryId };
+
+            var output = sql.LoadData<SubcategoryModel, dynamic>("dbo.spSubcategoryGetUnused", p, "WPlannerData");
+
+            return output;
         }
     }
 }

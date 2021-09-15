@@ -11,7 +11,7 @@ namespace WpfDesktopUI.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<GoWorkoutViewEvent>, IHandle<GoProgramViewEvent>,
         IHandle<GoWorkoutAddViewEvent>, IHandle<GoExerciseViewEvent>, IHandle<GoExerciseAddViewEvent>,
-        IHandle<GoCategoryViewEvent>, IHandle<GoPlayerViewEvent>
+        IHandle<GoCategoryViewEvent>, IHandle<GoPlayerViewEvent>, IHandle<GoSubcategoryViewEvent>
     {
         private IEventAggregator events;
         private SimpleContainer container;
@@ -114,6 +114,25 @@ namespace WpfDesktopUI.ViewModels
             playerVM.ExerciseEventData.VideoPath = message.VideoPath;
 
             await ActivateItemAsync(playerVM);
+        }
+
+        public async Task HandleAsync(GoSubcategoryViewEvent message, CancellationToken cancellationToken)
+        {
+            SubcategoryViewModel subcategoryVM = container.GetInstance<SubcategoryViewModel>();
+
+            subcategoryVM.ProgramEventData.Id = message.ProgramId;
+            subcategoryVM.ProgramEventData.Name = message.ProgramName;
+
+            subcategoryVM.WorkoutEventData.WorkoutId = message.WorkoutId;
+            subcategoryVM.WorkoutEventData.WorkoutName = message.WorkoutName;
+
+            subcategoryVM.DayEventData.DayId = message.DayId;
+            subcategoryVM.DayEventData.DayName = message.DayName;
+
+            subcategoryVM.CategoryEventData.CategoryId = message.CategoryId;
+            subcategoryVM.CategoryEventData.CategoryName = message.CategoryName;
+
+            await ActivateItemAsync(subcategoryVM);
         }
     }
 }

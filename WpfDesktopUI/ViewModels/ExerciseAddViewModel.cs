@@ -5,6 +5,7 @@ using DataAccess.Library.Models;
 using HelperLibrary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -66,6 +67,21 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
+        public bool CanAddSelected
+        {
+            get
+            {
+                bool output = false;
+
+                if (SelectedExercise != null)
+                {
+                    output = true;
+                }
+
+                return output;
+            }
+        }
+
         private BindingList<CategoryDisplayModel> categoryComboBox;
         public BindingList<CategoryDisplayModel> CategoryComboBox
         {
@@ -92,6 +108,62 @@ namespace WpfDesktopUI.ViewModels
                 selectedCategory = value;
                 NotifyOfPropertyChange(() => SelectedCategory);
                 FilterExercisesByCategories();
+                LoadSubcategoriesByCategory();
+                NotifyOfPropertyChange(() => CanResetFilters);
+            }
+        }
+
+        private BindingList<SubcategoryDisplayModel> subcategoryComboBox;
+        public BindingList<SubcategoryDisplayModel> SubcategoryComboBox
+        {
+            get
+            {
+                return subcategoryComboBox;
+            }
+            set
+            {
+                subcategoryComboBox = value;
+                NotifyOfPropertyChange(() => SubcategoryComboBox);
+            }
+        }
+
+        private ObservableCollection<SubcategoryDisplayModel> selectedSubcategories = new ObservableCollection<SubcategoryDisplayModel>();
+        public ObservableCollection<SubcategoryDisplayModel> SelectedSubcategories
+        {
+            get
+            {
+                return selectedSubcategories;
+            }
+            set
+            {
+                selectedSubcategories = value;
+                NotifyOfPropertyChange(() => SelectedSubcategories);
+            }
+        }
+
+        private string subcategoryCBText;
+        public string SubcategoryCBText
+        {
+            get { return subcategoryCBText; }
+            set
+            {
+                subcategoryCBText = value;
+                NotifyOfPropertyChange(() => SubcategoryCBText);
+            }
+        }
+
+        public bool CanResetFilters
+        {
+            get
+            {
+                bool output = false;
+
+                if (SelectedCategory != null)
+                {
+                    output = true;
+                }
+
+                return output;
             }
         }
 
@@ -110,19 +182,19 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        private string newVideoPath = "Video Path";
-        public string NewVideoPath
-        {
-            get
-            {
-                return newVideoPath;
-            }
-            set
-            {
-                newVideoPath = value;
-                NotifyOfPropertyChange(() => NewVideoPath);
-            }
-        }
+        //private string newVideoPath = "Video Path";
+        //public string NewVideoPath
+        //{
+        //    get
+        //    {
+        //        return newVideoPath;
+        //    }
+        //    set
+        //    {
+        //        newVideoPath = value;
+        //        NotifyOfPropertyChange(() => NewVideoPath);
+        //    }
+        //}
 
         private BindingList<CategoryDisplayModel> newCategoryComboBox;
         public BindingList<CategoryDisplayModel> NewCategoryComboBox
@@ -151,6 +223,46 @@ namespace WpfDesktopUI.ViewModels
                 selectedNewCategory = value;
                 NotifyOfPropertyChange(() => SelectedNewCategory);
                 NotifyOfPropertyChange(() => CanAddNew);
+                LoadNewSubcategoriesByCategory();
+            }
+        }
+
+        private BindingList<SubcategoryDisplayModel> newSubcategoryComboBox;
+        public BindingList<SubcategoryDisplayModel> NewSubcategoryComboBox
+        {
+            get
+            {
+                return newSubcategoryComboBox;
+            }
+            set
+            {
+                newSubcategoryComboBox = value;
+                NotifyOfPropertyChange(() => NewSubcategoryComboBox);
+            }
+        }
+
+        private ObservableCollection<SubcategoryDisplayModel> selectedNewSubcategories = new ObservableCollection<SubcategoryDisplayModel>();
+        public ObservableCollection<SubcategoryDisplayModel> SelectedNewSubcategories
+        {
+            get
+            {
+                return selectedNewSubcategories;
+            }
+            set
+            {
+                selectedNewSubcategories = value;
+                NotifyOfPropertyChange(() => SelectedNewSubcategories);
+            }
+        }
+
+        private string subcategoryNewCBText;
+        public string SubcategoryNewCBText
+        {
+            get { return subcategoryNewCBText; }
+            set
+            {
+                subcategoryNewCBText = value;
+                NotifyOfPropertyChange(() => SubcategoryNewCBText);
             }
         }
 
@@ -199,21 +311,6 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        public bool CanAddSelected
-        {
-            get
-            {
-                bool output = false;
-
-                if (SelectedExercise != null)
-                {
-                    output = true;
-                }
-
-                return output;
-            }
-        }
-
         public bool CanAddNewCategory
         {
             get
@@ -243,7 +340,8 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (NewExerciseName?.Length > 0 && SelectedNewCategory != null)
+                if (NewExerciseName?.Length > 0 && SelectedNewCategory != null 
+                    && SelectedNewSubcategories.Count > 0)
                 {
                     if (!int.TryParse(ExerciseSets, out int sets) ||
                         !int.TryParse(ExerciseReps, out int reps) ||
@@ -306,6 +404,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 LoadExercises();
                 LoadCategories();
+                SubcategoryNewCBText = null;
             }
             catch (Exception ex)
             {
@@ -338,10 +437,66 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
+        private void LoadSubcategoriesByCategory()
+        {
+            SubcategoryData data = new SubcategoryData();
+            SubcategoryComboBox = new BindingList<SubcategoryDisplayModel>();
+
+            Helper.LoadItems(
+                SubcategoryComboBox, 
+                SelectedCategory,
+                data.GetSubcategoryByCategoryId,
+                mapper.Map<List<SubcategoryDisplayModel>>
+                );
+        }
+
+
+        private void LoadNewSubcategoriesByCategory()
+        {
+            SubcategoryData data = new SubcategoryData();
+            NewSubcategoryComboBox = new BindingList<SubcategoryDisplayModel>();
+
+            Helper.LoadItems(
+                NewSubcategoryComboBox,
+                SelectedNewCategory,
+                data.GetSubcategoryByCategoryId,
+                mapper.Map<List<SubcategoryDisplayModel>>
+                );
+        }
+
+
         private void FilterExercisesByCategories()
         {
+            if (SelectedCategory == null)
+            {
+                LoadExercises();
+                return;
+            }
+
             ExerciseData data = new ExerciseData();
             List<ExerciseModel> exerciseList = data.GetExerciseByCategory(SelectedCategory.CategoryId);
+
+            var exercises = mapper.Map<List<ExerciseDisplayModel>>(exerciseList);
+
+            ExistingExercises = new BindingList<ExerciseDisplayModel>(exercises);
+        }
+
+
+        private void FilterExercisesBySubcategories()
+        {
+            if (SelectedSubcategories == null || SelectedSubcategories.Count == 0)
+            {
+                FilterExercisesByCategories();
+                return;
+            }
+
+            ExerciseData data = new ExerciseData();
+
+            List<ExerciseModel> exerciseList = data.GetExerciseByCategorySubcat(
+                
+                SelectedCategory.CategoryId, 
+                Helper.GetIdsFromCollection(SelectedSubcategories)
+                );
 
             var exercises = mapper.Map<List<ExerciseDisplayModel>>(exerciseList);
 
@@ -364,13 +519,15 @@ namespace WpfDesktopUI.ViewModels
             ExerciseModel newExercise = new ExerciseModel
             {
                 ExerciseName = NewExerciseName,
-                VideoPath = NewVideoPath,
+                VideoPath = "",
                 Sets = int.Parse(ExerciseSets),
                 Reps = int.Parse(ExerciseReps),
                 Duration = float.Parse(ExerciseDuration)
             };
 
-            data.SaveExerciseRecord(newExercise, SelectedNewCategory.CategoryId);
+            data.SaveExerciseRecord(newExercise, SelectedNewCategory.CategoryId, 
+                Helper.GetIdsFromCollection(SelectedNewSubcategories));
+
             LoadItems();
         }
 
@@ -406,6 +563,16 @@ namespace WpfDesktopUI.ViewModels
             data.SaveExerciseRecord(WorkoutEventData.WorkoutId, DayEventData.DayId, SelectedExercise.ExerciseId);
         }
 
+        public void ResetFilters()
+        {
+            SelectedCategory = null;
+            NotifyOfPropertyChange(() => SelectedCategory);
+
+            SelectedSubcategories.Clear();
+            NotifyOfPropertyChange(() => SelectedSubcategories);
+
+            FilterExercisesByCategories();
+        }
 
         public async Task GoBack()
         {
@@ -436,5 +603,33 @@ namespace WpfDesktopUI.ViewModels
             data.RemoveExerciseRecord(SelectedExercise.ExerciseId);
             LoadItems();
         }
+
+
+        public void SetCBText()
+        {
+            FilterExercisesBySubcategories();
+
+            if (SelectedSubcategories == null)
+            {
+                SubcategoryCBText = "0";
+                return;
+            }
+
+            SubcategoryCBText = SelectedSubcategories.Count.ToString();
+        }
+
+        public void SetNewCBText()
+        {
+            NotifyOfPropertyChange(() => CanAddNew);
+
+            if (SelectedNewSubcategories == null)
+            {
+                SubcategoryNewCBText = "0";
+                return;
+            }
+
+            SubcategoryNewCBText = SelectedNewSubcategories.Count.ToString();
+        }
+        
     }
 }

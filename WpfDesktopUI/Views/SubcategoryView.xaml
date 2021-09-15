@@ -8,7 +8,7 @@
              xmlns:cal="http://caliburnmicro.com"
              xmlns:local="clr-namespace:WpfDesktopUI.Views"
              mc:Ignorable="d" Background="White" FontSize="20"
-             d:DesignHeight="450" d:DesignWidth="775">
+             d:DesignHeight="475" d:DesignWidth="775">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -31,7 +31,7 @@
                    Grid.ColumnSpan="3" HorizontalAlignment="Center" 
                    FontSize="35" Margin="0 0 0 20" 
                    FontFamily="Segoe UI Light">
-            Category Panel
+            Subcategory Panel
         </TextBlock>
 
         <TextBlock x:Name="ErrorMessage"
@@ -45,11 +45,11 @@
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" 
                  Grid.RowSpan="3">
 
-            <TextBlock Text="Remaining Subcategories"
+            <TextBlock Text="All Subcategories"
                        Padding="0 0 0 5"/>
 
-            <ListBox x:Name="SubcategoryListBox"  MinHeight="270" MinWidth="250"
-                 MaxHeight="300" SelectedItem="{Binding SelectedSubcategory}">
+            <ListBox x:Name="AllSubcategories"  MinHeight="270" MinWidth="250"
+                 MaxHeight="300" SelectedItem="{Binding SelectedSubcategoryAll}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding SubcategoryName}"/>
@@ -59,31 +59,50 @@
             </ListBox>
 
             <Button x:Name="GoBack"
-                Margin="10 19 10 10" Padding="10">
+                Margin="10 29 10 10" Padding="10">
                 Back
             </Button>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2"
-                    Grid.RowSpan="3" Margin="10 0 0 0">
 
-            
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2" 
+                 Grid.RowSpan="3" Margin="5 0 5 0">
+
+            <TextBlock Text="Unused Subcategories"
+                       Padding="0 0 0 5"/>
+
+            <ListBox x:Name="UnusedSubcategories"  MinHeight="270" MinWidth="250"
+                 MaxHeight="300" SelectedItem="{Binding SelectedSubcategoryUnused}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding SubcategoryName}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
             <Button x:Name="AddSelected"  
-                Margin="20 32 10 10" Padding="10">
-                Add Selected 
+                Margin="10 29 10 10" Padding="10">
+                Add Selected
             </Button>
 
-            <TextBox x:Name="NewSubcategoryName" Margin="20 50 10 10"
+        </StackPanel>
+
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="3"
+                    Grid.RowSpan="3" Margin="10 0 0 0">
+
+            <TextBox x:Name="NewSubcategoryName" Margin="20 32 10 10"
                      Padding="10" Text="Subcategory Name"/>
 
             <Button x:Name="AddNew"  
-                Margin="20 10 10 10" Padding="10">
+                Margin="20 20 10 10" Padding="10">
                 Add New Subcategory
             </Button>
 
             <Button x:Name="RemoveSelected" Grid.Row="4" Grid.Column="3" 
-                Margin="20 52 10 10" Padding="10" Background="Red">
-                Remove Category
+                Margin="20 161 10 10" Padding="10" Background="Red">
+                Remove Subcategory
             </Button>
         </StackPanel>
 

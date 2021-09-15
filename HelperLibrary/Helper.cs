@@ -18,8 +18,19 @@ namespace HelperLibrary
         }
 
 
-        public static void LoadItems<T, U, V>(V container, 
-            Func<List<T>> dataFunc, Func<List<T>, List<U>> mapFunc) where V : Collection<U>
+        //ExerciseData data = new ExerciseData();
+        //List<ExerciseModel> exerciseList = data.GetAllExercises();
+
+        //var exercises = mapper.Map<List<ExerciseDisplayModel>>(exerciseList);
+
+        //ExistingExercises = new BindingList<ExerciseDisplayModel>(exercises);
+
+
+        //Helper.LoadItems(ExistingExercises,
+        //    new ExerciseData().GetAllExercises,
+        //    mapper.Map<List<ExerciseDisplayModel>>);
+        public static void LoadItems<T, U>(Collection<U> container, 
+            Func<List<T>> dataFunc, Func<List<T>, List<U>> mapFunc) 
         {
             List<T> itemList = dataFunc();
 
@@ -31,19 +42,8 @@ namespace HelperLibrary
             {
                 container.Add(item);
             }
-
-            //ExerciseData data = new ExerciseData();
-            //List<ExerciseModel> exerciseList = data.GetAllExercises();
-
-            //var exercises = mapper.Map<List<ExerciseDisplayModel>>(exerciseList);
-
-            //ExistingExercises = new BindingList<ExerciseDisplayModel>(exercises);
-
-
-            //Helper.LoadItems(ExistingExercises,
-            //    new ExerciseData().GetAllExercises,
-            //    mapper.Map<List<ExerciseDisplayModel>>);
         }
+
 
         /// <summary>
         /// Swap the locations of two items from a Collection of IDisplayModel
@@ -54,6 +54,21 @@ namespace HelperLibrary
         /// <param name="dataFunc">database function used to swap Collection items</param>
         /// <param name="loadFunc">the function used to reload the items in the Collection</param>
         /// <param name="step">the swap step, negative for upwards, positive for downwards</param>
+        /// 
+        //int index1 = CategoryListBox.IndexOf(SelectedCategory);
+        //int index2 = index1 - 1;
+
+        //int dbIndex1 = CategoryListBox[index1].CategoryId;
+        //int dbIndex2 = CategoryListBox[index2].CategoryId;
+
+        //int dbOrder1 = CategoryListBox[index1].CategoryOrder;
+        //int dbOrder2 = CategoryListBox[index2].CategoryOrder;
+
+        //CategoryData data = new CategoryData();
+
+        //data.SwapCategoryOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
+
+        //LoadCategories();
         public static void SwapItems<T>(Collection<T> itemList, T selectedItem, int step,
             Action<int, int, int, int> dataFunc, Action loadFunc) where T : IDisplayModel
         {
@@ -69,21 +84,6 @@ namespace HelperLibrary
             dataFunc(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
 
             loadFunc();
-
-            //int index1 = CategoryListBox.IndexOf(SelectedCategory);
-            //int index2 = index1 - 1;
-
-            //int dbIndex1 = CategoryListBox[index1].CategoryId;
-            //int dbIndex2 = CategoryListBox[index2].CategoryId;
-
-            //int dbOrder1 = CategoryListBox[index1].CategoryOrder;
-            //int dbOrder2 = CategoryListBox[index2].CategoryOrder;
-
-            //CategoryData data = new CategoryData();
-
-            //data.SwapCategoryOrder(dbIndex1, dbOrder1, dbIndex2, dbOrder2);
-
-            //LoadCategories();
         }
 
 
@@ -97,6 +97,43 @@ namespace HelperLibrary
             }
 
             return output;
+        }
+
+
+        //private void LoadSubcategoriesByCategory()
+        //{
+        //    if (SelectedCategory == null)
+        //    {
+        //        SubcategoryComboBox = new BindingList<SubcategoryDisplayModel>();
+        //        return;
+        //    }
+
+        //    SubcategoryData data = new SubcategoryData();
+        //    List<SubcategoryModel> subcategoryList = data.GetSubcategoryByCategoryId(SelectedCategory.CategoryId);
+
+        //    var subcategories = mapper.Map<List<SubcategoryDisplayModel>>(subcategoryList);
+
+        //    SubcategoryComboBox = new BindingList<SubcategoryDisplayModel>(subcategories);
+        //}
+        public static void LoadItems<T, U, V>(Collection<U> container, V selectedItem, 
+            Func<int, List<T>> dataFunc, Func<List<T>, List<U>> mapFunc) 
+            where U : IDisplayModel where V : IDisplayModel
+        {
+            if (selectedItem == null)
+            {
+                container = new Collection<U>();
+                return;
+            }
+
+            List<T> itemList = dataFunc(selectedItem.GetId);
+            List<U> items = mapFunc(itemList);
+
+            container.Clear();
+
+            foreach (var item in items)
+            {
+                container.Add(item);
+            }
         }
     }
 }

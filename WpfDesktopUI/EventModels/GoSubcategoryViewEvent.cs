@@ -18,5 +18,6 @@ namespace WpfDesktopUI.EventModels
         public string DayName { get; set; }
 
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
     }
 }

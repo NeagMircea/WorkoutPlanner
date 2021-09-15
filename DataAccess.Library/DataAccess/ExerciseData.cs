@@ -1,7 +1,9 @@
-﻿using DataAccess.Library.DataAccess.Internal;
+﻿using Dapper;
+using DataAccess.Library.DataAccess.Internal;
 using DataAccess.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ namespace DataAccess.Library.DataAccess
 {
     public class ExerciseData
     {
+
         public List<ExerciseModel> GetAllExercises()
         {
             SqlDataAccess sql = new SqlDataAccess();
@@ -51,21 +54,54 @@ namespace DataAccess.Library.DataAccess
         }
 
 
-        public void SaveExerciseRecord(ExerciseModel model, int categoryId)
+        public List<ExerciseModel> GetExerciseByCategorySubcat(int categoryId, List<int> subcategoryId)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
             var p = new
             {
-                ExerciseName = model.ExerciseName,
-                VideoPath = model.VideoPath,
                 CategoryId = categoryId,
-                Sets = model.Sets,
-                Reps = model.Reps,
-                Duration = model.Duration
+                SubcategoryId = new List<int>(subcategoryId)
             };
 
+            string query = @"SELECT MIN(ExerciseId), ExerciseName, VideoPath, Sets, Reps, Duration 
+                             FROM Exercises_Categories_Subcategories 
+                             WHERE CategoryId = @CategoryId AND SubcategoryId IN @SubcategoryId
+                             GROUP BY [ExerciseId], [ExerciseName], [VideoPath], [Sets], [Reps], [Duration];";
+
+            var output =
+                sql.QueryString<ExerciseModel, dynamic>(query, p, "WPlannerData");
+
+            return output;
+        }
+
+
+        public void SaveExerciseRecord(ExerciseModel model, int categoryId, List<int> subcategoryId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new DynamicParameters();
+            p.Add("@ExerciseName", model.ExerciseName);
+            p.Add("@VideoPath", model.VideoPath);
+            p.Add("@CategoryId", categoryId);
+            p.Add("@Sets", model.Sets);
+            p.Add("@Reps", model.Reps);
+            p.Add("@Duration", model.Duration);
+            p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
             sql.SaveData("dbo.spExerciseInsert", p, "WPlannerData");
+
+            int exerciseId = p.Get<int>("@Id");
+
+            foreach (int id in subcategoryId)
+            {
+                p = new DynamicParameters();
+                p.Add("@ExerciseId", exerciseId);
+                p.Add("@CategoryId", categoryId);
+                p.Add("@SubcategoryId", id);
+
+                sql.SaveData("dbo.spExercisesCategoriesSubcategoriesInsert", p, "WPlannerData");
+            }
         }
 
 

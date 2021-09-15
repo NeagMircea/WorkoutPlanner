@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:cal="http://caliburnmicro.com"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:WpfDesktopUI.Views"
              mc:Ignorable="d" Background="White" FontSize="20"
@@ -82,14 +84,25 @@
 
             <xctk:CheckComboBox x:Name="SubcategoryComboBox" Padding="10"  
                                 Margin="20 6 10 10" SelectedItemsOverride
-                                ="{Binding SelectedSubcategories}" >
+                                ="{Binding SelectedSubcategories}" 
+                                Text="{Binding SubcategoryCBText}">
 
                 <xctk:CheckComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding SubcategoryName}"/>
                     </DataTemplate>
                 </xctk:CheckComboBox.ItemTemplate>
-               
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ItemSelectionChanged">
+                        <cal:ActionMessage MethodName="SetCBText"/>
+                    </i:EventTrigger>
+
+                    <i:EventTrigger EventName="ItemSelectionChanged">
+                        <cal:ActionMessage MethodName="FilterExercisesBySubcategories"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
             </xctk:CheckComboBox>
 
             <Button x:Name="ResetFilters" 
@@ -130,13 +143,21 @@
 
             <xctk:CheckComboBox x:Name="NewSubcategoryComboBox" Padding="10"
                                 Margin="20 5 10 10" SelectedItemsOverride
-                                ="{Binding SelectedNewSubcategories}">
+                                ="{Binding SelectedNewSubcategories}"
+                                Text="{Binding SubcategoryNewCBText}">
+                
 
                 <xctk:CheckComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding SubcategoryName}"/>
                     </DataTemplate>
                 </xctk:CheckComboBox.ItemTemplate>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ItemSelectionChanged">
+                        <cal:ActionMessage MethodName="SetNewCBText"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
             </xctk:CheckComboBox>
 

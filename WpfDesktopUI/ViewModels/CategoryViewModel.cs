@@ -95,18 +95,6 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        //private string newSubcategoryName;
-        //public string NewSubcategoryName
-        //{
-        //    get { return newSubcategoryName; }
-        //    set
-        //    {
-        //        newSubcategoryName = value;
-        //        NotifyOfPropertyChange(() => NewSubcategoryName);
-        //        NotifyOfPropertyChange(() => CanAddNewSubcategory);
-        //    }
-        //}
-
         public bool CanAddNewSubcategory
         {
             get
@@ -266,7 +254,6 @@ namespace WpfDesktopUI.ViewModels
             }
             catch (Exception ex)
             {
-
                 ErrorMessage = ex.Message;
             }
         }
@@ -321,8 +308,30 @@ namespace WpfDesktopUI.ViewModels
 
         public async Task AddNewSubcategory()
         {
-            //TODO implement this
-            await CanCloseAsync();
+            try
+            {
+                ErrorMessage = "";
+
+                await events.PublishOnUIThreadAsync(
+                    new GoSubcategoryViewEvent
+                    {
+                        ProgramId = ProgramEventData.Id,
+                        ProgramName = ProgramEventData.Name,
+
+                        WorkoutId = WorkoutEventData.WorkoutId,
+                        WorkoutName = WorkoutEventData.WorkoutName,
+
+                        DayId = DayEventData.DayId,
+                        DayName = DayEventData.DayName,
+
+                        CategoryId = selectedCategory.CategoryId,
+                        CategoryName = selectedCategory.CategoryName
+                    });
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
 

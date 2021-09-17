@@ -52,7 +52,17 @@
                  SelectedItem="{Binding SelectedExercise}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding ExerciseName}"/>
+                        <StackPanel>
+                            
+                            <TextBlock Text="{Binding ExerciseName}"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding SetsDisplay}" FontSize="15"/>
+                                <TextBlock Text="{Binding RepRangeDisplay}" FontSize="15"/>
+                                <TextBlock Text="{Binding DurationDisplay}" FontSize="15"/>
+                            </StackPanel>
+                            
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
@@ -163,17 +173,27 @@
 
             <StackPanel Orientation="Vertical">
                 <DockPanel>
-                    <TextBox x:Name="ExerciseSets" Text="Sets"
-                         Margin="20 0 0 10" MinWidth="75"
+                    <TextBox x:Name="ExerciseDuration" Text="Duration"
+                         Margin="20 0 0 10" MinWidth="80"
                              HorizontalAlignment="Left"/>
-                    
-                    <TextBox x:Name="ExerciseReps" Text="Reps"
-                         Margin="20 0 10 10" MinWidth="75"
+
+                    <TextBox x:Name="ExerciseSets" Text="Sets"
+                         Margin="20 0 10 10" MinWidth="80"
+                             HorizontalAlignment="Right"/>
+                   
+                </DockPanel>
+
+                <DockPanel>
+                    <TextBox x:Name="MinReps" Text="min Reps"
+                         Margin="20 -2 0 10" MinWidth="80"
+                             HorizontalAlignment="Left"/>
+
+                    <TextBox x:Name="MaxReps" Text="max Reps"
+                         Margin="20 -2 10 10" MinWidth="80"
                              HorizontalAlignment="Right"/>
                 </DockPanel>
-                
-                <TextBox x:Name="ExerciseDuration" Text="Duration"
-                         Margin="20 -1 10 10"/>
+
+
             </StackPanel>
 
             <Button x:Name="AddNew"  

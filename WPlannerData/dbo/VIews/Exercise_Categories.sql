@@ -2,7 +2,7 @@
 AS
 
 SELECT [Exercises].[ExerciseId], [Exercises].[ExerciseName], [Exercises].VideoPath, 
-[Exercises].[Sets], [Exercises].[Reps], [Exercises].[Duration], [Categories].[CategoryId],
+[Exercises].[Sets], [Exercises].[MinReps], [Exercises].[MaxReps], [Exercises].[Duration], [Categories].[CategoryId],
 [Categories].[CategoryName]
 
 FROM [Exercises]

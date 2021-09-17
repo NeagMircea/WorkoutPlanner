@@ -180,7 +180,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 bool output = false;
 
-                if (NewCategoryName?.Length > 0 && SelectedSubcategoryCB?.Count > 0) 
+                if (NewCategoryName?.Length > 0 /*&& SelectedSubcategoryCB?.Count > 0*/) 
                 {
                     output = true;
                 }

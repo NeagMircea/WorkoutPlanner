@@ -4,7 +4,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT [ExerciseId], [ExerciseName], [VideoPath], [Sets], [Reps], [Duration]
+	SELECT [ExerciseId], [ExerciseName], [VideoPath], [Sets], [MinReps], [MaxReps], [Duration]
 	FROM [Exercise_Categories]
 	WHERE [CategoryId] = @CategoryId;
 

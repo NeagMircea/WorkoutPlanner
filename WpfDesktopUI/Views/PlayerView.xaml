@@ -31,12 +31,14 @@
 
     <Viewbox Grid.Row="1" Stretch="UniformToFill"
                  MaxHeight="400" MaxWidth="750">
-
-            <MediaElement x:Name="Player" LoadedBehavior="Manual" 
+            <StackPanel>
+                <MediaElement x:Name="Player" LoadedBehavior="Manual" 
                       Stretch="Uniform"  MouseDown="Player_MouseDown" 
                       Source="{Binding PlayerSource}"/>
+            </StackPanel>
+            
         
-        </Viewbox>
+    </Viewbox>
 
     <StatusBar Grid.Row="2">
         <StatusBar.ItemsPanel>

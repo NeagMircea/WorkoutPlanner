@@ -281,17 +281,32 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
-        private string exerciseReps = "Reps";
-        public string ExerciseReps
+        private string minReps = "min Reps";
+        public string MinReps
         {
             get
             {
-                return exerciseReps;
+                return minReps;
             }
             set
             {
-                exerciseReps = value;
-                NotifyOfPropertyChange(() => ExerciseReps);
+                minReps = value;
+                NotifyOfPropertyChange(() => MinReps);
+                NotifyOfPropertyChange(() => CanAddNew);
+            }
+        }
+
+        private string maxReps = "max Reps";
+        public string MaxReps
+        {
+            get
+            {
+                return maxReps;
+            }
+            set
+            {
+                maxReps = value;
+                NotifyOfPropertyChange(() => MaxReps);
                 NotifyOfPropertyChange(() => CanAddNew);
             }
         }
@@ -341,10 +356,11 @@ namespace WpfDesktopUI.ViewModels
                 bool output = false;
 
                 if (NewExerciseName?.Length > 0 && SelectedNewCategory != null 
-                    && SelectedNewSubcategories.Count > 0)
+                    /*&& SelectedNewSubcategories.Count > 0*/)
                 {
                     if (!int.TryParse(ExerciseSets, out int sets) ||
-                        !int.TryParse(ExerciseReps, out int reps) ||
+                        !int.TryParse(MinReps, out int minReps) ||
+                        !int.TryParse(MaxReps, out int maxReps) ||
                         !float.TryParse(ExerciseDuration, out float duration))
                     {
                         return false;
@@ -514,21 +530,30 @@ namespace WpfDesktopUI.ViewModels
 
         public void AddNew()
         {
-            ExerciseData data = new ExerciseData();
-
-            ExerciseModel newExercise = new ExerciseModel
+            try
             {
-                ExerciseName = NewExerciseName,
-                VideoPath = "",
-                Sets = int.Parse(ExerciseSets),
-                Reps = int.Parse(ExerciseReps),
-                Duration = float.Parse(ExerciseDuration)
-            };
+                ExerciseData data = new ExerciseData();
 
-            data.SaveExerciseRecord(newExercise, SelectedNewCategory.CategoryId, 
-                Helper.GetIdsFromCollection(SelectedNewSubcategories));
+                ExerciseModel newExercise = new ExerciseModel
+                {
+                    ExerciseName = NewExerciseName,
+                    VideoPath = "",
+                    Sets = int.Parse(ExerciseSets),
+                    MinReps = int.Parse(this.MinReps),
+                    MaxReps = int.Parse(this.MaxReps),
+                    Duration = float.Parse(ExerciseDuration)
+                };
 
-            LoadItems();
+                data.SaveExerciseRecord(newExercise, SelectedNewCategory.CategoryId,
+                    Helper.GetIdsFromCollection(SelectedNewSubcategories));
+
+                LoadItems();
+                ResetAddForm();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
 
@@ -566,10 +591,8 @@ namespace WpfDesktopUI.ViewModels
         public void ResetFilters()
         {
             SelectedCategory = null;
-            NotifyOfPropertyChange(() => SelectedCategory);
 
             SelectedSubcategories.Clear();
-            NotifyOfPropertyChange(() => SelectedSubcategories);
 
             FilterExercisesByCategories();
         }
@@ -618,6 +641,7 @@ namespace WpfDesktopUI.ViewModels
             SubcategoryCBText = SelectedSubcategories.Count.ToString();
         }
 
+
         public void SetNewCBText()
         {
             NotifyOfPropertyChange(() => CanAddNew);
@@ -630,6 +654,17 @@ namespace WpfDesktopUI.ViewModels
 
             SubcategoryNewCBText = SelectedNewSubcategories.Count.ToString();
         }
-        
+
+
+        public void ResetAddForm()
+        {
+            NewExerciseName = "ExerciseName";
+            SelectedNewCategory = null;
+            SelectedNewSubcategories.Clear();
+            ExerciseDuration = "Duration";
+            ExerciseSets = "Sets";
+            MinReps = "min Reps";
+            MaxReps = "max Reps";
+        }
     }
 }

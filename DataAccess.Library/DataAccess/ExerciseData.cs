@@ -64,10 +64,10 @@ namespace DataAccess.Library.DataAccess
                 SubcategoryId = new List<int>(subcategoryId)
             };
 
-            string query = @"SELECT MIN(ExerciseId), ExerciseName, VideoPath, Sets, Reps, Duration 
+            string query = @"SELECT MIN(ExerciseId), ExerciseName, VideoPath, Sets, MinReps, MaxReps, Duration 
                              FROM Exercises_Categories_Subcategories 
                              WHERE CategoryId = @CategoryId AND SubcategoryId IN @SubcategoryId
-                             GROUP BY [ExerciseId], [ExerciseName], [VideoPath], [Sets], [Reps], [Duration];";
+                             GROUP BY [ExerciseId], [ExerciseName], [VideoPath], [Sets], [MinReps], [MaxReps], [Duration];";
 
             var output =
                 sql.QueryString<ExerciseModel, dynamic>(query, p, "WPlannerData");
@@ -85,7 +85,8 @@ namespace DataAccess.Library.DataAccess
             p.Add("@VideoPath", model.VideoPath);
             p.Add("@CategoryId", categoryId);
             p.Add("@Sets", model.Sets);
-            p.Add("@Reps", model.Reps);
+            p.Add("@MinReps", model.MinReps);
+            p.Add("@MaxReps", model.MaxReps);
             p.Add("@Duration", model.Duration);
             p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 

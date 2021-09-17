@@ -220,6 +220,8 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
+                DayData data = new DayData();
+                data.InsertDaysOfTheWeek();
                 LoadDays();
             }
             catch (Exception ex)
@@ -254,7 +256,7 @@ namespace WpfDesktopUI.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            LoadDays();
+            LoadItems();
             ViewTitle = WorkoutEventData.WorkoutName;
         }
 

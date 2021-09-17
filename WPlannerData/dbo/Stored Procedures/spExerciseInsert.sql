@@ -3,15 +3,16 @@
 	@VideoPath VARCHAR(200),
 	@CategoryId INT,
 	@Sets INT = 0,
-	@Reps INT = 0,
+	@MinReps INT = 0,
+	@MaxReps INT = 0,
 	@Duration FLOAT = 0,
 	@Id INT OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
 
-	INSERT INTO [Exercises]([ExerciseName], [VideoPath], [Sets], [Reps], [Duration])
-	VALUES(@ExerciseName, @VideoPath, @Sets, @Reps, @Duration);
+	INSERT INTO [Exercises]([ExerciseName], [VideoPath], [Sets], [MinReps], [MaxReps], [Duration])
+	VALUES(@ExerciseName, @VideoPath, @Sets, @MinReps, @MaxReps, @Duration);
 
 	DECLARE @scopeId AS INT;
 	SET @scopeId = SCOPE_IDENTITY();

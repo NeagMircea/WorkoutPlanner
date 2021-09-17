@@ -19,5 +19,13 @@ namespace DataAccess.Library.DataAccess
 
             return output;
         }
+
+
+        public void InsertDaysOfTheWeek()
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            sql.SaveData("dbo.spDayInsert", new { }, "WPlannerData");
+        }
     }
 }

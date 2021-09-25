@@ -13,6 +13,8 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter">
                 
             </BooleanToVisibilityConverter>
+
+            <BitmapImage x:Key="ResourceNotFound" UriSource="/Media/Images/not_found.png"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -99,7 +99,9 @@
                     Grid.RowSpan="3">
 
             <TextBox x:Name="NewCategoryName" Margin="20 32 10 10"
-                     Padding="10" Text="Category Name"/>
+                     Padding="10" Text="Category Name"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalScrollBarVisibility="Auto" MaxWidth="190"/>
 
             <xctk:CheckComboBox x:Name="SubcategoryComboBox" Padding="10"
                                 Margin="20 5 10 10" 

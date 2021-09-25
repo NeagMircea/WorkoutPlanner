@@ -420,7 +420,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 LoadExercises();
                 LoadCategories();
-                SubcategoryNewCBText = null;
+                SubcategoryNewCBText = "Subcategories";
             }
             catch (Exception ex)
             {
@@ -444,12 +444,21 @@ namespace WpfDesktopUI.ViewModels
         private void LoadCategories()
         {
             CategoryData data = new CategoryData();
-            List<CategoryModel> categoryList = data.GetAllCategories();
 
-            var categories = mapper.Map<List<CategoryDisplayModel>>(categoryList);
+            CategoryComboBox = new BindingList<CategoryDisplayModel>();
+            NewCategoryComboBox = new BindingList<CategoryDisplayModel>();
 
-            CategoryComboBox = new BindingList<CategoryDisplayModel>(categories);
-            NewCategoryComboBox = new BindingList<CategoryDisplayModel>(categories);
+            Helper.LoadItems( 
+                CategoryComboBox,
+                data.GetAllCategories,
+                mapper.Map<List<CategoryDisplayModel>>
+                );
+
+            Helper.LoadItems(
+                NewCategoryComboBox,
+                data.GetAllCategories,
+                mapper.Map<List<CategoryDisplayModel>>
+                );
         }
 
 
@@ -532,6 +541,8 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
+                ErrorMessage = "";
+
                 ExerciseData data = new ExerciseData();
 
                 ExerciseModel newExercise = new ExerciseModel
@@ -661,6 +672,7 @@ namespace WpfDesktopUI.ViewModels
             NewExerciseName = "ExerciseName";
             SelectedNewCategory = null;
             SelectedNewSubcategories.Clear();
+            SubcategoryNewCBText = "Subcategories";
             ExerciseDuration = "Duration";
             ExerciseSets = "Sets";
             MinReps = "min Reps";

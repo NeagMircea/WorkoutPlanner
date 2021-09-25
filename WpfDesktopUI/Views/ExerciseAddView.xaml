@@ -8,7 +8,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:WpfDesktopUI.Views"
              mc:Ignorable="d" Background="White" FontSize="20"
-             d:DesignHeight="550" d:DesignWidth="775">
+             d:DesignHeight="600" d:DesignWidth="775">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -135,9 +135,12 @@
                     Grid.RowSpan="3" Margin="0 0 0 0">
 
             <TextBox x:Name="NewExerciseName" Margin="20 32 10 10"
-                     Padding="10" Text="Exercise Name"/>
+                     Padding="10" Text="Exercise Name"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalScrollBarVisibility="Disabled" 
+                     MaxWidth="200"/>
 
-            <TextBlock Text="Filters:"
+            <TextBlock Text="Category:"
                        Margin="20 0 10 0"/>
             
             <ComboBox x:Name="NewCategoryComboBox" Margin="20 0 10 10"
@@ -175,22 +178,34 @@
                 <DockPanel>
                     <TextBox x:Name="ExerciseDuration" Text="Duration"
                          Margin="20 0 0 10" MinWidth="80"
-                             HorizontalAlignment="Left"/>
+                             HorizontalAlignment="Left"
+                             HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Disabled" 
+                             MaxWidth="100"/>
 
                     <TextBox x:Name="ExerciseSets" Text="Sets"
                          Margin="20 0 10 10" MinWidth="80"
-                             HorizontalAlignment="Right"/>
+                             HorizontalAlignment="Right"
+                             HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Disabled" 
+                             MaxWidth="100"/>
                    
                 </DockPanel>
 
                 <DockPanel>
                     <TextBox x:Name="MinReps" Text="min Reps"
                          Margin="20 -2 0 10" MinWidth="80"
-                             HorizontalAlignment="Left"/>
+                             HorizontalAlignment="Left"
+                             HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Disabled" 
+                             MaxWidth="100"/>
 
                     <TextBox x:Name="MaxReps" Text="max Reps"
                          Margin="20 -2 10 10" MinWidth="80"
-                             HorizontalAlignment="Right"/>
+                             HorizontalAlignment="Right"
+                             HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Disabled" 
+                             MaxWidth="100"/>
                 </DockPanel>
 
 

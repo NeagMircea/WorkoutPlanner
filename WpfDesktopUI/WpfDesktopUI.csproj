@@ -95,6 +95,7 @@
     <Compile Include="EventModels\GoCategoryViewEvent.cs" />
     <Compile Include="EventModels\GoExerciseAddViewEvent.cs" />
     <Compile Include="EventModels\GoExerciseViewEvent.cs" />
+    <Compile Include="EventModels\GoMuscleViewEvent.cs" />
     <Compile Include="EventModels\GoPlayerViewEvent.cs" />
     <Compile Include="EventModels\GoProgramViewEvent.cs" />
     <Compile Include="EventModels\GoSubcategoryViewEvent.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ExerciseAddViewModel.cs" />
     <Compile Include="ViewModels\ExerciseViewModel.cs" />
+    <Compile Include="ViewModels\MuscleViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\ProgramViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -140,6 +142,9 @@
     <Compile Include="Views\Interfaces\IMoveItem.cs" />
     <Compile Include="Views\Interfaces\IRemoveItem.cs" />
     <Compile Include="Views\Interfaces\ISelectItem.cs" />
+    <Compile Include="Views\MuscleView.xaml.cs">
+      <DependentUpon>MuscleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlayerView.xaml.cs">
       <DependentUpon>PlayerView.xaml</DependentUpon>
     </Compile>
@@ -174,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ExerciseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MuscleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -242,6 +251,10 @@
       <Project>{451C249A-6A8A-4D5F-A9E7-5F50EDF55376}</Project>
       <Name>HelperLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Media\Images\not_found.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

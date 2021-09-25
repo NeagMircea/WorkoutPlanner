@@ -6,6 +6,7 @@ using HelperLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -199,16 +200,21 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            ViewTitle = $"{ProgramEventData.Name} - add workout";
+            LoadItems();
+        }
+
+
         public void LoadItems()
         {
             try
             {
-                WorkoutData data = new WorkoutData();
-                List<WorkoutModel> workoutList = data.GetAllWorkouts();
+                ErrorMessage = "";
+                LoadWorkouts();
 
-                var workouts = mapper.Map<List<WorkoutDisplayModel>>(workoutList);
-
-                ExistingWorkouts = new BindingList<WorkoutDisplayModel>(workouts);
             }
             catch (Exception ex)
             {
@@ -218,11 +224,16 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        protected override void OnViewLoaded(object view)
+        private void LoadWorkouts()
         {
-            base.OnViewLoaded(view);
-            ViewTitle = $"{ProgramEventData.Name} - add workout";
-            LoadItems();
+            WorkoutData data = new WorkoutData();
+            ExistingWorkouts = new BindingList<WorkoutDisplayModel>();
+
+            Helper.LoadItems(
+                ExistingWorkouts,
+                data.GetAllWorkouts,
+                mapper.Map<List<WorkoutDisplayModel>>
+                );
         }
 
 
@@ -237,9 +248,19 @@ namespace WpfDesktopUI.ViewModels
 
                 LoadItems();
             }
+            catch (SqlException sqlEx)
+            {
+                if (sqlEx.Number == 2627)
+                {
+                    ErrorMessage = $"Workout '{NewWorkoutName}' already exists!";
+                }
+                else
+                {
+                    throw;
+                }
+            }
             catch (Exception ex)
             {
-
                 ErrorMessage = ex.Message;
             }
         }

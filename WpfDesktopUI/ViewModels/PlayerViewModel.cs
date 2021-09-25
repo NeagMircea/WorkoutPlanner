@@ -74,12 +74,6 @@ namespace WpfDesktopUI.ViewModels
             this.events = events;
         }
 
-
-        protected override void OnViewReady(object view)
-        {
-            base.OnViewReady(view);
-        }
-
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);

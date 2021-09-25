@@ -6,7 +6,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	DELETE 
+	DELETE TOP(1)
 	FROM [WorkoutDayExercises]
 	WHERE [fk_WorkoutId] = @WorkoutId AND [fk_DayId] = @DayId AND [fk_ExerciseId] = @ExerciseId;
 END;

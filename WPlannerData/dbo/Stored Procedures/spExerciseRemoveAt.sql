@@ -4,7 +4,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	DELETE 
+	DELETE TOP(1)
 	FROM [Exercises]
 	WHERE [ExerciseId] = @Id;
 END;

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -249,6 +250,7 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
+                ErrorMessage = "";
                 LoadCategories();
                 LoadSubcategories();
             }
@@ -262,39 +264,39 @@ namespace WpfDesktopUI.ViewModels
         private void LoadCategories()
         {
             CategoryData data = new CategoryData();
-            List<CategoryModel> categoryList = data.GetAllCategories();
+            CategoryListBox = new BindingList<CategoryDisplayModel>();
 
-            var categories = mapper.Map<List<CategoryDisplayModel>>(categoryList);
-
-            CategoryListBox= new BindingList<CategoryDisplayModel>(categories);
+            Helper.LoadItems(
+                CategoryListBox, 
+                data.GetAllCategories, 
+                mapper.Map<List<CategoryDisplayModel>>
+                );
         }
 
 
         private void LoadSubcategories()
         {
             SubcategoryData data = new SubcategoryData();
-            List<SubcategoryModel> subcategoryList = data.GetAllSubcategories();
+            SubcategoryComboBox = new BindingList<SubcategoryDisplayModel>();
 
-            var subcategories = mapper.Map<List<SubcategoryDisplayModel>>(subcategoryList);
-
-            SubcategoryComboBox = new BindingList<SubcategoryDisplayModel>(subcategories);
+            Helper.LoadItems(
+                SubcategoryComboBox,
+                data.GetAllSubcategories,
+                mapper.Map<List<SubcategoryDisplayModel>>);
         }
 
 
         private void LoadSubcategoriesBySelected()
-        {
-            if (SelectedCategory == null)
-            {
-                SubcategoryListBox = new BindingList<SubcategoryDisplayModel>();
-                return;
-            }
-
+        {        
             SubcategoryData data = new SubcategoryData();
-            List<SubcategoryModel> subcategoryList = data.GetSubcategoryByCategoryId(SelectedCategory.CategoryId);
+            SubcategoryListBox = new BindingList<SubcategoryDisplayModel>();
 
-            var subcategories = mapper.Map<List<SubcategoryDisplayModel>>(subcategoryList);
-
-            SubcategoryListBox = new BindingList<SubcategoryDisplayModel>(subcategories);
+            Helper.LoadItems(
+                SubcategoryListBox, 
+                SelectedCategory,
+                data.GetSubcategoryByCategoryId,
+                mapper.Map<List<SubcategoryDisplayModel>>
+                );
         }
 
 
@@ -303,6 +305,7 @@ namespace WpfDesktopUI.ViewModels
             base.OnViewLoaded(view);
             LoadItems();
             ViewTitle = "Category Panel";
+            ResetAddForm();
         }
 
 
@@ -348,12 +351,28 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
+                ErrorMessage = "";
+
                 CategoryData data = new CategoryData();
-                            
+
                 data.SaveCategoryRecord(NewCategoryName, Helper.GetIdsFromCollection(SelectedSubcategoryCB));
 
                 LoadCategories();
+
+                ResetAddForm();
             }
+            catch (SqlException sqlEx)
+            {
+                if (sqlEx.Number == 2627)
+                {
+                    ErrorMessage = $"Category '{NewCategoryName}' already exists!";
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
             catch (Exception ex)
             {
                 ErrorMessage = ex.Message;
@@ -416,6 +435,13 @@ namespace WpfDesktopUI.ViewModels
             }
 
             SubcategoryCBText = SelectedSubcategoryCB.Count.ToString();
+        }
+
+
+        private void ResetAddForm()
+        {
+            NewCategoryName = "Category Name";
+            SubcategoryCBText = "Subcategories";
         }
 
     }

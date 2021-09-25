@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace WpfDesktopUI.Views
 {
     /// <summary>
-    /// Interaction logic for SubcategoryView.xaml
+    /// Interaction logic for MuscleView.xaml
     /// </summary>
-    public partial class SubcategoryView : UserControl
+    public partial class MuscleView : UserControl
     {
-        public SubcategoryView()
+        public MuscleView()
         {
             InitializeComponent();
-        }
-
-        private void NewSubcategoryText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

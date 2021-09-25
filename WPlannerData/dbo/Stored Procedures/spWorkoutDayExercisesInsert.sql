@@ -9,5 +9,6 @@ BEGIN
 	VALUES (@WorkoutId, @DayId, @ExerciseId);
 
 	UPDATE [WorkoutDayExercises]
-	SET [ExerciseOrder] = SCOPE_IDENTITY();
+	SET [ExerciseOrder] = SCOPE_IDENTITY()
+	WHERE Id = SCOPE_IDENTITY();
 END;

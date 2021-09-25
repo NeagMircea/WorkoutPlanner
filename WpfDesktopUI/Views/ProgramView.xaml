@@ -76,7 +76,9 @@
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="3">
 
             <TextBox x:Name="NewProgramName" Margin="20 30 10 10"
-                     Padding="10"/>
+                     Padding="10"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalScrollBarVisibility="Auto" MaxWidth="225"/>
 
             <Button x:Name="AddNew"  
                 Margin="20 10 10 10" Padding="10">

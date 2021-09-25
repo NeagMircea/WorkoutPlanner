@@ -21,7 +21,7 @@
         <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <TextBlock x:Name="ErrorMessage"
+        <TextBlock x:Name="ErrorMessage"
                    Grid.Row="0"
                    Margin="10 0 10 10" Foreground="Red" MaxWidth="600"
                    TextWrapping="Wrap" Visibility = 
@@ -29,21 +29,27 @@
             {StaticResource BooleanToVisibilityConverter}, 
             FallbackValue = Collapsed}" />
 
-    <Viewbox Grid.Row="1" Stretch="UniformToFill"
-                 MaxHeight="400" MaxWidth="750">
-            <StackPanel>
-                <MediaElement x:Name="Player" LoadedBehavior="Manual" 
+        <Viewbox Grid.Row="1">
+            <MediaElement x:Name="Player" LoadedBehavior="Manual" 
                       Stretch="Uniform"  MouseDown="Player_MouseDown" 
                       Source="{Binding PlayerSource}"/>
-            </StackPanel>
-            
-        
-    </Viewbox>
+        </Viewbox>
 
-    <StatusBar Grid.Row="2">
-        <StatusBar.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Grid>
+        <!--<DockPanel x:Name="ImageSlider" Panel.ZIndex="10000" Grid.Row="2"
+                   Background="LightGray">
+            <Image x:Name="MuscleImage" MinHeight="250"
+                   DockPanel.Dock="Top"/>
+            <TextBlock x:Name="ImageDescription" DockPanel.Dock="Top"
+                       MinHeight="80"/>
+            <Button DockPanel.Dock="Left" MinWidth="400">Prev</Button>
+            <Button DockPanel.Dock="Right">Next</Button>
+            
+        </DockPanel>-->
+
+        <StatusBar Grid.Row="2">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -100,7 +106,7 @@
     </StatusBar>
 
     
-    <i:Interaction.Triggers>
+        <i:Interaction.Triggers>
             <i:EventTrigger EventName="KeyDown"></i:EventTrigger>
         </i:Interaction.Triggers>
     

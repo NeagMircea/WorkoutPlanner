@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfDesktopUI.Views"
         mc:Ignorable="d" FontSize="18"
-        Title="WorkoutPlanner" Height="560" Width="800" WindowStartupLocation="CenterOwner">
-    <Grid>
+        Title="WorkoutPlanner" Height="560" Width="800" 
+        WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight">
+    <Grid Margin="10 20 10 20">
         <ContentControl x:Name="ActiveItem" Margin="5"/>
     </Grid>
 </Window>

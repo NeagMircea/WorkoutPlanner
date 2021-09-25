@@ -107,12 +107,17 @@
             </Button>
 
             <Button x:Name="ViewSelected"  
-                Margin="20 10 10 10" Padding="10">
+                Margin="20 8 10 10" Padding="10">
                 Show Video
             </Button>
 
+            <Button x:Name="ViewMuscle"  
+                Margin="20 10 10 10" Padding="10">
+                Muscle Target
+            </Button>
+
             <Button x:Name="RemoveSelected" Grid.Row="5" Grid.Column="3" 
-                Margin="20 122 10 10" Padding="10" Background="Red">
+                Margin="20 55 10 10" Padding="10" Background="Red">
                 Remove Exercise
             </Button>
             

@@ -6,6 +6,7 @@ using HelperLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,17 @@ namespace WpfDesktopUI.ViewModels
                 newSubcategoryName = value;
                 NotifyOfPropertyChange(() => NewSubcategoryName);
                 NotifyOfPropertyChange(() => CanAddNew);
+            }
+        }
+
+        private string newSubcategoryText;
+        public string NewSubcategoryText
+        {
+            get { return newSubcategoryText; }
+            set
+            {
+                newSubcategoryText = value;
+                NotifyOfPropertyChange(() => NewSubcategoryText);
             }
         }
 
@@ -214,11 +226,32 @@ namespace WpfDesktopUI.ViewModels
 
         public void AddNew()
         {
-            SubcategoryData data = new SubcategoryData();
-            data.SaveSubcategoryRecord(NewSubcategoryName);
+            try
+            {
+                ErrorMessage = "";
 
-            LoadAllSubcategories();
-            LoadUnusedSubcategories();
+                SubcategoryData data = new SubcategoryData();
+                data.SaveSubcategoryRecord(NewSubcategoryName, NewSubcategoryText);
+
+                LoadAllSubcategories();
+                LoadUnusedSubcategories();
+            }
+            catch (SqlException sqlEx)
+            {
+                if (sqlEx.Number == 2627)
+                {
+                    ErrorMessage = $"Subcategory '{newSubcategoryName}' already exists!";
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+
         }
 
 

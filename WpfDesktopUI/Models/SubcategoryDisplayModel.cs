@@ -12,6 +12,7 @@ namespace WpfDesktopUI.Models
     {
         public int SubcategoryId { get; set; }
         public string SubcategoryName { get; set; }
+        public string SubcategoryInfo { get; set; }
 
         public int GetId => SubcategoryId;
 

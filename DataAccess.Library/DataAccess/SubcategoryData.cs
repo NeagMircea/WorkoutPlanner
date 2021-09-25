@@ -34,13 +34,14 @@ namespace DataAccess.Library.DataAccess
         }
 
 
-        public void SaveSubcategoryRecord(string subcategoryName)
+        public void SaveSubcategoryRecord(string subcategoryName, string subcategoryInfo)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
             var p = new
             {
-                SubcategoryName = subcategoryName
+                SubcategoryName = subcategoryName,
+                SubcategoryInfo = subcategoryInfo
             };
 
             sql.SaveData("dbo.spSubcategoryInsert", p, "WPlannerData");
@@ -95,6 +96,18 @@ namespace DataAccess.Library.DataAccess
             var p = new { CategoryId = categoryId };
 
             var output = sql.LoadData<SubcategoryModel, dynamic>("dbo.spSubcategoryGetUnused", p, "WPlannerData");
+
+            return output;
+        }
+
+
+        public List<SubcategoryModel> GetSubcategoriesByExerciseId(int exerciseId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var p = new { ExerciseId = exerciseId };
+
+            var output = sql.LoadData<SubcategoryModel, dynamic>("dbo.spSubcategoryByExerciseId", p, "WPlannerData");
 
             return output;
         }

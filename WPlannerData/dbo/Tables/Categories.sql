@@ -4,4 +4,5 @@
     [CategoryName] NVARCHAR(100) NOT NULL, 
     [CategoryOrder] INT NULL
 
+	CONSTRAINT Unique_CategoryName UNIQUE([CategoryName])
 )

@@ -1,6 +1,6 @@
 ﻿CREATE VIEW [dbo].[Exercises_Categories_Subcategories]
 	AS 
-	SELECT [Exercises].*, [CategoryId], [CategoryName], [SubcategoryId], [SubcategoryName]
+	SELECT [Exercises].*, [CategoryId], [CategoryName], [SubcategoryId], [SubcategoryName], [SubcategoryInfo]
 	FROM [ExercisesCategoriesSubcategories]
 
 	JOIN [Exercises] ON [Exercises].[ExerciseId] = [ExercisesCategoriesSubcategories].[fk_ExerciseId]

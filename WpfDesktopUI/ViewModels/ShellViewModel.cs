@@ -11,16 +11,18 @@ namespace WpfDesktopUI.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<GoWorkoutViewEvent>, IHandle<GoProgramViewEvent>,
         IHandle<GoWorkoutAddViewEvent>, IHandle<GoExerciseViewEvent>, IHandle<GoExerciseAddViewEvent>,
-        IHandle<GoCategoryViewEvent>, IHandle<GoPlayerViewEvent>, IHandle<GoSubcategoryViewEvent>
+        IHandle<GoCategoryViewEvent>, IHandle<GoPlayerViewEvent>, IHandle<GoSubcategoryViewEvent>, IHandle<GoMuscleViewEvent>
     {
         private IEventAggregator events;
         private SimpleContainer container;
+        private ExerciseViewModel exerciseVM;
 
         //constructor injection
         public ShellViewModel(IEventAggregator events, SimpleContainer container)
         {
             this.events = events;
             this.container = container;
+            exerciseVM = container.GetInstance<ExerciseViewModel>();
 
             ActivateItemAsync(container.GetInstance<ProgramViewModel>());
             events.Subscribe(this);
@@ -58,7 +60,7 @@ namespace WpfDesktopUI.ViewModels
 
         public async Task HandleAsync(GoExerciseViewEvent message, CancellationToken cancellationToken)
         {
-            ExerciseViewModel exerciseVM = container.GetInstance<ExerciseViewModel>();
+            //ExerciseViewModel exerciseVM = container.GetInstance<ExerciseViewModel>();
 
             exerciseVM.ProgramEventData.Id = message.ProgramId;
             exerciseVM.ProgramEventData.Name = message.ProgramName;
@@ -133,6 +135,22 @@ namespace WpfDesktopUI.ViewModels
             subcategoryVM.CategoryEventData.CategoryName = message.CategoryName;
 
             await ActivateItemAsync(subcategoryVM);
+        }
+
+        public async Task HandleAsync(GoMuscleViewEvent message, CancellationToken cancellationToken)
+        {
+            MuscleViewModel muscleVM = container.GetInstance<MuscleViewModel>();
+            
+            muscleVM.ProgramEventData.Id = message.ProgramId;
+            muscleVM.ProgramEventData.Name = message.ProgramName;
+
+            muscleVM.WorkoutEventData.WorkoutId = message.WorkoutId;
+            muscleVM.WorkoutEventData.WorkoutName = message.WorkoutName;
+
+            muscleVM.ExerciseEventData.ExerciseId = message.ExerciseId;
+            muscleVM.ExerciseEventData.ExerciseName = message.ExerciseName;
+
+            await ActivateItemAsync(muscleVM);
         }
     }
 }

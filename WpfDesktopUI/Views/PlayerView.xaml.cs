@@ -34,6 +34,8 @@ namespace WpfDesktopUI.Views
             SetupPlayer();
             SetupTimer();
             isSetup = true;
+            //Rectangle.Stroke = new SolidColorBrush(Color.FromRgb(0, 111, 0));
+            //Rectangle.Fill = new SolidColorBrush(Color.FromRgb(0, 111, 111));
         }
 
 

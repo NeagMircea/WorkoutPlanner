@@ -6,6 +6,7 @@ using HelperLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using WpfDesktopUI.EventModels;
 using WpfDesktopUI.Models;
@@ -106,11 +107,13 @@ namespace WpfDesktopUI.ViewModels
         public void LoadItems()
         {
             ProgramData data = new ProgramData();
-            List<ProgramModel> programList = data.GetAllPrograms();
+            ProgramListBox = new BindingList<ProgramDisplayModel>();
 
-            var programs = mapper.Map<List<ProgramDisplayModel>>(programList); 
-
-            ProgramListBox = new BindingList<ProgramDisplayModel>(programs);
+            Helper.LoadItems(
+                ProgramListBox, 
+                data.GetAllPrograms,
+                mapper.Map<List<ProgramDisplayModel>>
+                );
         }
 
 
@@ -213,6 +216,17 @@ namespace WpfDesktopUI.ViewModels
                 data.SaveProgramRecord(NewProgramName);
 
                 LoadItems();
+            }
+            catch (SqlException sqlEx)
+            {
+                if (sqlEx.Number == 2627)
+                {
+                    ErrorMessage = $"Program '{NewProgramName}' already exists!";
+                }
+                else
+                {
+                    throw;
+                }
             }
             catch (Exception ex)
             {

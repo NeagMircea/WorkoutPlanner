@@ -16,7 +16,7 @@ using WpfDesktopUI.Views.Interfaces.Composite;
 namespace WpfDesktopUI.ViewModels
 {
     public class ExerciseViewModel : Screen, IDefaultView
-    {
+    {       
         public ProgramModel ProgramEventData { get; set; } = new ProgramModel();
         public WorkoutModel WorkoutEventData { get; set; } = new WorkoutModel();
 
@@ -64,10 +64,11 @@ namespace WpfDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CanMoveUp);
                 NotifyOfPropertyChange(() => CanMoveDown);
                 NotifyOfPropertyChange(() => CanViewSelected);
+                NotifyOfPropertyChange(() => CanViewMuscle);
             }
         }
 
-        //DaysComboBox
+
         private BindingList<DayDisplayModel> daysComboBox;
         public BindingList<DayDisplayModel> DaysComboBox
         {
@@ -129,6 +130,21 @@ namespace WpfDesktopUI.ViewModels
         }
 
         public bool CanViewSelected
+        {
+            get
+            {
+                bool output = false;
+
+                if (SelectedExercise != null)
+                {
+                    output = true;
+                }
+
+                return output;
+            }
+        }
+
+        public bool CanViewMuscle
         {
             get
             {
@@ -220,8 +236,7 @@ namespace WpfDesktopUI.ViewModels
         {
             try
             {
-                DayData data = new DayData();
-                data.InsertDaysOfTheWeek();
+                ErrorMessage = "";             
                 LoadDays();
             }
             catch (Exception ex)
@@ -234,11 +249,15 @@ namespace WpfDesktopUI.ViewModels
         private void LoadDays()
         {
             DayData data = new DayData();
-            List<DayModel> dayList = data.GetAllDays();
+            data.InsertDaysOfTheWeek();
 
-            var days = mapper.Map<List<DayDisplayModel>>(dayList);
+            DaysComboBox = new BindingList<DayDisplayModel>();
 
-            DaysComboBox = new BindingList<DayDisplayModel>(days);
+            Helper.LoadItems(
+                DaysComboBox,
+                data.GetAllDays,
+                mapper.Map<List<DayDisplayModel>>
+                );
         }
 
 
@@ -256,6 +275,14 @@ namespace WpfDesktopUI.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
+
+            //check if we're returning to this view
+            if (SelectedDay != null)
+            {
+                LoadExercises();
+                return;
+            }
+                
             LoadItems();
             ViewTitle = WorkoutEventData.WorkoutName;
         }
@@ -370,6 +397,30 @@ namespace WpfDesktopUI.ViewModels
                         ExerciseId = SelectedExercise.ExerciseId,
                         ExerciseName = SelectedExercise.ExerciseName,
                         VideoPath = SelectedExercise.VideoPath
+                    });
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
+
+
+        public async Task ViewMuscle()
+        {
+            try
+            {
+                await events.PublishOnUIThreadAsync(
+                    new GoMuscleViewEvent
+                    {
+                        ProgramId = ProgramEventData.Id,
+                        ProgramName = ProgramEventData.Name,
+
+                        WorkoutId = WorkoutEventData.WorkoutId,
+                        WorkoutName = WorkoutEventData.WorkoutName,
+
+                        ExerciseId = SelectedExercise.ExerciseId,
+                        ExerciseName = SelectedExercise.ExerciseName
                     });
             }
             catch (Exception ex)

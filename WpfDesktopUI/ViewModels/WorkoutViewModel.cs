@@ -6,6 +6,7 @@ using HelperLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -177,7 +178,29 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            ViewTitle = ProgramEventData.Name;
+            LoadItems();
+        }
+
+
         public void LoadItems()
+        {
+            try
+            {
+                ErrorMessage = "";
+                LoadWorkouts();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
+
+
+        private void LoadWorkouts()
         {
             WorkoutProgramData data = new WorkoutProgramData();
             List<WorkoutProgramModel> workoutList = data.GetWorkoutsByProgramId(ProgramEventData.Id);
@@ -185,14 +208,6 @@ namespace WpfDesktopUI.ViewModels
             var workouts = mapper.Map<List<WorkoutProgramDisplayModel>>(workoutList);
 
             WorkoutListBox = new BindingList<WorkoutProgramDisplayModel>(workouts);
-        }
-
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            ViewTitle = ProgramEventData.Name;
-            LoadItems();
         }
 
 

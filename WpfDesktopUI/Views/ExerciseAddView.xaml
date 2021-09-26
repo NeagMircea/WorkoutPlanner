@@ -9,51 +9,39 @@
              xmlns:local="clr-namespace:WpfDesktopUI.Views"
              mc:Ignorable="d" Background="White" FontSize="20"
              d:DesignHeight="600" d:DesignWidth="775">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+
+    <Grid Margin="20 10 20 10">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="ViewTitle" Grid.Row="0" Grid.Column="1" 
-                   Grid.ColumnSpan="3" HorizontalAlignment="Center" 
-                   FontSize="35" Margin="0 0 0 10" 
-                   FontFamily="Segoe UI Light">
-            Add Exercise
-        </TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="ErrorMessage"
-                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                   Margin="10 0 10 10" Foreground="Red" MaxWidth="600"
-                   TextWrapping="Wrap" Visibility = 
-                   "{Binding IsErrorVisible, Converter=
-            {StaticResource BooleanToVisibilityConverter}, 
-            FallbackValue = Collapsed}" />
+        <Grid Grid.Row="2" Grid.Column="0">
 
-        <StackPanel Grid.Row="2" Grid.Column="1" 
-                 Grid.RowSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock Text="Existing Exercises"
+            <TextBlock Text="Existing Exercises" Grid.Row="0"
                        Padding="10 0 0 5"/>
 
-            <ListBox x:Name="ExistingExercises"  MinHeight="328" MinWidth="250"
-                 Margin="10 0 0 0"
+            <ListBox x:Name="ExistingExercises" Grid.Row="1"
                  SelectedItem="{Binding SelectedExercise}">
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            
+
                             <TextBlock Text="{Binding ExerciseName}"/>
 
                             <StackPanel Orientation="Horizontal">
@@ -61,27 +49,34 @@
                                 <TextBlock Text="{Binding RepRangeDisplay}" FontSize="15"/>
                                 <TextBlock Text="{Binding DurationDisplay}" FontSize="15"/>
                             </StackPanel>
-                            
+
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
             </ListBox>
+        </Grid>
 
-        </StackPanel>
-        
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2"
-                    Grid.RowSpan="3">
+        <Grid Grid.Row="2" Grid.Column="1">
 
-            <Button x:Name="AddSelected" 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="AddSelected" Grid.Row="0"
                 Margin="20 32 10 10" Padding="10">
                 Add Selected
             </Button>
 
-            <TextBlock Text="Filters:"
+            <TextBlock Text="Filters:" Grid.Row="1"
                        Margin="20 0 10 0"/>
-            
-            <ComboBox x:Name="CategoryComboBox" SelectedItem="{Binding SelectedCategory}" 
+
+            <ComboBox x:Name="CategoryComboBox" Grid.Row="2"
+                      SelectedItem="{Binding SelectedCategory}" 
                       Margin="20 0 10 10" Padding="10">
 
                 <ComboBox.ItemTemplate>
@@ -92,8 +87,9 @@
 
             </ComboBox>
 
-            <xctk:CheckComboBox x:Name="SubcategoryComboBox" Padding="10"  
-                                Margin="20 6 10 10" SelectedItemsOverride
+            <xctk:CheckComboBox x:Name="SubcategoryComboBox" Grid.Row="3" 
+                                Padding="10" Margin="20 6 10 10" 
+                                SelectedItemsOverride
                                 ="{Binding SelectedSubcategories}" 
                                 Text="{Binding SubcategoryCBText}">
 
@@ -115,50 +111,51 @@
 
             </xctk:CheckComboBox>
 
-            <Button x:Name="ResetFilters" 
-                Margin="20 7 10 10" Padding="10">
+            <Button x:Name="ResetFilters" Grid.Row="4"
+                Margin="20 10 10 10" Padding="10">
                 Reset Filters
             </Button>
 
-            <Button x:Name="AddNewCategory" 
-                Margin="20 7 10 10" Padding="10">
+            <Button x:Name="AddNewCategory" Grid.Row="5"
+                Margin="20 10 10 10" Padding="10">
                 Add New Category
             </Button>
+        </Grid>
 
-            <Button x:Name="GoBack" Grid.Row="3" Grid.Column="2" 
-                Margin="20 30 10 10" Padding="10">
-                Back
-            </Button>
-        </StackPanel>
+        <Grid Grid.Row="2" Grid.Column="2">
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="3"
-                    Grid.RowSpan="3" Margin="0 0 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-            <TextBox x:Name="NewExerciseName" Margin="20 32 10 10"
+            <TextBox x:Name="NewExerciseName" Grid.Row="0" Margin="20 32 10 10"
                      Padding="10" Text="Exercise Name"
                      HorizontalScrollBarVisibility="Auto"
-                     VerticalScrollBarVisibility="Disabled" 
-                     MaxWidth="200"/>
+                     VerticalScrollBarVisibility="Disabled"/>
 
-            <TextBlock Text="Category:"
+            <TextBlock Text="Category:" Grid.Row="1"
                        Margin="20 0 10 0"/>
-            
-            <ComboBox x:Name="NewCategoryComboBox" Margin="20 0 10 10"
+
+            <ComboBox x:Name="NewCategoryComboBox" Grid.Row="2" Margin="20 0 10 10"
                       Padding="10" SelectedItem="{Binding SelectedNewCategory}" >
-                
+
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding CategoryName}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-
             </ComboBox>
 
-            <xctk:CheckComboBox x:Name="NewSubcategoryComboBox" Padding="10"
-                                Margin="20 5 10 10" SelectedItemsOverride
+            <xctk:CheckComboBox x:Name="NewSubcategoryComboBox" Grid.Row="3"
+                                Padding="10" Margin="20 6 10 10" 
+                                SelectedItemsOverride
                                 ="{Binding SelectedNewSubcategories}"
                                 Text="{Binding SubcategoryNewCBText}">
-                
 
                 <xctk:CheckComboBox.ItemTemplate>
                     <DataTemplate>
@@ -171,57 +168,60 @@
                         <cal:ActionMessage MethodName="SetNewCBText"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-
             </xctk:CheckComboBox>
 
-            <StackPanel Orientation="Vertical">
-                <DockPanel>
-                    <TextBox x:Name="ExerciseDuration" Text="Duration"
-                         Margin="20 0 0 10" MinWidth="80"
-                             HorizontalAlignment="Left"
-                             HorizontalScrollBarVisibility="Auto"
-                             VerticalScrollBarVisibility="Disabled" 
-                             MaxWidth="100"/>
+            <Grid Grid.Row="4" Margin="20 10 10 5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                    <TextBox x:Name="ExerciseSets" Text="Sets"
-                         Margin="20 0 10 10" MinWidth="80"
-                             HorizontalAlignment="Right"
-                             HorizontalScrollBarVisibility="Auto"
-                             VerticalScrollBarVisibility="Disabled" 
-                             MaxWidth="100"/>
-                   
-                </DockPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <DockPanel>
-                    <TextBox x:Name="MinReps" Text="min Reps"
-                         Margin="20 -2 0 10" MinWidth="80"
-                             HorizontalAlignment="Left"
-                             HorizontalScrollBarVisibility="Auto"
-                             VerticalScrollBarVisibility="Disabled" 
-                             MaxWidth="100"/>
+                <TextBox x:Name="ExerciseDuration" Grid.Row="0" Grid.Column="0"
+                             Text="Duration" Margin="0 0 5 0"
+                             HorizontalAlignment="Stretch"                             
+                             HorizontalScrollBarVisibility="Visible"
+                             VerticalScrollBarVisibility="Disabled"/>
 
-                    <TextBox x:Name="MaxReps" Text="max Reps"
-                         Margin="20 -2 10 10" MinWidth="80"
-                             HorizontalAlignment="Right"
-                             HorizontalScrollBarVisibility="Auto"
-                             VerticalScrollBarVisibility="Disabled" 
-                             MaxWidth="100"/>
-                </DockPanel>
+                <TextBox x:Name="ExerciseSets" Grid.Row="0" Grid.Column="1"
+                             Text="Sets" Margin="5 0 0 0"
+                             HorizontalAlignment="Stretch"   
+                             HorizontalScrollBarVisibility="Visible"
+                             VerticalScrollBarVisibility="Disabled"/>
 
+                <TextBox x:Name="MinReps" Grid.Row="1" Grid.Column="0"
+                             Text="min Reps" Margin="0 25 5 0"
+                             HorizontalAlignment="Stretch"   
+                             HorizontalScrollBarVisibility="Visible"
+                             VerticalScrollBarVisibility="Disabled"/>
 
-            </StackPanel>
+                <TextBox x:Name="MaxReps" Grid.Row="1" Grid.Column="1"
+                         Text="max Reps" Margin="5 25 0 0"
+                             HorizontalAlignment="Stretch"   
+                             HorizontalScrollBarVisibility="Visible"
+                             VerticalScrollBarVisibility="Disabled"/>
 
-            <Button x:Name="AddNew"  
-                Margin="20 -2 10 10" Padding="10">
+            </Grid>
+
+            <Button x:Name="AddNew" Grid.Row="5"  
+                Margin="20 15 10 10" Padding="10">
                 Add New Exercise
             </Button>
+        </Grid>
 
-            <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="3" 
-                Margin="20 29 10 10" Padding="10" Background="Red">
-                Remove Exercise
-            </Button>
+        <Button x:Name="GoBack" Grid.Row="3" Grid.Column="1" 
+                Margin="20 10 10 10" Padding="10">
+            Back
+        </Button>
 
-        </StackPanel>
+        <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="2" 
+                Margin="20 10 10 10" Padding="10" Background="Red">
+            Remove Exercise
+        </Button>
 
     </Grid>
 </UserControl>

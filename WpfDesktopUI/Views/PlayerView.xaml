@@ -35,16 +35,6 @@
                       Source="{Binding PlayerSource}"/>
         </Viewbox>
 
-        <!--<DockPanel x:Name="ImageSlider" Panel.ZIndex="10000" Grid.Row="2"
-                   Background="LightGray">
-            <Image x:Name="MuscleImage" MinHeight="250"
-                   DockPanel.Dock="Top"/>
-            <TextBlock x:Name="ImageDescription" DockPanel.Dock="Top"
-                       MinHeight="80"/>
-            <Button DockPanel.Dock="Left" MinWidth="400">Prev</Button>
-            <Button DockPanel.Dock="Right">Next</Button>
-            
-        </DockPanel>-->
 
         <StatusBar Grid.Row="2">
             <StatusBar.ItemsPanel>
@@ -96,16 +86,14 @@
             </StatusBarItem>
 
             <StatusBarItem Grid.Column="5">
-            <!--<ProgressBar x:Name="Volume" Width="50" Height="12" Maximum="1" 
-                             Value="{Binding ElementName=Player, Path=Volume}"/>-->
+               
                 <Slider x:Name="Volume"
                         ValueChanged="Volume_ValueChanged"
                         Minimum="0" Maximum="1" MinWidth="100"/>
                 
         </StatusBarItem>
     </StatusBar>
-
-    
+  
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="KeyDown"></i:EventTrigger>
         </i:Interaction.Triggers>

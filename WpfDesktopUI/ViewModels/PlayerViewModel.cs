@@ -87,7 +87,7 @@ namespace WpfDesktopUI.ViewModels
             {
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-                PlayerSource = new Uri($@"{baseDirectory}Videos\{ExerciseEventData.ExerciseName}.mp4");
+                PlayerSource = new Uri($@"{baseDirectory}Media\Videos\{ExerciseEventData.ExerciseName}.mp4");
                 //PlayerSource = new Uri($@"{baseDirectory}Videos\Super Meat Boy E3 2010 Trailer.mp4");
             }
             else

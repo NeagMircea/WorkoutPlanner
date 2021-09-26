@@ -6,72 +6,78 @@
              xmlns:local="clr-namespace:WpfDesktopUI.Views"
             mc:Ignorable="d" Background="White" FontSize="20"
              d:DesignHeight="420" d:DesignWidth="775">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    
+    <Grid Margin="20 10 20 10">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
         <TextBlock x:Name="ViewTitle" 
-                   Grid.Row="0" Grid.Column="1" 
+                   Grid.Row="0" Grid.Column="0" 
                    Grid.ColumnSpan="3" HorizontalAlignment="Center" 
                    FontSize="35" FontFamily="Segoe UI Light">
             Workout Name
         </TextBlock>
 
         <TextBlock x:Name="ErrorMessage"
-                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
                    Margin="10 0 10 10" Foreground="Red" MaxWidth="600"
                    TextWrapping="Wrap" Visibility = 
                    "{Binding IsErrorVisible, Converter=
             {StaticResource BooleanToVisibilityConverter}, 
             FallbackValue = Collapsed}" />
 
-        <StackPanel Grid.Row="2" Grid.Column="1" 
-                 Grid.RowSpan="4">
+        <Grid Grid.Row="2" Grid.Column="0">
 
-            <TextBlock Text="Exercises"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Exercises" Grid.Row="0"
                        Padding="0 0 0 5"/>
 
-            <ListBox x:Name="ExerciseListBox"  MinHeight="300" MinWidth="250"
+            <ListBox x:Name="ExerciseListBox" Grid.Row="1" 
                  SelectedItem="{Binding SelectedExercise}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            
+
                             <TextBlock Text="{Binding ExerciseName}"/>
-                            
+
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding SetsDisplay}" FontSize="15"/>
                                 <TextBlock Text="{Binding RepRangeDisplay}" FontSize="15"/>
                                 <TextBlock Text="{Binding DurationDisplay}" FontSize="15"/>
                             </StackPanel>
                         </StackPanel>
-                        
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
             </ListBox>
-        </StackPanel>
+        </Grid>
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2"
-                    Grid.RowSpan="4">
+        <Grid Grid.Row="2" Grid.Column="1">
 
-            <ComboBox x:Name="DaysComboBox" SelectedItem="{Binding SelectedDay}" 
-                      Margin="20 32 10 10" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <ComboBox x:Name="DaysComboBox" Grid.Row="0" 
+                      SelectedItem="{Binding SelectedDay}" 
+                      Margin="20 30 10 10" Padding="10">
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -81,46 +87,49 @@
 
             </ComboBox>
 
-            <Button x:Name="MoveUp" 
+            <Button x:Name="MoveUp" Grid.Row="1"
                 Margin="20 10 10 10" Padding="10">
                 Move Up
             </Button>
 
-            <Button x:Name="MoveDown"  
+            <Button x:Name="MoveDown" Grid.Row="2"
                 Margin="20 10 10 10" Padding="10">
                 Move Down
             </Button>
+        </Grid>
 
-            <Button x:Name="GoBack" Grid.Row="5" Grid.Column="2" 
-                Margin="20 55 10 10" Padding="10">
-                Back
-            </Button>
+        <Grid Grid.Row="2" Grid.Column="2">
 
-        </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="3"
-                    Grid.RowSpan="4">
-
-            <Button x:Name="AddNew" 
-                Margin="20 32 10 10" Padding="10">
+            <Button x:Name="AddNew" Grid.Row="0"
+                Margin="20 30 10 10" Padding="10">
                 Add Exercise
             </Button>
 
-            <Button x:Name="ViewSelected"  
+            <Button x:Name="ViewSelected" Grid.Row="1"
                 Margin="20 8 10 10" Padding="10">
                 Show Video
             </Button>
 
-            <Button x:Name="ViewMuscle"  
+            <Button x:Name="ViewMuscle" Grid.Row="2"
                 Margin="20 10 10 10" Padding="10">
                 Muscle Target
             </Button>
+        </Grid>
 
-            <Button x:Name="RemoveSelected" Grid.Row="5" Grid.Column="3" 
-                Margin="20 55 10 10" Padding="10" Background="Red">
-                Remove Exercise
-            </Button>
-            
-        </StackPanel>
+        <Button x:Name="GoBack" Grid.Row="3" Grid.Column="1" 
+                Margin="20 10 10 10" Padding="10">
+            Back
+        </Button>
+
+        <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="2" 
+                Margin="20 10 10 10" Padding="10" Background="Red">
+            Remove Exercise
+        </Button>
     </Grid>
 </UserControl>

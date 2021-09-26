@@ -252,9 +252,8 @@
       <Name>HelperLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Media\Images\not_found.png" />
+    <Folder Include="Media\Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

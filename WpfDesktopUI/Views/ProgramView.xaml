@@ -6,46 +6,48 @@
              xmlns:local="clr-namespace:WpfDesktopUI.Views"
              mc:Ignorable="d" Background="White" FontSize="20"
              d:DesignHeight="425" d:DesignWidth="775">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
+    <Grid Margin="20 10 20 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.2*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                    HorizontalAlignment="Center" FontSize="35" 
                    Margin="0 0 0 20" FontFamily="Segoe UI Light">
             Workout Planner
         </TextBlock>
 
         <TextBlock x:Name="ErrorMessage"
-                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                    Margin="10 0 10 10" Foreground="Red" MaxWidth="600"
                    TextWrapping="Wrap" Visibility = 
                    "{Binding IsErrorVisible, Converter=
             {StaticResource BooleanToVisibilityConverter}, 
             FallbackValue = Collapsed}" />
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" 
-                 Grid.RowSpan="3">
+        <Grid Grid.Row="2" Grid.Column="0">
 
-            <TextBlock Text="Workout Programs"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Workout Programs"
                        Padding="0 0 0 5"/>
-            
-            <ListBox x:Name="ProgramListBox"  MinHeight="300" MinWidth="250"
-                 MaxHeight="300" SelectedItem="{Binding SelectedProgram}">
+           
+            <ListBox Grid.Row="1" x:Name="ProgramListBox"   
+                 SelectedItem="{Binding SelectedProgram}">
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>
@@ -53,43 +55,54 @@
                 </ListBox.ItemTemplate>
 
             </ListBox>
-        </StackPanel>
+        </Grid>
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2">
+        <Grid Grid.Row="2" Grid.Column="1">
 
-            <Button x:Name="ViewSelected"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="ViewSelected" Grid.Row="0"
                 Margin="20 30 10 10" Padding="10">
                 View Program
             </Button>
 
-            <Button x:Name="MoveUp" 
+            <Button x:Name="MoveUp" Grid.Row="1"
                 Margin="20 10 10 10" Padding="10">
                 Move Up
             </Button>
-            
-            <Button x:Name="MoveDown"  
+
+            <Button x:Name="MoveDown" Grid.Row="2"
                 Margin="20 10 10 10" Padding="10">
                 Move Down
             </Button>
-        </StackPanel>
+        </Grid>
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="3">
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-            <TextBox x:Name="NewProgramName" Margin="20 30 10 10"
-                     Padding="10"
+            <TextBox x:Name="NewProgramName" Grid.Row="0"
+                     Padding="10" Margin="20 30 10 10"
                      HorizontalScrollBarVisibility="Auto"
-                     VerticalScrollBarVisibility="Auto" MaxWidth="225"/>
+                     VerticalScrollBarVisibility="Disabled"/>
 
-            <Button x:Name="AddNew"  
+            <Button x:Name="AddNew"  Grid.Row="1"
                 Margin="20 10 10 10" Padding="10">
                 Add New Program
             </Button>
+        </Grid>
 
-        </StackPanel>
-
-        <Button x:Name="RemoveSelected" Grid.Row="4" Grid.Column="3" 
-                Margin="20 60 10 10" Padding="10" Background="Red">
+        <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="2"
+                Margin="20 10 10 10" Padding="10" Background="Red">
             Remove Program
         </Button>
+
     </Grid>
 </UserControl>

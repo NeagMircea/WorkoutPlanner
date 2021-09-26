@@ -156,7 +156,7 @@ namespace WpfDesktopUI.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            ViewTitle = ExerciseEventData.ExerciseName;
+            ViewTitle = $"The {ExerciseEventData.ExerciseName}";
 
             LoadSubcategories();
             UpdateNameAndImage();
@@ -187,10 +187,10 @@ namespace WpfDesktopUI.ViewModels
 
         private void UpdateNameAndImage()
         {
-            MuscleName = subcategoryList[subcatIndex].SubcategoryName;
+            MuscleName = $"The {subcategoryList[subcatIndex].SubcategoryName}";
 
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            ImageSource = new Uri($@"{baseDirectory}Images\{subcategoryList[subcatIndex].SubcategoryName}.png");
+            ImageSource = new Uri($@"{baseDirectory}Media\Images\{subcategoryList[subcatIndex].SubcategoryName}.png");
         }
 
 

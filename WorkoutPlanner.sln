@@ -19,9 +19,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helper", "Helper", "{CFBA98
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperLibrary", "HelperLibrary\HelperLibrary.csproj", "{451C249A-6A8A-4D5F-A9E7-5F50EDF55376}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{132C936F-4F07-413D-8AFB-AA02C2316BBF}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WorkoutPlannerSetup", "WorkoutPlannerSetup\WorkoutPlannerSetup.vdproj", "{FC305D93-7089-434C-A923-8F054DB3B51A}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PlannerSetup", "PlannerSetup\PlannerSetup.vdproj", "{D00BDE6B-3393-463E-AAEE-0F5800734166}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{BB8A0540-CC3B-4C62-9778-BC087A95E425}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8B35F56-51C0-4C1B-8D20-5CCB663D0499}"
+	ProjectSection(SolutionItems) = preProject
+		icon.ico = icon.ico
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,8 +52,8 @@ Global
 		{451C249A-6A8A-4D5F-A9E7-5F50EDF55376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{451C249A-6A8A-4D5F-A9E7-5F50EDF55376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{451C249A-6A8A-4D5F-A9E7-5F50EDF55376}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D00BDE6B-3393-463E-AAEE-0F5800734166}.Debug|Any CPU.ActiveCfg = Debug
-		{D00BDE6B-3393-463E-AAEE-0F5800734166}.Release|Any CPU.ActiveCfg = Release
+		{FC305D93-7089-434C-A923-8F054DB3B51A}.Debug|Any CPU.ActiveCfg = Debug
+		{FC305D93-7089-434C-A923-8F054DB3B51A}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,7 +63,7 @@ Global
 		{1D3D251B-5FCF-4BB6-9B0D-FE463D0977E0} = {0C8E8958-14CA-4E18-A75C-EA39EF785F37}
 		{6AA64459-29AE-4B71-BC72-C5B8CE07BC6E} = {E6BC6F56-5471-44F4-AB62-E1006661F187}
 		{451C249A-6A8A-4D5F-A9E7-5F50EDF55376} = {CFBA987D-D5A3-4CA1-AD8B-98FEC94682E5}
-		{D00BDE6B-3393-463E-AAEE-0F5800734166} = {132C936F-4F07-413D-8AFB-AA02C2316BBF}
+		{FC305D93-7089-434C-A923-8F054DB3B51A} = {BB8A0540-CC3B-4C62-9778-BC087A95E425}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07CD2C74-D9AA-47B3-92BE-32D0F315294D}

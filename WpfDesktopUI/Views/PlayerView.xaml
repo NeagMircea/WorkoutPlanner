@@ -17,26 +17,34 @@
     <Grid >
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
+        <TextBlock x:Name="ViewTitle" 
+                   Grid.Row="0" HorizontalAlignment="Center" 
+                   FontSize="30" FontFamily="Segoe UI Light"
+                   Margin="0 5 0 5">
+            Exercise Name
+        </TextBlock>
+
         <TextBlock x:Name="ErrorMessage"
-                   Grid.Row="0"
-                   Margin="10 0 10 10" Foreground="Red" MaxWidth="600"
+                   Grid.Row="1"
+                   Margin="10 0 10 5" Foreground="Red" MaxWidth="600"
                    TextWrapping="Wrap" Visibility = 
                    "{Binding IsErrorVisible, Converter=
             {StaticResource BooleanToVisibilityConverter}, 
             FallbackValue = Collapsed}" />
 
-        <Viewbox Grid.Row="1">
+        <Viewbox Grid.Row="2">
             <MediaElement x:Name="Player" LoadedBehavior="Manual" 
                       Stretch="Uniform"  MouseDown="Player_MouseDown" 
                       Source="{Binding PlayerSource}"/>
         </Viewbox>
 
 
-        <StatusBar Grid.Row="2">
+        <StatusBar Grid.Row="3">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>

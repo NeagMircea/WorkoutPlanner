@@ -33,7 +33,7 @@ namespace WpfDesktopUI.Models
                 }
                 else
                 {
-                    return $"Sets: 1";
+                    return $"";
                 }
             }
         }

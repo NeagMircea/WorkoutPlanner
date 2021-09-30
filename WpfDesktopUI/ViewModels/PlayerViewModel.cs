@@ -17,6 +17,17 @@ namespace WpfDesktopUI.ViewModels
         public WorkoutModel WorkoutEventData { get; set; } = new WorkoutModel();
         public ExerciseModel ExerciseEventData { get; set; } = new ExerciseModel();
 
+        private string viewTitle;
+        public string ViewTitle
+        {
+            get { return viewTitle; }
+            set
+            {
+                viewTitle = value;
+                NotifyOfPropertyChange(() => ViewTitle);
+            }
+        }
+
         private Uri playerSource;
         public Uri PlayerSource
         {
@@ -77,6 +88,7 @@ namespace WpfDesktopUI.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
+            ViewTitle = $"The {ExerciseEventData.ExerciseName}";
             SetupPlayer();
         }
 

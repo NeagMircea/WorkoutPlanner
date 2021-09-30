@@ -339,7 +339,8 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = "";
 
                 ExerciseData data = new ExerciseData();
-                Helper.SwapItems(ExerciseListBox, SelectedExercise, -1, data.SwapExerciseOrder, LoadExercises);
+
+                Helper.SwapItems(ExerciseListBox, SelectedExercise, -1, data.SwapExerciseOrder, LoadExercises);       
             }
             catch (Exception ex)
             {
@@ -355,6 +356,7 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = "";
 
                 ExerciseData data = new ExerciseData();
+
                 Helper.SwapItems(ExerciseListBox, SelectedExercise, 1, data.SwapExerciseOrder, LoadExercises);
             }
             catch (Exception ex)

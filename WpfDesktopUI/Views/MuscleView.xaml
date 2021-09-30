@@ -43,8 +43,12 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
+            <TextBlock Grid.Row="0" Text="{Binding MuscleName}"
+                       HorizontalAlignment="Center" FontSize="20"              
+                       Margin="0 5 0 10" FontWeight="Bold"/>
+
             <Image Name="MuscleImage" Grid.Row="1" Source="{Binding ImageSource}"
-                   Stretch="Uniform"/>
+                   MaxHeight="400"/>
 
             <DockPanel Grid.Row="2" Margin="10">
 
@@ -81,10 +85,10 @@
                        HorizontalAlignment="Center" FontSize="20"
                        Margin="0 0 0 5"/>
 
-            <ScrollViewer Grid.Row="1">
-                <TextBlock x:Name="QuickInfo"
+            <ScrollViewer Grid.Row="1" Margin="10 5 10 5">
+                <TextBlock x:Name="QuickInfo" Margin="10 5 10 0"
                        Text="{Binding QuickInfo}" 
-                       TextWrapping="Wrap" Margin="10 10 10 5"
+                       TextWrapping="Wrap"
                        FontSize="18"/>
             </ScrollViewer>
 
@@ -92,7 +96,7 @@
                        HorizontalAlignment="Center" FontSize="20"
                        Margin="0 0 0 5"/>
 
-            <ScrollViewer Grid.Row="3" Margin="0 0 0 17">
+            <ScrollViewer Grid.Row="3" Margin="10 5 10 17">
                 <TextBlock x:Name="MuscleInfo" 
                        Text="{Binding MuscleInfo}" TextWrapping="Wrap"
                        Margin="10 5 10 0" FontSize="18"

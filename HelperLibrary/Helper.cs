@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace HelperLibrary
 {
     public static class Helper
-    {
+    { 
         public static void Swap<T>(IList<T> list, int index1, int index2)
         {
             T temp = list[index1];

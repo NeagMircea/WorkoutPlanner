@@ -1,0 +1,10 @@
+**How to install this application**
+
+In order to install this application you'll have to use a file 
+extractor like WinRar or 7-Zip.
+
+With WinRar or 7-Zip right click the file Setup.part1 and choose
+Extract... or Extract Here.
+
+Once the extraction is complete find 'setup.exe' file in your 
+extraction folder. Run it and wait for the installation to complete.  

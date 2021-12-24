@@ -159,6 +159,10 @@ namespace WpfDesktopUI.ViewModels
             ViewTitle = $"The {ExerciseEventData.ExerciseName}";
 
             LoadSubcategories();
+
+            if (subcategoryList == null || subcategoryList.Count == 0)
+                return;
+
             UpdateNameAndImage();
             UpdateQuickInfo();
             UpdateMuscleInfo();

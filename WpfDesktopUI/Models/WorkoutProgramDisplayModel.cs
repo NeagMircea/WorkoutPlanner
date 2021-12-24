@@ -12,6 +12,7 @@ namespace WpfDesktopUI.Models
         public int Id { get; set; }
         public int WorkoutId { get; set; }
         public string WorkoutName { get; set; }
+        public string WorkoutInfo { get; set; }
         public int WorkoutProgramId { get; set; }
         public int WorkoutProgramOrder { get; set; }
 

@@ -3,7 +3,7 @@
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SELECT [Id], [WorkoutId], [WorkoutName], [WorkoutProgramId], [WorkoutProgramOrder]
+	SELECT [Id], [WorkoutId], [WorkoutName], [WorkoutInfo], [WorkoutProgramId], [WorkoutProgramOrder]
 	FROM [dbo].[Program_Workouts]
 	WHERE [ProgramId] = @ProgramId
 	ORDER BY [WorkoutProgramOrder];

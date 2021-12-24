@@ -101,7 +101,7 @@
                      HorizontalScrollBarVisibility="Disabled"
                      VerticalScrollBarVisibility="Auto"
                      ScrollViewer.CanContentScroll="True"
-                     TextWrapping="Wrap"/>
+                     TextWrapping="Wrap" AcceptsReturn="True"/>
 
             <Button x:Name="AddNew" Grid.Row="2" 
                 Margin="10 13 10 10" Padding="10">

@@ -221,6 +221,17 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
+        private string workoutInfo;
+        public string WorkoutInfo
+        {
+            get { return workoutInfo; }
+            set
+            {
+                workoutInfo = value;
+                NotifyOfPropertyChange(() => WorkoutInfo);
+            }
+        }
+
         private IEventAggregator events;
         private IMapper mapper;
 
@@ -232,12 +243,28 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+
+            //check if we're returning to this view
+            if (SelectedDay != null)
+            {
+                LoadExercises();
+                return;
+            }
+                
+            LoadItems();
+        }
+
+
         public void LoadItems()
         {
             try
             {
-                ErrorMessage = "";             
+                ErrorMessage = "";
                 LoadDays();
+                LoadWorkoutData();
             }
             catch (Exception ex)
             {
@@ -272,19 +299,10 @@ namespace WpfDesktopUI.ViewModels
         }
 
 
-        protected override void OnViewLoaded(object view)
+        private void LoadWorkoutData()
         {
-            base.OnViewLoaded(view);
-
-            //check if we're returning to this view
-            if (SelectedDay != null)
-            {
-                LoadExercises();
-                return;
-            }
-                
-            LoadItems();
             ViewTitle = WorkoutEventData.WorkoutName;
+            WorkoutInfo = WorkoutEventData.WorkoutInfo;
         }
 
 

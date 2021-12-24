@@ -9,7 +9,7 @@
              xmlns:local="clr-namespace:WpfDesktopUI.Views"
              mc:Ignorable="d" Background="White"
              d:DesignHeight="450" d:DesignWidth="775">
-    
+
     <Grid Margin="20 10 20 10">
 
         <Grid.RowDefinitions>
@@ -20,20 +20,20 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="ViewTitle" Grid.Row="0" Grid.Column="0" 
+        <TextBlock x:Name="ViewTitle" 
+                   Grid.Row="0" Grid.Column="0" 
                    Grid.ColumnSpan="3" HorizontalAlignment="Center" 
-                   FontSize="35" Margin="0 0 0 20" 
-                   FontFamily="Segoe UI Light">
-            Subcategory Panel
+                   FontSize="35" FontFamily="Segoe UI Light">
+            Workout Name
         </TextBlock>
 
         <TextBlock x:Name="ErrorMessage"
-                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
                    Margin="10 0 10 10" Foreground="Red" MaxWidth="600"
                    TextWrapping="Wrap" Visibility = 
                    "{Binding IsErrorVisible, Converter=
@@ -47,79 +47,99 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="All Subcategories" Grid.Row="0"
+            <TextBlock Text="Exercises" Grid.Row="0"
                        Padding="0 0 0 5"/>
 
-            <ListBox x:Name="AllSubcategories" Grid.Row="1"
-                SelectedItem="{Binding SelectedSubcategoryAll}">
+            <ListBox x:Name="ExerciseListBox" Grid.Row="1" 
+                 SelectedItem="{Binding SelectedExercise}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding SubcategoryName}"/>
+                        <StackPanel>
+
+                            <TextBlock Text="{Binding ExerciseName}"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding SetsDisplay}" FontSize="15"/>
+                                <TextBlock Text="{Binding RepRangeDisplay}" FontSize="15"/>
+                                <TextBlock Text="{Binding DurationDisplay}" FontSize="15"/>
+                            </StackPanel>
+                        </StackPanel>
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <TextBlock Text="Unused Subcategories" Grid.Row="0"
-                       Padding="0 0 0 5"/>
 
-            <ListBox x:Name="UnusedSubcategories" Grid.Row="1"
-                SelectedItem="{Binding SelectedSubcategoryUnused}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                <ListBox.ItemTemplate>
+            <ComboBox x:Name="DaysComboBox" Grid.Row="0" Grid.Column="0"
+                      SelectedItem="{Binding SelectedDay}" 
+                      Margin="20 30 10 10" Padding="10">
+
+                <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding SubcategoryName}"/>
+                        <TextBlock Text="{Binding DayName}"/>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
+                </ComboBox.ItemTemplate>
 
-        <Grid Grid.Row="2" Grid.Column="2">
+            </ComboBox>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBox x:Name="NewSubcategoryName" Grid.Row="0" Margin="20 32 10 10"
-                     Padding="10" Text="Subcategory Name"
-                     HorizontalScrollBarVisibility="Auto"
-                     VerticalScrollBarVisibility="Disabled"/>
-
-            <TextBox x:Name="NewSubcategoryText" Grid.Row="1" Margin="20 0 10 0" 
-                     MinHeight="150" 
-                     HorizontalScrollBarVisibility="Disabled"
-                     VerticalScrollBarVisibility="Auto"
-                     ScrollViewer.CanContentScroll="True"
-                     TextWrapping="Wrap"/>
-
-            <Button x:Name="AddNew" Grid.Row="2" 
-                Margin="20 13 10 10" Padding="10">
-                Add New Subcategory
+            <Button x:Name="MoveUp" Grid.Row="1" Grid.Column="0"
+                Margin="20 10 10 10" Padding="10">
+                Move Up
             </Button>
+
+            <Button x:Name="MoveDown" Grid.Row="2" Grid.Column="0"
+                Margin="20 10 10 10" Padding="10">
+                Move Down
+            </Button>
+
+
+            <Button x:Name="AddNew" Grid.Row="0" Grid.Column="1"
+                Margin="20 30 10 10" Padding="10">
+                Add Exercise
+            </Button>
+
+            <Button x:Name="ViewSelected" Grid.Row="1" Grid.Column="1"
+                Margin="20 8 10 10" Padding="10">
+                Show Video
+            </Button>
+
+            <Button x:Name="ViewMuscle" Grid.Row="2" Grid.Column="1"
+                Margin="20 10 10 10" Padding="10">
+                Muscle Target
+            </Button>
+
+            <ScrollViewer Grid.Row="3" Grid.ColumnSpan="2" Margin="10 5 10 5">
+                <TextBlock x:Name="WorkoutInfo" 
+                       Text="{Binding WorkoutInfo}" TextWrapping="Wrap"
+                       Margin="10 5 5 5" FontSize="18"
+                       />
+            </ScrollViewer>
+
         </Grid>
 
-        <Button x:Name="GoBack" Grid.Row="3" Grid.Column="0"
-                Margin="10 10 10 10" Padding="10">
-            Back
-        </Button>
 
-        <Button x:Name="AddSelected" Grid.Row="3" Grid.Column="1"
-                Margin="10 10 10 10" Padding="10">
-            Add Selected
+        <Button x:Name="GoBack" Grid.Row="3" Grid.Column="1" 
+                Margin="20 10 10 10" Padding="10">
+            Back
         </Button>
 
         <Button x:Name="RemoveSelected" Grid.Row="3" Grid.Column="2" 
                 Margin="20 10 10 10" Padding="10" Background="Red">
-            Remove Subcategory
+            Remove Exercise
         </Button>
     </Grid>
 </UserControl>

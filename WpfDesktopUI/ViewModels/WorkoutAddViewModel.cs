@@ -112,6 +112,17 @@ namespace WpfDesktopUI.ViewModels
             }
         }
 
+        private string workoutInfo;
+        public string WorkoutInfo
+        {
+            get { return workoutInfo; }
+            set
+            {
+                workoutInfo = value;
+                NotifyOfPropertyChange(() => WorkoutInfo);
+            }
+        }
+
         public bool CanRemoveSelected
         {
             get
@@ -244,7 +255,7 @@ namespace WpfDesktopUI.ViewModels
                 ErrorMessage = "";
 
                 WorkoutData data = new WorkoutData();
-                data.SaveWorkoutRecord(NewWorkoutName);
+                data.SaveWorkoutRecord(NewWorkoutName, WorkoutInfo);
 
                 LoadItems();
             }

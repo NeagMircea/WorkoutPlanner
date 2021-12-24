@@ -259,7 +259,8 @@ namespace WpfDesktopUI.ViewModels
                         ProgramId = ProgramEventData.Id,
                         ProgramName = ViewTitle,
                         WorkoutId = SelectedWorkout.WorkoutId,
-                        WorkoutName = SelectedWorkout.WorkoutName
+                        WorkoutName = SelectedWorkout.WorkoutName,
+                        WorkoutInfo = SelectedWorkout.WorkoutInfo
                     });
             }
             catch (Exception ex)

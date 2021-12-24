@@ -33,12 +33,13 @@ namespace DataAccess.Library.DataAccess
         }
 
 
-        public void SaveWorkoutRecord(string workoutName)
+        public void SaveWorkoutRecord(string workoutName, string workoutInfo)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
             var p = new DynamicParameters();
             p.Add("@Name", workoutName);
+            p.Add("@Description", workoutInfo);
             //p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             sql.SaveData("dbo.spWorkoutInsert", p, "WPlannerData");

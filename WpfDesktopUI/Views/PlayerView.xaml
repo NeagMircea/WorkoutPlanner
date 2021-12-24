@@ -84,7 +84,7 @@
         <StatusBarItem Grid.Column="3" HorizontalContentAlignment="Stretch">
             <Slider x:Name="Progress" Thumb.DragStarted="Progress_DragStarted" 
                         Thumb.DragCompleted="Progress_DragCompleted" 
-                        ValueChanged="Progress_ValueChanged" />
+                        ValueChanged="Progress_ValueChanged" Background="LightGray" />
         </StatusBarItem>
 
             <StatusBarItem Grid.Column="4">
@@ -97,7 +97,8 @@
                
                 <Slider x:Name="Volume"
                         ValueChanged="Volume_ValueChanged"
-                        Minimum="0" Maximum="1" MinWidth="100"/>
+                        Minimum="0" Maximum="1" MinWidth="100"
+                        Background="LightGray"/>
                 
         </StatusBarItem>
     </StatusBar>

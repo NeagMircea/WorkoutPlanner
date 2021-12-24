@@ -12,5 +12,6 @@ namespace WpfDesktopUI.EventModels
         public string ProgramName { get; set; }
         public int WorkoutId { get; set; }
         public string WorkoutName { get; set; }
+        public string WorkoutInfo { get; set; }
     }
 }

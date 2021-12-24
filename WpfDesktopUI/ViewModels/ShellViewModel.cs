@@ -67,6 +67,7 @@ namespace WpfDesktopUI.ViewModels
 
             exerciseVM.WorkoutEventData.WorkoutId = message.WorkoutId;
             exerciseVM.WorkoutEventData.WorkoutName = message.WorkoutName;
+            exerciseVM.WorkoutEventData.WorkoutInfo = message.WorkoutInfo;
 
             await ActivateItemAsync(exerciseVM);
         }

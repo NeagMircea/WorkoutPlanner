@@ -87,6 +87,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <TextBox x:Name="NewWorkoutName" Grid.Row="0" Margin="20 30 10 10"
@@ -96,6 +97,13 @@
                 Margin="20 10 10 10" Padding="10">
                 Add New Workout
             </Button>
+
+            <TextBox x:Name="WorkoutInfo" Grid.Row="2" Text="Workout Description"
+                     HorizontalScrollBarVisibility="Disabled"
+                     VerticalScrollBarVisibility="Auto" Margin="20 10 10 10"
+                     TextWrapping="Wrap" AcceptsReturn="True">
+
+            </TextBox>
         </Grid>
 
         <Button x:Name="GoBack" Grid.Row="3" Grid.Column="1"
